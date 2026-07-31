@@ -13,13 +13,13 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from trustworthy_launchpads.agentic import export_tab_arms, score_agent_runs, write_prompt_templates
+from trustworthy_launchpads.agentic import score_agent_runs, write_prompt_templates
 from trustworthy_launchpads.causal_validation import build_h1_rpc_mechanism_causal_audit
-from trustworthy_launchpads.deterministic_ladder import export_tab_ablation, run_ladder
+from trustworthy_launchpads.deterministic_ladder import run_ladder
 from trustworthy_launchpads.free_public import scan_free_public_assets
 from trustworthy_launchpads.identification import build_identification_strength_summary, build_moralis_sample_selection_audit
 from trustworthy_launchpads.io import ensure_output_dirs, file_sha256, load_config, write_json
-from trustworthy_launchpads.metrics import build_metric_battery, export_metric_battery_tex
+from trustworthy_launchpads.metrics import build_metric_battery
 from trustworthy_launchpads.plots import make_all_figures
 from trustworthy_launchpads.readiness import build_readiness_audit
 
@@ -50,16 +50,11 @@ def main() -> None:
         battery,
     )
 
-    export_tab_ablation(ladder_outputs.ladder, config.overleaf_dir / "tab_ablation_shilin.tex")
-    export_metric_battery_tex(battery, config.overleaf_dir / "tab_metric_battery_shilin.tex")
-    export_tab_arms(ladder_outputs.ladder, agent_scores, config.overleaf_dir / "tab_arms_shilin.tex")
-
     manifest = {
         "case_id": config.case_id,
         "config_path": str(config.config_path),
         "tables": sorted(p.name for p in config.tables_dir.glob("*")),
         "figures": sorted(p.name for p in config.figures_dir.glob("*")),
-        "overleaf": sorted(p.name for p in config.overleaf_dir.glob("*")),
         "free_public_files": int(len(free_public_inventory)),
         "prompt_count": int(len(prompt_manifest)),
         "config_sha256": file_sha256(config.config_path),

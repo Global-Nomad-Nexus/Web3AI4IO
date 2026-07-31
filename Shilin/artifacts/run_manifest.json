@@ -36,11 +36,6 @@
     "fig_token_persistence_survival_single_shilin.png"
   ],
   "free_public_files": 27,
-  "overleaf": [
-    "tab_ablation_shilin.tex",
-    "tab_arms_shilin.tex",
-    "tab_metric_battery_shilin.tex"
-  ],
   "prompt_count": 8,
   "tables": [
     "agentic_arm_scores.csv",

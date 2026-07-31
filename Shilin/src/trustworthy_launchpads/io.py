@@ -50,10 +50,6 @@ class CaseConfig:
         return self.output_root / "figures"
 
     @property
-    def overleaf_dir(self) -> Path:
-        return self.output_root / "overleaf"
-
-    @property
     def agent_runs_dir(self) -> Path:
         return self.output_root / "agent_runs"
 
@@ -90,7 +86,7 @@ def load_config(path: str | Path | None = None) -> CaseConfig:
 
 
 def ensure_output_dirs(config: CaseConfig) -> None:
-    for path in [config.tables_dir, config.figures_dir, config.overleaf_dir, config.agent_runs_dir]:
+    for path in [config.tables_dir, config.figures_dir, config.agent_runs_dir]:
         path.mkdir(parents=True, exist_ok=True)
 
 

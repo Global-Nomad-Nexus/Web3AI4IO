@@ -6,7 +6,7 @@ This directory contains the code, data interfaces, generated artifacts, and visu
 
 *Trustworthy Causal Inference for Token Launch Platforms: An Interdisciplinary Approach of Platform Economics, Causal Econometrics, and AI Evaluation.*
 
-The paper source remains in Overleaf. This GitHub package is a replication and audit bundle: it keeps the computational evidence, but intentionally excludes paper `.tex`, `.sty`, and `.bib` files.
+The paper source remains outside this repository. This GitHub package is a replication and audit bundle: it keeps the computational evidence, but intentionally excludes paper `.tex`, `.sty`, and `.bib` files.
 
 ## Abstract
 
@@ -19,7 +19,7 @@ The package supports two paper hypotheses:
 | H1 | Did lower migration friction improve post-graduation liquidity persistence? | Market-level DiD ladder, public Solana RPC validation, Moralis decoded sample, and rendered Dune SQL paths. |
 | H4 | Did allocation concentration and early-wallet behavior create retail harm channels? | Holder-concentration/risk proxies, RED-COHORT sniper-cohort extension, and registered early-wallet validation SQL. |
 
-The strongest currently supported claim is mechanism-level: PumpSwap operated as an active post-migration venue for graduated tokens. Full welfare, price-quality, active-trader, and early-wallet causal claims still require full-cohort decoded indexer outcomes.
+The strongest currently supported claim is mechanism-level: PumpSwap operated as an active post-migration venue for graduated tokens. Full welfare, price-quality, active-trader, and early-wallet causal claims still require full-cohort decoded indexer outcomes. To keep the repository reviewable, this GitHub tree is a slim release package: bulky raw mirrors and page-level API dumps are intentionally excluded while their summaries, hashes, scripts, and regenerated outputs are retained.
 
 ## Research Scope
 
@@ -31,7 +31,7 @@ This folder owns the Pump.fun/PumpSwap application arm of the broader paper. It 
 - a stakeholder metric battery for creators, retail traders, communities, reviewers, and asset-backed token contexts;
 - an L0-L7 deterministic and agentic evaluation ladder.
 
-It does not implement Claire's staggered cross-chain DiD design, except through compatible interfaces in the ladder. It also does not contain the manuscript source, Overleaf tables, or paper bibliography.
+It does not implement Claire's staggered cross-chain DiD design, except through compatible interfaces in the ladder. It also does not contain the manuscript source, manuscript tables, or paper bibliography.
 
 ## Empirical Design
 
@@ -87,7 +87,25 @@ The package combines public data, generated artifacts, and indexer-ready validat
 | Full indexer path | Dune SQL templates and rendered all-token queries | Registered path for full-cohort 1/7/30 day decoded outcomes. |
 | Off-chain extensions | Discord sentiment, DeFiLlama TVL, RWA registry | Community and asset-backed-token comparison channels. |
 
-Large data files are tracked with Git LFS where needed. File hashes and provenance summaries are recorded in `artifacts/tables/free_public_data_inventory.csv` and related summary JSON files.
+Bulky raw mirrors are not committed to GitHub. The excluded files include raw Moralis swap pages, per-token Pump.fun metadata JSON, HuggingFace mirror CSVs, SolArchive parquet partitions, RED-COHORT raw ZIP/JSONL files, and raw agent responses. The package keeps compact validation outputs, rendered SQL, provenance summaries, and file-hash inventories so the evidence boundary remains auditable without turning the repository into a data dump.
+
+## Slim Release Policy
+
+The GitHub version keeps only files that are useful for review, reproduction, or direct paper evidence:
+
+- analysis code, prompts, tests, and configuration;
+- machine-readable result tables and audit ledgers;
+- generated figures used in the README or manuscript;
+- compact external-validation CSVs and rendered Dune SQL;
+- public-data schemas, indexes, summary tables, and provenance ledgers.
+
+The GitHub version excludes files that are reproducible but noisy:
+
+- raw API/page dumps;
+- per-token metadata JSON caches;
+- large public-data mirrors already available from source platforms;
+- raw model response JSON when `agent_runs.csv` and score tables already summarize the run;
+- interrupted downloads, cache files, and local-only manuscript assets.
 
 ## Repository Layout
 
@@ -103,7 +121,7 @@ Shilin/
     tables/                     Machine-readable result tables and audit ledgers
     figures/                    Generated figures used in the paper and README
     external_validation/        RPC, Moralis, and rendered Dune validation outputs
-    agent_runs/                 Agentic-evaluation run schema, scores, and raw responses
+    agent_runs/                 Agentic-evaluation run schema and compact run summaries
 ```
 
 ## Reproduction
@@ -118,7 +136,7 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests
 ```
 
-To regenerate the package from upstream data, first edit `configs/pumpswap_case.json` so `upstream_mvp_root` points to a local full-data checkout. Then run:
+To regenerate the package from upstream data, first edit `configs/pumpswap_case.json` so `upstream_mvp_root` points to a local full-data checkout. Raw downloads and API caches are ignored by Git by default. Then run:
 
 ```bash
 cd Shilin
@@ -187,7 +205,7 @@ The package supports:
 - mechanism-level evidence that PumpSwap functioned as a post-migration liquidity venue for graduated tokens;
 - token-level H4 proxy evidence based on holder concentration and source-coded risk;
 - a transparent data-availability ledger separating computed evidence from registered validation gaps;
-- agentic-evaluation scaffolds and raw runs for L0-L7 conclusion reliability.
+- agentic-evaluation scaffolds and compact run summaries for L0-L7 conclusion reliability.
 
 The package does not support:
 
@@ -196,6 +214,6 @@ The package does not support:
 - same-cohort H4 early-wallet causal effects;
 - replacing decoded indexer evidence with public-RPC signature proxies.
 
-## Overleaf and Manuscript Boundary
+## Manuscript Boundary
 
-No manuscript LaTeX files are committed in this directory. Overleaf-ready `.tex` tables can be regenerated locally from the code, but the GitHub package is intentionally limited to code, data interfaces, non-LaTeX artifacts, figures, and reproducibility checks.
+No manuscript LaTeX files are committed in this directory. The GitHub package is intentionally limited to code, data interfaces, non-LaTeX artifacts, figures, and reproducibility checks.

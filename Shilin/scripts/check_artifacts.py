@@ -159,7 +159,6 @@ def main() -> None:
         "solana_parsed_transaction_proxies.csv",
         "dune_graduated_tokens.csv",
         "h1_rpc_token_level_outcomes.csv",
-        "moralis_token_swaps.csv",
         "moralis_fetch_status.csv",
         "moralis_decoded_token_outcomes.csv",
     ]:
