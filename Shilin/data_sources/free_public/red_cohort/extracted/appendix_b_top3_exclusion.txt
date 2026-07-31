@@ -1,0 +1,7 @@
+APPENDIX B.2 TOP-3 COHORT EXCLUSION
+========================================
+Excluded: ['COH-0001', 'COH-0002', 'COH-0003']
+Treated (any non-top3 cohort): 5869
+Control: 17607
+First-30-min buyer lift: +128.8%
+First-30-min SOL inflow lift: +128.8%

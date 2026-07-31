@@ -1,0 +1,387 @@
+{
+  "dataset": "tokens",
+  "description": "Solana token metadata partitioned by month",
+  "partition_type": "monthly",
+  "schema": "https://data.solarchive.org/schemas/solana/tokens.json",
+  "partitions": [
+    {
+      "partition": "2020-10",
+      "path": "tokens/2020-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 10469
+    },
+    {
+      "partition": "2020-11",
+      "path": "tokens/2020-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 6767
+    },
+    {
+      "partition": "2020-12",
+      "path": "tokens/2020-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 6567
+    },
+    {
+      "partition": "2021-01",
+      "path": "tokens/2021-01/index.json",
+      "file_count": 1,
+      "total_size_bytes": 3995
+    },
+    {
+      "partition": "2021-02",
+      "path": "tokens/2021-02/index.json",
+      "file_count": 1,
+      "total_size_bytes": 5835
+    },
+    {
+      "partition": "2021-03",
+      "path": "tokens/2021-03/index.json",
+      "file_count": 1,
+      "total_size_bytes": 89309
+    },
+    {
+      "partition": "2021-04",
+      "path": "tokens/2021-04/index.json",
+      "file_count": 1,
+      "total_size_bytes": 2813174
+    },
+    {
+      "partition": "2021-05",
+      "path": "tokens/2021-05/index.json",
+      "file_count": 1,
+      "total_size_bytes": 271211
+    },
+    {
+      "partition": "2021-06",
+      "path": "tokens/2021-06/index.json",
+      "file_count": 1,
+      "total_size_bytes": 3066634
+    },
+    {
+      "partition": "2021-07",
+      "path": "tokens/2021-07/index.json",
+      "file_count": 1,
+      "total_size_bytes": 2982655
+    },
+    {
+      "partition": "2021-08",
+      "path": "tokens/2021-08/index.json",
+      "file_count": 1,
+      "total_size_bytes": 37384913
+    },
+    {
+      "partition": "2021-09",
+      "path": "tokens/2021-09/index.json",
+      "file_count": 1,
+      "total_size_bytes": 294148298
+    },
+    {
+      "partition": "2021-10",
+      "path": "tokens/2021-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 435785192
+    },
+    {
+      "partition": "2021-11",
+      "path": "tokens/2021-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 375474199
+    },
+    {
+      "partition": "2021-12",
+      "path": "tokens/2021-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 350324010
+    },
+    {
+      "partition": "2022-01",
+      "path": "tokens/2022-01/index.json",
+      "file_count": 1,
+      "total_size_bytes": 494302555
+    },
+    {
+      "partition": "2022-02",
+      "path": "tokens/2022-02/index.json",
+      "file_count": 1,
+      "total_size_bytes": 523206989
+    },
+    {
+      "partition": "2022-03",
+      "path": "tokens/2022-03/index.json",
+      "file_count": 1,
+      "total_size_bytes": 368482819
+    },
+    {
+      "partition": "2022-04",
+      "path": "tokens/2022-04/index.json",
+      "file_count": 1,
+      "total_size_bytes": 313013391
+    },
+    {
+      "partition": "2022-05",
+      "path": "tokens/2022-05/index.json",
+      "file_count": 1,
+      "total_size_bytes": 476760742
+    },
+    {
+      "partition": "2022-06",
+      "path": "tokens/2022-06/index.json",
+      "file_count": 1,
+      "total_size_bytes": 427388888
+    },
+    {
+      "partition": "2022-07",
+      "path": "tokens/2022-07/index.json",
+      "file_count": 1,
+      "total_size_bytes": 274964589
+    },
+    {
+      "partition": "2022-08",
+      "path": "tokens/2022-08/index.json",
+      "file_count": 1,
+      "total_size_bytes": 169814975
+    },
+    {
+      "partition": "2022-09",
+      "path": "tokens/2022-09/index.json",
+      "file_count": 1,
+      "total_size_bytes": 211389354
+    },
+    {
+      "partition": "2022-10",
+      "path": "tokens/2022-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 216389290
+    },
+    {
+      "partition": "2022-11",
+      "path": "tokens/2022-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 227705057
+    },
+    {
+      "partition": "2022-12",
+      "path": "tokens/2022-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 147374841
+    },
+    {
+      "partition": "2023-01",
+      "path": "tokens/2023-01/index.json",
+      "file_count": 1,
+      "total_size_bytes": 142305640
+    },
+    {
+      "partition": "2023-02",
+      "path": "tokens/2023-02/index.json",
+      "file_count": 1,
+      "total_size_bytes": 169758468
+    },
+    {
+      "partition": "2023-03",
+      "path": "tokens/2023-03/index.json",
+      "file_count": 1,
+      "total_size_bytes": 192477924
+    },
+    {
+      "partition": "2023-04",
+      "path": "tokens/2023-04/index.json",
+      "file_count": 1,
+      "total_size_bytes": 57359307
+    },
+    {
+      "partition": "2023-05",
+      "path": "tokens/2023-05/index.json",
+      "file_count": 1,
+      "total_size_bytes": 29578680
+    },
+    {
+      "partition": "2023-06",
+      "path": "tokens/2023-06/index.json",
+      "file_count": 1,
+      "total_size_bytes": 22449197
+    },
+    {
+      "partition": "2023-07",
+      "path": "tokens/2023-07/index.json",
+      "file_count": 1,
+      "total_size_bytes": 29762279
+    },
+    {
+      "partition": "2023-08",
+      "path": "tokens/2023-08/index.json",
+      "file_count": 1,
+      "total_size_bytes": 13994926
+    },
+    {
+      "partition": "2023-09",
+      "path": "tokens/2023-09/index.json",
+      "file_count": 1,
+      "total_size_bytes": 9856276
+    },
+    {
+      "partition": "2023-10",
+      "path": "tokens/2023-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 13704898
+    },
+    {
+      "partition": "2023-11",
+      "path": "tokens/2023-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 18598233
+    },
+    {
+      "partition": "2023-12",
+      "path": "tokens/2023-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 54789883
+    },
+    {
+      "partition": "2024-01",
+      "path": "tokens/2024-01/index.json",
+      "file_count": 1,
+      "total_size_bytes": 41287664
+    },
+    {
+      "partition": "2024-02",
+      "path": "tokens/2024-02/index.json",
+      "file_count": 1,
+      "total_size_bytes": 46145775
+    },
+    {
+      "partition": "2024-03",
+      "path": "tokens/2024-03/index.json",
+      "file_count": 1,
+      "total_size_bytes": 68446917
+    },
+    {
+      "partition": "2024-04",
+      "path": "tokens/2024-04/index.json",
+      "file_count": 1,
+      "total_size_bytes": 24370355
+    },
+    {
+      "partition": "2024-05",
+      "path": "tokens/2024-05/index.json",
+      "file_count": 1,
+      "total_size_bytes": 21707404
+    },
+    {
+      "partition": "2024-06",
+      "path": "tokens/2024-06/index.json",
+      "file_count": 1,
+      "total_size_bytes": 24774111
+    },
+    {
+      "partition": "2024-07",
+      "path": "tokens/2024-07/index.json",
+      "file_count": 1,
+      "total_size_bytes": 12752295
+    },
+    {
+      "partition": "2024-08",
+      "path": "tokens/2024-08/index.json",
+      "file_count": 1,
+      "total_size_bytes": 6149207
+    },
+    {
+      "partition": "2024-09",
+      "path": "tokens/2024-09/index.json",
+      "file_count": 1,
+      "total_size_bytes": 3973416
+    },
+    {
+      "partition": "2024-10",
+      "path": "tokens/2024-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 4640098
+    },
+    {
+      "partition": "2024-11",
+      "path": "tokens/2024-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 8435749
+    },
+    {
+      "partition": "2024-12",
+      "path": "tokens/2024-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 9504754
+    },
+    {
+      "partition": "2025-01",
+      "path": "tokens/2025-01/index.json",
+      "file_count": 1,
+      "total_size_bytes": 21768158
+    },
+    {
+      "partition": "2025-02",
+      "path": "tokens/2025-02/index.json",
+      "file_count": 1,
+      "total_size_bytes": 17351555
+    },
+    {
+      "partition": "2025-03",
+      "path": "tokens/2025-03/index.json",
+      "file_count": 1,
+      "total_size_bytes": 19170643
+    },
+    {
+      "partition": "2025-04",
+      "path": "tokens/2025-04/index.json",
+      "file_count": 1,
+      "total_size_bytes": 27109029
+    },
+    {
+      "partition": "2025-05",
+      "path": "tokens/2025-05/index.json",
+      "file_count": 1,
+      "total_size_bytes": 34152456
+    },
+    {
+      "partition": "2025-06",
+      "path": "tokens/2025-06/index.json",
+      "file_count": 1,
+      "total_size_bytes": 64085887
+    },
+    {
+      "partition": "2025-07",
+      "path": "tokens/2025-07/index.json",
+      "file_count": 1,
+      "total_size_bytes": 62512433
+    },
+    {
+      "partition": "2025-08",
+      "path": "tokens/2025-08/index.json",
+      "file_count": 1,
+      "total_size_bytes": 52211272
+    },
+    {
+      "partition": "2025-09",
+      "path": "tokens/2025-09/index.json",
+      "file_count": 1,
+      "total_size_bytes": 21997335
+    },
+    {
+      "partition": "2025-10",
+      "path": "tokens/2025-10/index.json",
+      "file_count": 1,
+      "total_size_bytes": 12390207
+    },
+    {
+      "partition": "2025-11",
+      "path": "tokens/2025-11/index.json",
+      "file_count": 1,
+      "total_size_bytes": 13808083
+    },
+    {
+      "partition": "2025-12",
+      "path": "tokens/2025-12/index.json",
+      "file_count": 1,
+      "total_size_bytes": 7341924
+    }
+  ],
+  "updated_at": "2025-12-19T19:19:41.267862Z"
+}

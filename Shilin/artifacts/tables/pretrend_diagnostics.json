@@ -1,0 +1,8 @@
+{
+  "interpretation": "Pre-trend risk detected; market-level volume estimates should not be read as clean causal evidence.",
+  "max_abs_pretrend_log_points": 1.416288539858264,
+  "mean_abs_pretrend_log_points": 0.5528426669141536,
+  "pretrend_flag": true,
+  "pretrend_weeks_checked": 7,
+  "significant_pretrend_weeks": 2
+}

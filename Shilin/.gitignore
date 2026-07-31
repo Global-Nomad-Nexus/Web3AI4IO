@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/external/*.csv
+data/external/*.parquet
+artifacts/agent_runs/raw_responses/
+artifacts/download_failures/
+*.part
+*.bad_incomplete
+
+# Paper/Overleaf sources stay local and are not part of this GitHub package.
+*.tex
+*.sty
+*.bib
+artifacts/overleaf/

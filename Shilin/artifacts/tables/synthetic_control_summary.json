@@ -1,0 +1,11 @@
+{
+  "actual_abs_rank_among_units": 2,
+  "actual_gap_change": 1.4010101501174201,
+  "actual_pre_centered_rmse": 0.4527668777488847,
+  "claim_boundary": "This is a synthetic-control-style diagnostic with only three donor units. It strengthens the robustness ledger, but it is not a stand-alone causal proof.",
+  "event_date": "2025-03-20",
+  "generated_at_utc": "2026-07-31T03:31:10.085389+00:00",
+  "treated_unit": "pump_ecosystem",
+  "two_sided_placebo_p_value": 0.5,
+  "unit_count": 4
+}
