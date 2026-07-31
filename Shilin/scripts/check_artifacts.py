@@ -93,6 +93,19 @@ REQUIRED_FIGURES = [
 EXPECTED_RUNGS = [f"L{i}" for i in range(8)]
 
 
+def resolve_artifact_path(path_value: object) -> Path:
+    """Resolve stale absolute artifact paths against the current package root."""
+    path = Path(str(path_value))
+    if path.exists():
+        return path
+    if "artifacts" in path.parts:
+        artifact_index = path.parts.index("artifacts")
+        candidate = ROOT / Path(*path.parts[artifact_index:])
+        if candidate.exists():
+            return candidate
+    return path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default=str(ROOT / "configs" / "pumpswap_case.json"))
@@ -187,7 +200,7 @@ def main() -> None:
     if int(dune_summary.get("tokens_in_query", 0)) != int(dune_summary.get("all_graduated_tokens_available", -1)):
         errors.append("Rendered Dune SQL should cover all available graduated tokens.")
     for key in ["post_sql_path", "early_sql_path"]:
-        path = Path(str(dune_summary.get(key, "")))
+        path = resolve_artifact_path(dune_summary.get(key, ""))
         if not path.exists() or path.stat().st_size == 0:
             errors.append(f"Missing rendered Dune SQL artifact: {path}")
     if dune_summary.get("status") in {

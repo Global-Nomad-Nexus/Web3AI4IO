@@ -1,60 +1,127 @@
-# Shilin Replication Package: Pump.fun / PumpSwap Application Arm
+# Shilin Replication Package
 
-This folder contains Shilin's code and artifacts for the paper:
+## Pump.fun / PumpSwap Application Arm
+
+This directory contains the code, data interfaces, generated artifacts, and visual diagnostics for Shilin's application arm of the paper:
 
 *Trustworthy Causal Inference for Token Launch Platforms: An Interdisciplinary Approach of Platform Economics, Causal Econometrics, and AI Evaluation.*
 
-The paper itself stays on Overleaf. This folder is for code, data interfaces, generated tables, figures, and agentic-evaluation scaffolds.
+The paper source remains in Overleaf. This GitHub package is a replication and audit bundle: it keeps the computational evidence, but intentionally excludes paper `.tex`, `.sty`, and `.bib` files.
 
-## Scope
+## Abstract
 
-Shilin owns the Pump.fun/PumpSwap application arm:
+This replication package studies whether the Pump.fun to PumpSwap migration regime improved post-graduation market persistence, and whether that conclusion survives a more trustworthy causal-evaluation pipeline. The central empirical lesson is not a simple "PumpSwap worked" claim. A naive before-after dashboard says yes, but adding Solana DEX controls, two-way fixed effects, event-study diagnostics, few-cluster inference, token-level heterogeneity, and stakeholder metrics changes the conclusion to a bounded and stakeholder-dependent claim.
 
-- Related work strand: empirical evidence on token platforms.
-- H1: migration friction and post-graduation persistence.
-- H4: allocation concentration and retail harm.
-- Method Pillar 1: stakeholder metric battery.
-- Method Pillar 2: data richness and frequency.
-- Result 1: application-layer metrics, frequency analysis, and naive rerun.
-- Agentic execution arm: prompts, run schema, scoring, and `tab_arms` agentic columns.
+The package supports two paper hypotheses:
 
-Claire's staggered cross-chain DiD design is not implemented here, except for compatible interfaces in the ladder.
+| Hypothesis | Question | Evidence in this package |
+|---|---|---|
+| H1 | Did lower migration friction improve post-graduation liquidity persistence? | Market-level DiD ladder, public Solana RPC validation, Moralis decoded sample, and rendered Dune SQL paths. |
+| H4 | Did allocation concentration and early-wallet behavior create retail harm channels? | Holder-concentration/risk proxies, RED-COHORT sniper-cohort extension, and registered early-wallet validation SQL. |
 
-## What This Code Does
+The strongest currently supported claim is mechanism-level: PumpSwap operated as an active post-migration venue for graduated tokens. Full welfare, price-quality, active-trader, and early-wallet causal claims still require full-cohort decoded indexer outcomes.
 
-The pipeline upgrades the earlier MVP into a benchmark-style replication package:
+## Research Scope
 
-1. Runs a deterministic L0-L7 ablation ladder.
-2. Computes Result 1 stakeholder metrics from RED-PUMP, market panels, Discord, and RWA extensions.
-3. Performs daily-vs-weekly and market-vs-token frequency sensitivity checks.
-4. Runs event-study pretrend diagnostics.
-5. Adds a PyFixest `feols` DiD cross-check for the naive and unit/date fixed-effect specifications.
-6. Adds a self-contained Pump.fun token risk snapshot using the HuggingFace `Pumpdotstudio/pump-fun-sentiment-100k` sample, deduplicated to one latest snapshot per mint.
-7. Runs exact Rademacher wild-cluster bootstrap over the four protocol units.
-8. Generates Overleaf-ready tables locally; the `.tex` outputs stay outside this GitHub package.
-9. Runs L0-L7 agentic prompts with DeepSeek repeated runs and scores conclusion reliability.
-10. Renders full 1,651-token Dune SQL for decoded indexer exports and computes a public-Solana-RPC validation sample.
+This folder owns the Pump.fun/PumpSwap application arm of the broader paper. It covers:
 
-## Run
+- empirical token-platform evidence and public-data provenance;
+- H1 post-graduation persistence and mechanism validation;
+- H4 holder concentration, early-access, and retail-risk proxies;
+- a stakeholder metric battery for creators, retail traders, communities, reviewers, and asset-backed token contexts;
+- an L0-L7 deterministic and agentic evaluation ladder.
 
-The current local machine already has a working virtual environment in the upstream MVP folder. From the paper root:
+It does not implement Claire's staggered cross-chain DiD design, except through compatible interfaces in the ladder. It also does not contain the manuscript source, Overleaf tables, or paper bibliography.
 
-```bash
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/run_all.py
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/run_agentic_deepseek.py --overwrite
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/run_dune_token_exports.py --max-tokens 0
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/run_solana_external_validation.py --max-tokens 300 --sample-strategy evenly_spaced --page-limit 20 --max-pages 1 --post-tx-limit-per-token 0 --early-tx-limit-per-token 0 --resume
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/download_free_public_data.py --include all
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/run_all.py
-/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/.venv/bin/python Shilin/scripts/check_artifacts.py
+## Empirical Design
+
+The market-level design compares the Pump ecosystem with Solana DEX controls around the PumpSwap migration event date, `2025-03-20` UTC.
+
+```text
+log(1 + volume_it) = alpha_i + gamma_t + beta * Pump_i * Post_t + epsilon_it
 ```
 
-On a fresh machine:
+where `i` indexes market units and `t` indexes days. The package treats this aggregate market DiD as one rung in a broader evaluation ladder, not as final causal proof.
+
+| Rung | Added evidence layer | Role in the paper |
+|---|---|---|
+| L0 | Pump ecosystem before-after means | Operational dashboard baseline. |
+| L1 | Solana DEX control group | Naive DiD comparison. |
+| L2 | Unit and date fixed effects | TWFE market-level specification. |
+| L3 | Dynamic event-study analogue | Timing and dynamic-response diagnostic. |
+| L4 | Pre-trend screen | Identifies market-level design risk. |
+| L5 | Token-level heterogeneity | H4 holder-concentration and risk proxy audit. |
+| L6 | Exact wild-cluster inference | Few-cluster uncertainty correction. |
+| L7 | Stakeholder metric battery | Interprets results across welfare-relevant dimensions. |
+
+## Visual Summary
+
+**Figure 1. Naive-to-trustworthy conclusion flip.** The benchmark starts with a positive before-after estimate and becomes uncertain once controls, diagnostics, and few-cluster inference are added.
+
+![Naive-to-trustworthy conclusion flip](artifacts/figures/fig_ladder_decision_flip_shilin.png)
+
+**Figure 2. Event-study diagnostics.** The market-level event study shows positive post-event estimates but also flags pre-trend risk, so it is used as a diagnostic rather than a clean causal claim.
+
+![Event-study diagnostics](artifacts/figures/fig_event_study_shilin.png)
+
+**Figure 3. H1 mechanism audit.** Public Solana RPC evidence supports strong post-migration venue activation, while the claim boundary blocks over-reading RPC proxies as welfare or USD-volume causality.
+
+![H1 RPC mechanism audit](artifacts/figures/fig_h1_mechanism_audit_shilin.png)
+
+**Figure 4. Stakeholder metric battery.** The package reports multiple outcome dimensions rather than treating aggregate volume as the only welfare-relevant metric.
+
+![Stakeholder metric battery](artifacts/figures/fig_metric_battery_status_shilin.png)
+
+## Data Layers
+
+The package combines public data, generated artifacts, and indexer-ready validation paths.
+
+| Layer | Source | Main use |
+|---|---|---|
+| Market baseline | DeFiLlama protocol and DEX volume data | Pump ecosystem vs Solana DEX market-level DiD. |
+| Token lifecycle | RED-PUMP launch and terminal-outcome data | Graduation, timeout, and token-level mechanism metrics. |
+| Token metadata and risk | HuggingFace Pump.fun token datasets | Holder concentration, social metadata, and risk proxies. |
+| Early-access mechanism | RED-COHORT-2026-v1 | Persistent sniper-cohort and early-wallet mechanism validation. |
+| RPC validation | Pump.fun metadata plus Solana RPC / Helius-compatible outputs | Post-migration pool activation and transaction-count proxies. |
+| Decoded sample | Moralis decoded swap sample | Wallet-level, USD-denominated sample outcomes for covered tokens. |
+| Full indexer path | Dune SQL templates and rendered all-token queries | Registered path for full-cohort 1/7/30 day decoded outcomes. |
+| Off-chain extensions | Discord sentiment, DeFiLlama TVL, RWA registry | Community and asset-backed-token comparison channels. |
+
+Large data files are tracked with Git LFS where needed. File hashes and provenance summaries are recorded in `artifacts/tables/free_public_data_inventory.csv` and related summary JSON files.
+
+## Repository Layout
+
+```text
+Shilin/
+  configs/                     Case configuration and event-date settings
+  data_sources/                 Public data snapshots and Dune SQL templates
+  prompts/                      L0-L7 agentic-evaluation prompts
+  scripts/                      End-to-end, validation, RPC, Dune, and Moralis runners
+  src/trustworthy_launchpads/   Reusable analysis modules
+  tests/                        Artifact integrity tests
+  artifacts/
+    tables/                     Machine-readable result tables and audit ledgers
+    figures/                    Generated figures used in the paper and README
+    external_validation/        RPC, Moralis, and rendered Dune validation outputs
+    agent_runs/                 Agentic-evaluation run schema, scores, and raw responses
+```
+
+## Reproduction
+
+To verify the checked-in artifacts:
 
 ```bash
 cd Shilin
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python scripts/check_artifacts.py
+.venv/bin/python -m unittest discover -s tests
+```
+
+To regenerate the package from upstream data, first edit `configs/pumpswap_case.json` so `upstream_mvp_root` points to a local full-data checkout. Then run:
+
+```bash
+cd Shilin
 .venv/bin/python scripts/run_all.py
 .venv/bin/python scripts/run_agentic_deepseek.py --env-file /path/to/local/.env --overwrite
 .venv/bin/python scripts/run_dune_token_exports.py --max-tokens 0
@@ -64,131 +131,71 @@ python3 -m venv .venv
 .venv/bin/python scripts/check_artifacts.py
 ```
 
-If a Dune key becomes available, validate with a tiny sample before running larger exports:
+Optional decoded-indexer execution:
 
 ```bash
 export DUNE_API_KEY=...
 .venv/bin/python scripts/run_dune_token_exports.py --max-tokens 1 --execute --only post_migration --performance medium
 ```
 
-For a larger attempt, use chunking and a credit cap. Stop when Dune returns account/datapoint limits; do not keep retrying the same request.
+For larger Dune runs, use chunking and a credit cap:
 
 ```bash
 .venv/bin/python scripts/run_dune_token_exports.py --max-tokens 0 --sample-strategy first --execute --only post_migration --performance medium --chunk-size 10 --max-total-credits 1700 --resume
 ```
 
-If a Helius RPC key becomes available, set `HELIUS_API_KEY` or `SOLANA_RPC_URL` before running `scripts/run_solana_external_validation.py`; the script records only the provider class, not the secret.
+If a high-throughput Solana RPC key is available, set `HELIUS_API_KEY` or `SOLANA_RPC_URL` before running `scripts/run_solana_external_validation.py`. The scripts record provider class and output provenance, not secrets.
 
-Edit `configs/pumpswap_case.json` if the upstream MVP data root changes.
+## Main Machine-Readable Outputs
 
-## Main Outputs
-
-Tables:
-
-- `artifacts/tables/deterministic_ladder.csv`
-- `artifacts/tables/l0_window_sensitivity.csv`
-- `artifacts/tables/event_study_coefficients_shilin.csv`
-- `artifacts/tables/pretrend_diagnostics.json`
-- `artifacts/tables/wild_cluster_bootstrap.json`
-- `artifacts/tables/result1_frequency_sensitivity.csv`
-- `artifacts/tables/result1_stakeholder_metric_battery.csv`
-- `artifacts/tables/data_availability_ledger.csv`
-- `artifacts/tables/claim_scope_ledger.csv`
-- `artifacts/tables/hf_pump_risk_snapshot_summary.json`
-- `artifacts/tables/external_validation_summary.json`
-- `artifacts/tables/dune_indexer_export_summary.json`
-- `artifacts/tables/free_public_data_inventory.csv`
-- `artifacts/tables/free_public_data_summary.json`
-- `artifacts/tables/free_public_data_download_summary.json`
-- `artifacts/tables/pyfixest_did_crosscheck.csv`
-- `artifacts/tables/agentic_prompt_manifest.csv`
-- `artifacts/tables/agentic_arm_scores.csv`
-- `artifacts/tables/paper_readiness_audit.csv`
-- `artifacts/tables/paper_readiness_summary.json`
-- `artifacts/tables/radar_evidence_profiles.csv`
-
-Figures:
-
-- `artifacts/figures/fig_parallel_trends_shilin.png`
-- `artifacts/figures/fig_event_study_shilin.png`
-- `artifacts/figures/fig_ablation_ladder_shilin.png`
-- `artifacts/figures/fig_frequency_sensitivity_shilin.png`
-- `artifacts/figures/fig_metric_battery_status_shilin.png`
-- `artifacts/figures/fig_external_validation_rpc_shilin.png`
-- `artifacts/figures/fig_readiness_radar_shilin.png`
-- `artifacts/figures/fig_readiness_status_bar_shilin.png`
-- `artifacts/figures/fig_market_protocol_volume_lines_shilin.png`
-- `artifacts/figures/fig_agentic_method_omission_bar_shilin.png`
-- `artifacts/figures/fig_agentic_calibration_gap_bar_shilin.png`
-
-Overleaf-ready `.tex` tables are intentionally not committed here. Regenerate them locally with `scripts/run_all.py` when updating the paper.
-
-External validation artifacts:
-
-- `artifacts/external_validation/pumpfun_coin_metadata.csv`
-- `artifacts/external_validation/solana_post_migration_pool_windows.csv`
-- `artifacts/external_validation/solana_early_wallet_concentration.csv`
-- `artifacts/external_validation/solana_parsed_transaction_proxies.csv`
-- `artifacts/external_validation/dune_graduated_tokens.csv`
-- `artifacts/external_validation/dune_sql/rendered_pumpswap_post_migration_trades.sql`
-- `artifacts/external_validation/dune_sql/rendered_pumpswap_early_wallets.sql`
-
-The current generated external-validation artifact is a Helius-backed RPC run over all 1,651 graduated RED-PUMP tokens. It has 1,651/1,651 Pump.fun metadata matches, 1,651/1,651 pool addresses, and 4,953 token-horizon post-migration rows. In the 30-day horizon, 762 tokens have complete signature windows, the complete-window active share is 100.0%, and the median complete-window transaction-count proxy is 826. Across the full 1,651-token cohort, 1,636 tokens have at least one observed 30-day pool transaction, giving a conservative observed lower-bound active share of 99.09%. These counts remain RPC signature-level proxies: 889 30-day windows are still pagination-truncated, and decoded USD volume, active trader counts, trade direction, and early-wallet concentration require a decoded indexer. The rendered Dune SQL covers all 1,651 graduated tokens. Dune API execution was tested successfully on tiny samples, but the account-level datapoint limit stopped the full post-migration export before a usable full Dune CSV was downloaded.
-
-## Free Public Data Extension
-
-To reduce dependence on paid indexer APIs, `scripts/download_free_public_data.py` downloads and verifies no-key public data under `data_sources/free_public/`. The current local run registers 27 files and 112.7 MiB of public assets:
-
-- SolArchive / HuggingFace mirror: Solana-wide token metadata partitions and schemas, including local token snapshot parquet files for `2025-03` and `2025-12`. The HuggingFace token index covers 63 monthly token partitions from `2020-10` through `2025-12`. The HuggingFace transaction index currently ends at `2022-04-30`, so it is useful for archive infrastructure and schema planning but not yet a free substitute for 2025 PumpSwap post-migration swap windows.
-- RED-COHORT-2026-v1 from Zenodo: a valid local ZIP plus extracted files for 1,012 persistent Pump.fun sniper cohorts and 20,163 intra-launch first-buyer-window observations. This is the strongest free extension for H4, because it directly targets early-wallet concentration and persistent cohort behavior.
-- HuggingFace `pump-fun-meme-token-dataset`: a 106,113-row CSV covering 98,175 unique Pump.fun mint addresses with launch metadata, creator, social links, timestamps, market-cap fields, and Raydium pool fields. It extends the launch-universe and social-metadata coverage, but is not treated as a main causal outcome.
-
-These free assets strengthen the data-coverage and H4 validation layers, and their file sizes and SHA256 hashes are recorded in `artifacts/tables/free_public_data_inventory.csv`. They do not replace decoded token-level PumpSwap `1/7/30d` USD trade outcomes from Dune or another full Solana indexer; that boundary is intentionally preserved in the claim ledger.
+| Artifact | Path |
+|---|---|
+| Deterministic L0-L7 ladder | `artifacts/tables/deterministic_ladder.csv` |
+| Event-study coefficients | `artifacts/tables/event_study_coefficients_shilin.csv` |
+| Pre-trend diagnostics | `artifacts/tables/pretrend_diagnostics.json` |
+| Few-cluster inference | `artifacts/tables/wild_cluster_bootstrap.json` |
+| Stakeholder metric battery | `artifacts/tables/result1_stakeholder_metric_battery.csv` |
+| Data availability ledger | `artifacts/tables/data_availability_ledger.csv` |
+| Claim scope ledger | `artifacts/tables/claim_scope_ledger.csv` |
+| H1 mechanism audit | `artifacts/tables/h1_rpc_mechanism_causal_audit.csv` |
+| H1 mechanism summary | `artifacts/tables/h1_rpc_mechanism_summary.json` |
+| Moralis decoded summary | `artifacts/tables/moralis_decoded_outcomes_summary.json` |
+| Dune indexer export summary | `artifacts/tables/dune_indexer_export_summary.json` |
+| Paper readiness audit | `artifacts/tables/paper_readiness_audit.csv` |
+| Paper readiness summary | `artifacts/tables/paper_readiness_summary.json` |
 
 ## Current Findings
 
-The current deterministic ladder produces the conclusion-flip pattern required by the paper's benchmark framing:
+The current run produces a conclusion flip that is useful for the paper's benchmark framing:
 
-- L0 before-after means conclude that PumpSwap "worked": Pump ecosystem log volume increases by about `0.669` log points.
-- L1/L2 add controls and fixed effects; the estimate is about `0.412` log points but the confidence interval includes zero.
-- L4 flags pretrend risk, so the dynamic market-level event-study should not be read as clean causal evidence.
-- L6 exact wild-cluster inference over four protocol units widens uncertainty substantially and yields a non-significant result.
-- L5 audits the H4 proxy layer with real latest-token-snapshot holder concentration and source-coded risk fields from the HuggingFace Pump.fun sentiment/risk sample.
-- L7 reframes the conclusion as stakeholder-dependent rather than simply yes/no.
+- L0 before-after means estimate a positive Pump ecosystem change of about `0.669` log points and would conclude "yes."
+- L2 TWFE estimates about `0.412` log points but has a confidence interval that includes zero.
+- L4 flags pre-trend risk, so dynamic market-level estimates should be treated as diagnostics.
+- L6 exact Rademacher wild-cluster inference over four protocol units widens uncertainty and remains non-significant.
+- L5 finds that high-concentration tokens have a substantially higher source-coded high/critical risk rate, but this is a proxy association, not H4 causal proof.
+- L7 reframes the evaluation as stakeholder-dependent rather than a single aggregate-volume verdict.
 
-Result 1 currently computes RED-PUMP token-level graduation, timeout, time-to-graduation, social-metadata heterogeneity, Pump.fun holder-concentration/risk proxies, token market-activity proxies, a RED-COHORT early-wallet/sniper-cohort validation metric, Discord extension, and RWA extension. The HF token snapshot is deduplicated to the latest record per mint before token-level summaries are computed. The no-key RED-COHORT download adds 1,012 persistent sniper cohorts, 2,965 unique cohort wallets, 5,411 strict cohort-touched mints, 153 high-tier cohorts, and median first-buyer rank 3.55 to the H4 mechanism battery. The RED-COHORT/RED-PUMP overlap audit records 0 overlapping mints in the current windows, so RED-COHORT is treated as external H4 mechanism validation, not as a joined causal outcome sample. The package now also includes a generated H1 RPC mechanism-causal audit: the all-token observed 30-day activity lower bound is 99.09% (Wilson 95% CI [98.51%, 99.45%]), the complete-window active share is 100.0% (Wilson 95% CI [99.50%, 100.0%]), the complete-window median transaction-count proxy is 826 (bootstrap 95% CI [730.0, 941.0]), and there are zero temporal-order violations. This supports the bounded claim that PumpSwap operated as a post-migration liquidity venue for graduated tokens. Dune or another decoded indexer remains necessary before reporting USD-volume, active-trader, price-quality, welfare, or same-cohort early-wallet H4 causal effects.
+Mechanism validation is stronger than welfare causality. The RPC audit covers 1,651 graduated tokens, finds 1,636 with observed 30-day pool activity, records a 99.09% all-token observed active lower bound, and finds 100.0% active share among complete 30-day windows. Complete windows have a median transaction-count proxy of 826 and zero temporal-order violations. Moralis decoded outcomes add a covered-token sample with wallet-level and USD-valued swaps, but not a full-cohort welfare-causal estimate.
 
-## Claim Boundary and External Validation
+The paper-readiness audit currently labels the package `strong_replication_draft_not_submission_ready`: reproducible and useful for a workshop benchmark, but not sufficient for unconstrained welfare, price-quality, or early-wallet causal claims.
 
-The current code is self-contained for the Shilin application claim. It supports:
+## Claim Boundary
 
-- A market-level benchmark showing how naive and trustworthy pipelines diverge.
-- A token-level H1 proxy using real market-activity, liquidity, and bonding-progress latest snapshots.
-- A Helius/Solana RPC H1 mechanism audit showing post-migration pool activation and persistence for the 1,651-token graduated cohort.
-- A token-level H4 proxy using real top-holder concentration, holder-concentration labels, and high/critical source-coded risk labels.
-- A claim-scope ledger that states what the evidence allows and forbids.
+The package supports:
 
-The next version can strengthen mechanism timing through executed Dune/Solana indexer exports:
+- a market-level benchmark showing how naive and trustworthy pipelines diverge;
+- mechanism-level evidence that PumpSwap functioned as a post-migration liquidity venue for graduated tokens;
+- token-level H4 proxy evidence based on holder concentration and source-coded risk;
+- a transparent data-availability ledger separating computed evidence from registered validation gaps;
+- agentic-evaluation scaffolds and raw runs for L0-L7 conclusion reliability.
 
-- H1 event-time validation: token-level post-migration `1/7/30d` decoded swap count, active trader count, USD volume, inactivity, and reactivation for all 1,651 graduated tokens.
-- H4 event-time validation: early-wallet concentration and sniper proxies from decoded first-window trades rather than public-RPC lower bounds.
-- Indexer execution: `scripts/run_dune_token_exports.py --execute` once `DUNE_API_KEY` is available, or `scripts/run_solana_external_validation.py --resume --max-tokens 0` with a high-throughput Helius/Solana RPC endpoint.
+The package does not support:
 
-SQL templates are provided in `data_sources/dune_queries/`, and full rendered SQL files are generated under `artifacts/external_validation/dune_sql/`. They remain the path to decoded Dune `dex_solana.trades` USD-volume validation; the current included validation sample uses Pump.fun metadata and public Solana RPC.
+- full welfare causality;
+- full-cohort USD-volume, price-quality, active-trader, or trade-direction claims;
+- same-cohort H4 early-wallet causal effects;
+- replacing decoded indexer evidence with public-RPC signature proxies.
 
-## Academic-Standard Design Choices
+## Overleaf and Manuscript Boundary
 
-- All outputs are generated by `scripts/run_all.py`; manual copy-paste numbers are avoided.
-- The config file is hashed and recorded in `artifacts/run_manifest.json`.
-- Each ladder rung uses a common schema.
-- PyFixest is used as the package-level DiD cross-check for the naive and TWFE market specifications.
-- The data-availability ledger separates computed metrics from required new exports.
-- The claim-scope ledger prevents overclaiming from proxies.
-- The readiness audit records which evidence components are pass, warning, or gap before submission-level claims are made.
-- The figure set includes multiple academic plot types: event-study and parallel-trends lines, a four-protocol market-trajectory line chart, robustness/error-bar plots, a multi-profile radar comparing the actual L0/L2/L6 pipeline rungs, readiness bars, separate agentic-evaluation bars, and Solana RPC validation summaries.
-- Agentic prompts are versioned and hashed before model runs are reported; raw DeepSeek responses are saved without API keys.
-- Dune/indexer values are not imputed or simulated; their role is external validation.
-
-## Overleaf Boundary
-
-The paper source and generated `.tex` tables stay in Overleaf/local working folders, not in this repository. This package keeps the code, data interfaces, generated non-LaTeX artifacts, and figures needed to reproduce Shilin's application arm.
+No manuscript LaTeX files are committed in this directory. Overleaf-ready `.tex` tables can be regenerated locally from the code, but the GitHub package is intentionally limited to code, data interfaces, non-LaTeX artifacts, figures, and reproducibility checks.
