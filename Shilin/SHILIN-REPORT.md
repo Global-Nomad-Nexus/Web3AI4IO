@@ -4,6 +4,8 @@
 
 This report summarizes my Pump.fun to PumpSwap research package. The project asks whether the move from Pump.fun's original graduation path to the PumpSwap migration regime improved post-graduation market persistence. The empirical answer is deliberately cautious. A simple dashboard-style comparison says that activity increased after the migration. A more trustworthy pipeline still finds positive mechanism evidence, but it does not support a broad claim that PumpSwap caused a clean welfare gain for all market participants.
 
+The figures and statistics below are drawn from the current Shilin artifact pipeline, regenerated from the full local project data on August 3, 2026 with `scripts/run_all.py`. They are not limited to the earliest MVP outputs.
+
 The project began as a Difference-in-Differences MVP. I combined Pump.fun and PumpSwap into a treated "Pump ecosystem" and compared it with Solana DEX controls around March 20, 2025. The first result was useful but incomplete: the static DiD estimate was about 0.412 log points, roughly a 50.9 percent relative increase in daily volume, while the confidence interval crossed zero. That result shaped the later design. Instead of treating the positive estimate as a final answer, I rebuilt the project as a replication and audit package that measures how conclusions change as stronger evidence is added.
 
 ![Naive-to-trustworthy conclusion flip](artifacts/figures/fig_ladder_decision_flip_shilin.png)

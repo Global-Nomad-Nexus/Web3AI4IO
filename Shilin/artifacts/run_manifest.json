@@ -1,7 +1,7 @@
 {
   "case_id": "pumpswap_shilin_application",
-  "config_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/configs/pumpswap_case.json",
-  "config_sha256": "01eb71c57c8adaaa6fbf8f13c34f8691767256e05db90f80d6318d3b0bc42e04",
+  "config_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/configs/pumpswap_case.json",
+  "config_sha256": "6564ff3e5b0376fc9a6f34d9207b6f93a9e46f304695c552191c27e437811e38",
   "figures": [
     "fig_ablation_ladder_shilin.png",
     "fig_agentic_calibration_gap_bar_shilin.png",

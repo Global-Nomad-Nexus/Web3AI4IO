@@ -47,7 +47,7 @@
     ],
     "columns": 32,
     "mint_column": "mint",
-    "path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/huggingface/pump_fun_meme_token_dataset.csv",
+    "path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/huggingface/pump_fun_meme_token_dataset.csv",
     "present": true,
     "rows": 106113,
     "status": "read_with_pandas",
@@ -73,8 +73,8 @@
       "sol_total_median": 5.3251,
       "unique_cohort_wallets": 2965.0
     },
-    "descriptive_stats_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/table3_descriptive_stats.csv",
-    "extracted_root": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted",
+    "descriptive_stats_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/table3_descriptive_stats.csv",
+    "extracted_root": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted",
     "files": [
       {
         "compressed_size": 3125,
@@ -224,12 +224,12 @@
         "share_pct": 0.3
       }
     ],
-    "size_distribution_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/table2_size_distribution.csv",
-    "sniper_cohorts_intra_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts_intra.jsonl.gz",
+    "size_distribution_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/table2_size_distribution.csv",
+    "sniper_cohorts_intra_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts_intra.jsonl.gz",
     "sniper_cohorts_intra_rows": 20163,
-    "sniper_cohorts_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts.jsonl",
+    "sniper_cohorts_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts.jsonl",
     "sniper_cohorts_rows": 1012,
-    "zip_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/RED-COHORT-2026-v1.zip",
+    "zip_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/RED-COHORT-2026-v1.zip",
     "zip_present": true,
     "zip_status": "valid_zip"
   },
@@ -237,17 +237,17 @@
     "claim_boundary": "If overlap is zero or sparse, RED-COHORT is an external H4 mechanism validation sample, not a joined token-level outcome design for the current RED-PUMP window.",
     "overlap_share_intra": 0.0,
     "overlap_share_mints_hit": 0.0,
-    "red_cohort_cohorts_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts.jsonl",
+    "red_cohort_cohorts_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts.jsonl",
     "red_cohort_intra_mints": 20162,
     "red_cohort_intra_overlap_mints": 0,
-    "red_cohort_intra_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts_intra.jsonl.gz",
+    "red_cohort_intra_path": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/red_cohort/extracted/sniper_cohorts_intra.jsonl.gz",
     "red_cohort_mints_hit": 5975,
     "red_cohort_mints_hit_overlap": 0,
     "red_pump_mints": 832941,
-    "red_pump_path": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/data/processed/red_pump_token_outcomes.csv",
+    "red_pump_path": "../pumpfun_pumpswap_did_mvp_full_local/data/processed/red_pump_token_outcomes.csv",
     "status": "computed_overlap_audit"
   },
-  "root": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public",
+  "root": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public",
   "solarchive": {
     "downloaded_token_parquet_files": [
       "solarchive/tokens/solarchive_tokens_2025-03.parquet",
@@ -255,7 +255,7 @@
     ],
     "parquet_reader": "not_required_for_inventory",
     "present": true,
-    "root": "/Users/oushilin/Desktop/SRS/01_Pumpfun_PumpSwap_Project/NeurIPS_AI4Good_Web3AI4IO/Shilin/data_sources/free_public/solarchive",
+    "root": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/data_sources/free_public/solarchive",
     "token_index_updated_at": "2025-12-19T19:19:41.267862Z",
     "token_partition_count": 63,
     "token_partition_first": "2020-10",
