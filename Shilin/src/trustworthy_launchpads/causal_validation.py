@@ -9,13 +9,45 @@ sniper features.
 
 from __future__ import annotations
 
+import json
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Iterable
 
 import numpy as np
 import pandas as pd
-from scipy.stats import binomtest
+
+try:
+    from scipy.stats import binomtest
+except ModuleNotFoundError:  # pragma: no cover - fallback for slim local environments
+    class _BinomResult:
+        def __init__(self, pvalue: float) -> None:
+            self.pvalue = pvalue
+
+    def binomtest(successes: int, n: int, p: float, alternative: str = "greater") -> _BinomResult:
+        if alternative != "greater":
+            raise ValueError("Fallback binomtest only supports alternative='greater'.")
+        if n <= 0:
+            return _BinomResult(float("nan"))
+        if successes <= 0:
+            return _BinomResult(1.0)
+        if successes > n:
+            return _BinomResult(float("nan"))
+        if p <= 0:
+            return _BinomResult(1.0)
+        if p >= 1:
+            return _BinomResult(1.0 if successes <= n else 0.0)
+
+        # Recurrence avoids huge combinations for n in the thousands.
+        prob = (1 - p) ** n
+        tail = 0.0
+        for k in range(0, n + 1):
+            if k >= successes:
+                tail += prob
+            if k == n:
+                break
+            prob = prob * (n - k) / (k + 1) * p / (1 - p)
+        return _BinomResult(float(min(max(tail, 0.0), 1.0)))
 
 from .io import CaseConfig, write_csv, write_json
 
@@ -31,6 +63,15 @@ def _read_nonempty_csv(path: Path) -> pd.DataFrame:
         return pd.read_csv(path)
     except pd.errors.EmptyDataError:
         return pd.DataFrame()
+
+
+def _read_json(path: Path) -> dict[str, object]:
+    if not path.exists() or path.stat().st_size == 0:
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
 
 
 def _summarize_moralis_decoded_outcomes(config: CaseConfig) -> dict[str, object]:
@@ -244,7 +285,174 @@ def build_teacher_requirements_alignment(config: CaseConfig, mechanism_summary: 
     """Map Luyao's email requirements to local code/artifact status."""
 
     tables = config.tables_dir
+    release = config.project_root / "benchmark_release" / "data"
+    events = _read_nonempty_csv(release / "events.csv")
+    metrics = _read_nonempty_csv(release / "metrics_panel.csv")
+    covariates = _read_nonempty_csv(release / "covariates.csv")
+    gaps = _read_nonempty_csv(release / "data_gap_ledger.csv")
+    agentic = _read_nonempty_csv(release / "agentic_evaluation_panel.csv")
+    mirror = _read_nonempty_csv(release / "mirror_case_ladder.csv")
+    telegram_shocks = _read_nonempty_csv(release / "telegram_shock_candidates.csv")
+    base_manifest = _read_nonempty_csv(release / "clanker_base_full_cohort_manifest.csv")
+    base_coverage = _read_nonempty_csv(release / "clanker_base_full_cohort_import_coverage.csv")
+    base_diagnostics = _read_nonempty_csv(release / "clanker_base_causal_diagnostics.csv")
+    base_backfill = _read_json(tables / "clanker_base_full_cohort_backfill_summary.json")
+    telegram_exposure = _read_json(tables / "telegram_exposure_design_summary.json")
+
+    event_statuses = set(events.get("eligibility_status", pd.Series(dtype=str)).dropna().astype(str))
+    metric_horizons = set(pd.to_numeric(metrics.get("horizon_days", pd.Series(dtype=float)), errors="coerce").dropna().astype(int))
+    covariate_families = set(covariates.get("covariate_family", pd.Series(dtype=str)).dropna().astype(str))
+    gap_ids = set(gaps.get("gap_id", pd.Series(dtype=str)).dropna().astype(str))
+    release_join_status = (
+        "pass"
+        if all(
+            not frame.empty and "event_id" in frame.columns and "claim_boundary" in frame.columns
+            for frame in [events, metrics, covariates]
+        )
+        else "gap"
+    )
+    events_status = "pass" if {"accepted", "conditional", "rejected"}.issubset(event_statuses) else "partial"
+    metrics_status = "pass" if {1, 7, 30}.issubset(metric_horizons) and "claim_boundary" in metrics else "partial"
+    covariates_status = (
+        "pass"
+        if {"token_social_metadata", "community_attention_sentiment", "community_attention_tvl"}.issubset(covariate_families)
+        else "partial"
+    )
+    license_status = (
+        "partial_release_ready_no_zenodo_doi"
+        if (config.project_root.parent / "LICENSE").exists()
+        and (config.project_root / "DATA_LICENSE.md").exists()
+        and (config.project_root / "CITATION.cff").exists()
+        else "gap"
+    )
+    cross_chain_status = (
+        "partial_accepted_matched_case_full_cohort_backfill_partial"
+        if not base_manifest.empty and int(base_backfill.get("transfer_import_rows", 0) or 0) > 0
+        else "registered_gap"
+    )
+    mirror_status = (
+        "credible_matched_signal_not_causal"
+        if not mirror.empty and int(telegram_exposure.get("supported_shocks", 0) or 0) == 0
+        else "needs_design"
+    )
+    agentic_status = (
+        "computed_single_model_ladder_panel"
+        if not agentic.empty and set(agentic.get("rung", pd.Series(dtype=str)).astype(str)) == {f"L{i}" for i in range(8)}
+        else "gap"
+    )
     rows = [
+        {
+            "ownership_item": "Three-sheet benchmark release",
+            "teacher_requirement": "Treat the released dataset as a primary deliverable with linked events.csv, metrics_panel.csv, and covariates.csv.",
+            "artifact": str(release),
+            "status": release_join_status,
+            "evidence_or_gap": (
+                f"events={len(events)}, metrics={len(metrics)}, covariates={len(covariates)}; "
+                "all three primary sheets carry event_id and claim_boundary."
+            ),
+        },
+        {
+            "ownership_item": "Rule-event registry with rejected cases",
+            "teacher_requirement": "events.csv must include accepted, rejected, and conditional rule-event cases, with activation evidence and rejection reasons.",
+            "artifact": str(release / "events.csv"),
+            "status": events_status,
+            "evidence_or_gap": (
+                f"eligibility_status counts={events.get('eligibility_status', pd.Series(dtype=str)).value_counts(dropna=False).to_dict()}; "
+                "Clanker/Base is accepted, Four.meme is rejected, PumpSwap/context rows are conditional."
+            ),
+        },
+        {
+            "ownership_item": "Metrics panel at fixed horizons",
+            "teacher_requirement": "metrics_panel.csv should include platform-day and token-cohort/token-horizon rows at 7-day and 30-day windows with formal claim boundaries.",
+            "artifact": str(release / "metrics_panel.csv"),
+            "status": metrics_status,
+            "evidence_or_gap": (
+                f"unit_type counts={metrics.get('unit_type', pd.Series(dtype=str)).value_counts(dropna=False).to_dict()}; "
+                f"horizons={sorted(metric_horizons)}."
+            ),
+        },
+        {
+            "ownership_item": "Off-chain and behavioral covariates",
+            "teacher_requirement": "covariates.csv should include Telegram, Discord, sentiment, social metadata, and community-channel indicators.",
+            "artifact": str(release / "covariates.csv"),
+            "status": covariates_status,
+            "evidence_or_gap": (
+                f"covariate families={sorted(covariate_families)}; token social metadata and Discord/sentiment/TVL context are linked by event_id."
+            ),
+        },
+        {
+            "ownership_item": "Claim ledger, data dictionary, licensing, citation, data gaps",
+            "teacher_requirement": "Prepare a complete claim-scope ledger, data dictionary, MIT code license, CC BY 4.0 data plan, CITATION.cff, Zenodo plan, and explicit data-gap ledger.",
+            "artifact": f"{release / 'claim_scope_ledger.csv'}; {release / 'data_dictionary.csv'}; {release / 'data_gap_ledger.csv'}",
+            "status": license_status,
+            "evidence_or_gap": (
+                f"gap_ids={sorted(gap_ids)}; LICENSE, DATA_LICENSE.md, and CITATION.cff are present; Zenodo DOI is still planned rather than minted."
+            ),
+        },
+        {
+            "ownership_item": "Cross-chain empirical case",
+            "teacher_requirement": "Cross-chain evidence must appear in the dataset architecture, at least one empirical case, and external-validity discussion.",
+            "artifact": str(release / "cross_chain_event_candidates.csv"),
+            "status": cross_chain_status,
+            "evidence_or_gap": (
+                f"Base manifest rows={len(base_manifest)}; backfill swap rows={base_backfill.get('swap_import_rows', 0)}, "
+                f"transfer rows={base_backfill.get('transfer_import_rows', 0)}; full 30-day archive/indexer coverage remains open."
+            ),
+        },
+        {
+            "ownership_item": "Base archive/indexer full-cohort path",
+            "teacher_requirement": "Comparable Base outcomes should scale from bounded on-chain/import-compatible evidence to full cohort swaps, transfers, holder reconstruction, and causal diagnostics.",
+            "artifact": f"{release / 'clanker_base_full_cohort_manifest.csv'}; {release / 'clanker_base_full_cohort_import_coverage.csv'}",
+            "status": "partial_backfill_smoke_and_sample_import",
+            "evidence_or_gap": (
+                f"coverage rows={len(base_coverage)}; diagnostics rows={len(base_diagnostics)}; "
+                "accepted 12-token sample is imported into the full-cohort ledger, but coverage is about 0.1% of the 13,880-row manifest."
+            ),
+        },
+        {
+            "ownership_item": "On-chain/off-chain evidence integration",
+            "teacher_requirement": "Cases should integrate deployment/on-chain verification with Telegram, Discord, sentiment, social metadata, or community response where possible.",
+            "artifact": f"{release / 'events.csv'}; {release / 'covariates.csv'}; {release / 'telegram_shock_candidates.csv'}",
+            "status": "partial_layers_linked_no_exogenous_social_shock",
+            "evidence_or_gap": (
+                f"Telegram shock candidates={len(telegram_shocks)}, supported shocks={telegram_exposure.get('supported_shocks', 0)}; "
+                "on-chain Base evidence and off-chain Solana/Telegram layers share schema but do not yet form a causal social-exposure design."
+            ),
+        },
+        {
+            "ownership_item": "Mirror empirical Case B",
+            "teacher_requirement": "Find a complementary case where naive null/ambiguous evidence becomes credible and supported after design and adjustment.",
+            "artifact": str(release / "mirror_case_ladder.csv"),
+            "status": mirror_status,
+            "evidence_or_gap": (
+                f"mirror ladder rungs={sorted(mirror.get('rung', pd.Series(dtype=str)).astype(str).unique().tolist())}; "
+                "Telegram has matched ATT and timing/sensitivity checks, but no in-window exogenous shock, so it remains predictive/mechanism-supported rather than causal."
+            ),
+        },
+        {
+            "ownership_item": "Agentic Trustworthy AI evaluation",
+            "teacher_requirement": "Present agentic analysis as a central AI evaluation of evidence behavior, including per-rung decision paths and scaffold effects.",
+            "artifact": str(release / "agentic_evaluation_panel.csv"),
+            "status": agentic_status,
+            "evidence_or_gap": (
+                f"agentic rows={len(agentic)}; current release is single-model L0-L7 evidence-behavior scoring. "
+                "Top-conference extension still needs multi-model reruns and scaffold ablations."
+            ),
+        },
+        {
+            "ownership_item": "Trustworthy AI for Good societal impact",
+            "teacher_requirement": "Add explicit societal-impact framing around retail users, financial inclusion, welfare overclaims, SDG 8/10, and open benchmark data as a public good.",
+            "artifact": str(config.project_root / "SHILIN-REPORT.md"),
+            "status": "added_to_shilin_report_needs_joint_paper_sync",
+            "evidence_or_gap": "SHILIN-REPORT now includes retail-user protection, financial inclusion, welfare-overclaim, SDG 8/10, and public-good benchmark framing; joint paper text still needs synchronization.",
+        },
+        {
+            "ownership_item": "Joint August 7 deliverable scope",
+            "teacher_requirement": "Provide revised dataset specification, cross-chain extension, Shilin mirror case ladder, AI-for-good framing, artifact outline, and remaining blockers.",
+            "artifact": str(config.project_root / "SHILIN-AUGUST7-REVISION-PLAN.md"),
+            "status": "shilin_side_release_candidate_with_blockers",
+            "evidence_or_gap": "Shilin-side artifacts are concrete; Claire semi-synthetic suite and joint paper integration remain outside this Shilin-only audit.",
+        },
         {
             "ownership_item": "H1 migration friction / post-graduation persistence",
             "teacher_requirement": "Shilin owns H1 and Result 1 mechanism evidence.",

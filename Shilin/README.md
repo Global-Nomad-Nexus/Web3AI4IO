@@ -8,6 +8,11 @@ This directory contains the code, data interfaces, generated artifacts, and visu
 
 For a concise academic write-up of the methodology, results, and interpretation, see [Pump.fun to PumpSwap Research Report](SHILIN-REPORT.md).
 
+For the current Shilin-only revision path toward the August 7 draft, see [Shilin August 7 Revision Plan](SHILIN-AUGUST7-REVISION-PLAN.md).
+
+For the literature review and top-conference assessment behind the August 7
+direction, see [Shilin Literature Review and Top-Conference Assessment](SHILIN-LITERATURE-REVIEW-AUGUST7.md).
+
 The paper source remains outside this repository. This GitHub package is a replication and audit bundle: it keeps the computational evidence, but intentionally excludes paper `.tex`, `.sty`, and `.bib` files.
 
 ## Abstract
@@ -91,6 +96,28 @@ The package combines public data, generated artifacts, and indexer-ready validat
 
 Bulky raw mirrors are not committed to GitHub. The excluded files include raw Moralis swap pages, per-token Pump.fun metadata JSON, HuggingFace mirror CSVs, SolArchive parquet partitions, RED-COHORT raw ZIP/JSONL files, and raw agent responses. The package keeps compact validation outputs, rendered SQL, provenance summaries, and file-hash inventories so the evidence boundary remains auditable without turning the repository into a data dump.
 
+## Benchmark Release
+
+The August 7 revision direction is to turn this application arm into a reusable benchmark artifact, not only a case-study replication package. Shilin's release candidate is under `benchmark_release/` and can be rebuilt with:
+
+```bash
+python3 scripts/build_benchmark_release.py
+```
+
+The release contains three primary sheets:
+
+| Sheet | Purpose |
+|---|---|
+| `benchmark_release/data/events.csv` | Shilin's PumpSwap event, an accepted matched Clanker/Base event, and rejected or conditional candidates. |
+| `benchmark_release/data/metrics_panel.csv` | Platform-day, token-horizon, and token-cohort outcomes with fixed horizons and claim boundaries. |
+| `benchmark_release/data/covariates.csv` | Token social metadata plus Discord, sentiment, TVL, and RWA context rows. |
+
+Supplemental sheets record the claim-scope ledger, data gaps, mirror-case candidates, Telegram matched-design outputs, cross-chain event candidates, and agentic evaluation panel. Code remains MIT licensed. Generated data tables are prepared for CC BY 4.0 release, subject to upstream license compatibility checks before Zenodo publication.
+
+Shilin's current mirror case is stronger than a raw association but still not a final causal result. The strongest candidate is Telegram/social metadata: the overall RED-PUMP graduation rate is about `0.198%`, while Telegram-linked tokens graduate at about `1.485%` versus `0.166%` without Telegram. The release now includes `benchmark_release/data/telegram_mirror_design.csv`, `telegram_mirror_balance.csv`, and `telegram_mirror_matched_cells.csv`. The matched design supports 20,227 Telegram tokens, estimates a matched ATT of about `0.945` percentage points with a launch-day cluster bootstrap CI of `[0.738, 1.152]` percentage points, and records an E-value of `5.02`. Event-time diagnostics make the causal boundary stricter rather than looser: the same `0.945` percentage-point association appears within 5 minutes, while the delayed >60 minute outcome is zero. A public shock registry now records six Telegram outage/linking/App Store candidates, but none overlaps the RED-PUMP launch window with enough support. This is therefore a credible predictive/mechanism-supported mirror signal, not a causal Telegram effect without an exogenous attention shock or stronger exposure design.
+
+The cross-chain extension now has an accepted matched Base case. `scripts/run_clanker_base_validation.py` verifies the first observed Clanker v4.1 MEV/sniper-protection token launch on Base at `2025-08-26T20:41:57Z` in transaction `0x5c076d1967b9f4873d36191321ccf015015b48687d0f176c6ad7091a84551985`. The bounded on-chain outcome run matches the first six v4.1 treated launches to nearest v4.0 controls and computes 1/7/30 day Uniswap v4 PoolManager outcomes for a 12-token, 36-row matched cohort. It writes raw Base swap and ERC20 Transfer evidence (`30` PoolManager Swap rows and `94` ERC20 Transfer rows) and reconstructs holder concentration for all 12 matched tokens across all 36 horizon rows. A larger TokenCreated discovery scan now covers `61,080` Clanker v4 launches from block `34,350,000` to `36,250,000`, including `6,940` v4.1 rows through `2025-10-01T03:22:27Z`. `scripts/prepare_clanker_base_full_cohort.py` turns that discovery universe into a full-cohort archive/indexer manifest: `13,880` matched token rows, `13,880` PoolManager swap query bounds, `13,880` ERC20 Transfer query bounds, and `41,640` expected 1/7/30 day horizon rows. `scripts/backfill_clanker_base_full_cohort_logs.py` backfills those manifests into `--swap-import` and `--transfer-import` compatible CSVs with a resumable coverage ledger; the current ledger contains `30` swap import rows and `100` transfer import rows after merging the accepted sample and smoke-tested units. That result shows why the accepted matched case should still not be written as platform-wide causal replication: the universe and import path are now specified and smoke-tested, but full-cohort 30-day swaps, transfers, and holder reconstruction still require an archive/indexer endpoint. A live public endpoint retry on August 4, 2026 hit an archive-token requirement for historical `eth_getLogs`, so the package keeps the import path explicit. Four.meme on BNB and SunPump on TRON are retained as discovery candidates.
+
 ## Slim Release Policy
 
 The GitHub version keeps only files that are useful for review, reproduction, or direct paper evidence:
@@ -170,6 +197,13 @@ If a high-throughput Solana RPC key is available, set `HELIUS_API_KEY` or `SOLAN
 
 | Artifact | Path |
 |---|---|
+| Shilin benchmark events | `benchmark_release/data/events.csv` |
+| Shilin benchmark metrics panel | `benchmark_release/data/metrics_panel.csv` |
+| Shilin benchmark covariates | `benchmark_release/data/covariates.csv` |
+| Shilin mirror case candidates | `benchmark_release/data/mirror_case_candidates.csv` |
+| Shilin preliminary mirror-case ladder | `benchmark_release/data/mirror_case_ladder.csv` |
+| Shilin cross-chain candidates | `benchmark_release/data/cross_chain_event_candidates.csv` |
+| Shilin agentic evaluation panel | `benchmark_release/data/agentic_evaluation_panel.csv` |
 | Deterministic L0-L7 ladder | `artifacts/tables/deterministic_ladder.csv` |
 | Event-study coefficients | `artifacts/tables/event_study_coefficients_shilin.csv` |
 | Pre-trend diagnostics | `artifacts/tables/pretrend_diagnostics.json` |

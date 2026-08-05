@@ -83,6 +83,7 @@ REQUIRED_FIGURES = [
     "fig_token_coverage_by_date_single_shilin.png",
     "fig_token_persistence_survival_single_shilin.png",
     "fig_ladder_decision_flip_shilin.png",
+    "fig_paired_case_ladder_shilin.png",
     "fig_rpc_deepening_gain_shilin.png",
     "fig_horizon_ridgeline_shilin.png",
     "fig_readiness_gap_heatmap_shilin.png",

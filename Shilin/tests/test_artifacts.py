@@ -9,6 +9,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "artifacts" / "tables"
+FIGURES = ROOT / "artifacts" / "figures"
 
 
 class ArtifactIntegrityTest(unittest.TestCase):
@@ -19,6 +20,19 @@ class ArtifactIntegrityTest(unittest.TestCase):
         l6 = ladder.loc[ladder["rung"].eq("L6")].iloc[0]
         self.assertEqual(l0["worked_decision"], "yes")
         self.assertNotEqual(l6["worked_decision"], "yes")
+
+    def test_paired_case_ladder_figure_exists(self) -> None:
+        figure = FIGURES / "fig_paired_case_ladder_shilin.png"
+        self.assertTrue(figure.exists())
+        self.assertGreater(figure.stat().st_size, 20_000)
+        mirror = pd.read_csv(ROOT / "benchmark_release" / "data" / "mirror_case_ladder.csv")
+        self.assertEqual(mirror["rung"].tolist(), [f"B{i}" for i in range(7)])
+        b0 = mirror.loc[mirror["rung"].eq("B0")].iloc[0]
+        b4 = mirror.loc[mirror["rung"].eq("B4")].iloc[0]
+        b6 = mirror.loc[mirror["rung"].eq("B6")].iloc[0]
+        self.assertIn("near_null", b0["decision"])
+        self.assertIn("credible", b4["decision"])
+        self.assertIn("not as a completed causal", b6["claim_boundary"])
 
     def test_pretrend_risk_is_explicit_not_hidden(self) -> None:
         pretrend = json.loads((TABLES / "pretrend_diagnostics.json").read_text(encoding="utf-8"))

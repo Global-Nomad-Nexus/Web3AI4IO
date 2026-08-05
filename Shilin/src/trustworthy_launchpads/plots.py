@@ -1391,6 +1391,152 @@ def plot_ladder_decision_flip(config: CaseConfig, ladder: pd.DataFrame, path: Pa
     _save_figure(fig, path)
 
 
+def plot_paired_case_ladder(config: CaseConfig, ladder: pd.DataFrame, path: Path) -> None:
+    mirror_path = config.project_root / "benchmark_release" / "data" / "mirror_case_ladder.csv"
+    mirror = _read_table(mirror_path)
+    if mirror.empty or ladder.empty:
+        return
+
+    def ladder_row(rung: str) -> pd.Series:
+        rows = ladder.loc[ladder["rung"].eq(rung)]
+        return rows.iloc[0] if len(rows) else pd.Series(dtype=object)
+
+    def mirror_row(rung: str) -> pd.Series:
+        rows = mirror.loc[mirror["rung"].eq(rung)]
+        return rows.iloc[0] if len(rows) else pd.Series(dtype=object)
+
+    def as_float(value: object) -> float:
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return float("nan")
+
+    def fmt_log(value: object) -> str:
+        number = as_float(value)
+        return "n/a" if np.isnan(number) else f"{number:+.3f}"
+
+    def fmt_pp(value: object) -> str:
+        number = as_float(value)
+        return "n/a" if np.isnan(number) else f"{number * 100:+.3f} pp"
+
+    def fmt_pct(value: object) -> str:
+        number = as_float(value)
+        return "n/a" if np.isnan(number) else f"{number * 100:.3f}%"
+
+    def color_for(decision: object) -> str:
+        text = str(decision).lower()
+        if "yes" in text or "supported" in text or "credible" in text or "stratified" in text:
+            return PALETTE["green"]
+        if "near_null" in text or "nothing" in text:
+            return PALETTE["gray"]
+        if "uncertain" in text or "depends" in text:
+            return PALETTE["slate"]
+        if "flag" in text or "strict" in text or "confounding" in text:
+            return PALETTE["amber"]
+        if "risk" in text:
+            return PALETTE["purple"]
+        return PALETTE["teal"]
+
+    stages = [
+        "Naive read",
+        "Comparison /\nstrata",
+        "Controls /\nmodel",
+        "Outcome\ndepth",
+        "Diagnostic\nscreen",
+        "Inference /\nsensitivity",
+        "Claim\nboundary",
+    ]
+
+    a0, a1, a2, a3, a4, a6, a7 = [ladder_row(rung) for rung in ["L0", "L1", "L2", "L3", "L4", "L6", "L7"]]
+    b0, b1, b2, b3, b5, b4, b6 = [mirror_row(rung) for rung in ["B0", "B1", "B2", "B3", "B5", "B4", "B6"]]
+
+    case_a = [
+        ("L0", "yes", fmt_log(a0.get("estimate")), a0.get("worked_decision", "")),
+        ("L1", "uncertain", fmt_log(a1.get("estimate")), a1.get("worked_decision", "")),
+        ("L2", "uncertain", fmt_log(a2.get("estimate")), a2.get("worked_decision", "")),
+        ("L3", "dynamic yes", fmt_log(a3.get("estimate")), a3.get("worked_decision", "")),
+        ("L4", "pretrend flag", "", a4.get("worked_decision", "")),
+        ("L6", "few-cluster uncertain", f"p={as_float(a6.get('p_value')):.3f}", a6.get("worked_decision", "")),
+        ("L7", "stakeholder bounded", "", a7.get("worked_decision", "")),
+    ]
+    case_b = [
+        ("B0", "near null", fmt_pct(b0.get("estimate")), b0.get("decision", "")),
+        ("B1", "stratified signal", fmt_pp(as_float(b1.get("estimate"))), b1.get("decision", "")),
+        ("B2", "controlled support", fmt_pp(as_float(b2.get("estimate"))), b2.get("decision", "")),
+        ("B3", "mechanism depth", "", b3.get("decision", "")),
+        ("B5", "timing strict", "", b5.get("decision", "")),
+        ("B4", "matched support", fmt_pp(as_float(b4.get("estimate"))), b4.get("decision", "")),
+        ("B6", "supported, not causal", "", b6.get("decision", "")),
+    ]
+
+    fig, ax = plt.subplots(figsize=(12.2, 4.8))
+    x = np.arange(len(stages))
+    rows = [
+        ("Case A: PumpSwap market", 1.0, case_a, "naive yes -> trustworthy uncertain", PALETTE["navy"]),
+        ("Case B: Telegram metadata", 0.0, case_b, "naive nothing happened -> supported matched signal", PALETTE["teal"]),
+    ]
+
+    for _, y, points, summary, line_color in rows:
+        ax.plot(x, np.full_like(x, y, dtype=float), color=PALETTE["grid"], linewidth=3.0, zorder=0)
+        ax.annotate(
+            "",
+            xy=(len(stages) - 0.18, y),
+            xytext=(0.08, y),
+            arrowprops={"arrowstyle": "->", "color": line_color, "linewidth": 1.5},
+            zorder=1,
+        )
+        for idx, (rung, decision_label, value_label, decision_key) in enumerate(points):
+            color = color_for(decision_key or decision_label)
+            ax.scatter(idx, y, s=260, marker="o", color=color, edgecolor="white", linewidth=1.2, zorder=3)
+            main_label = f"{rung}\n{decision_label}"
+            if value_label:
+                main_label = f"{main_label}\n{value_label}"
+            ax.text(
+                idx,
+                y + (0.14 if y > 0 else -0.14),
+                main_label,
+                ha="center",
+                va="bottom" if y > 0 else "top",
+                fontsize=7.4,
+                color=PALETTE["ink"],
+                linespacing=1.05,
+            )
+        ax.text(
+            len(stages) + 0.16,
+            y,
+            "\n".join(textwrap.wrap(summary, width=31, break_long_words=False)),
+            ha="left",
+            va="center",
+            fontsize=8.8,
+            weight="semibold",
+            color=line_color,
+            bbox={"boxstyle": "round,pad=0.28", "facecolor": "white", "edgecolor": line_color, "linewidth": 0.8},
+        )
+
+    ax.set_yticks([1.0, 0.0], [rows[0][0], rows[1][0]])
+    ax.set_xticks(x, stages)
+    ax.set_xlim(-0.45, len(stages) + 1.95)
+    ax.set_ylim(-0.55, 1.55)
+    ax.set_title("Paired Evidence Ladder: Opposite Conclusion Revisions")
+    ax.set_xlabel("Common evidence requirement")
+    ax.text(
+        0.5,
+        -0.22,
+        "Case B is a supported matched predictive/mechanism signal, not a causal Telegram effect without an exogenous exposure shock.",
+        transform=ax.transAxes,
+        ha="center",
+        va="top",
+        fontsize=8.3,
+        color=PALETTE["slate"],
+    )
+    ax.grid(True, axis="x")
+    ax.grid(False, axis="y")
+    ax.spines["left"].set_visible(False)
+    ax.tick_params(axis="y", length=0)
+    fig.tight_layout()
+    _save_figure(fig, path)
+
+
 def plot_rpc_deepening_gain(config: CaseConfig, path: Path) -> None:
     baseline = _read_json(config.tables_dir / "external_validation_2page_baseline_stats.json")
     current = _read_json(config.tables_dir / "external_validation_summary.json")
@@ -1652,6 +1798,7 @@ def make_all_figures(
     plot_token_coverage_by_date_single(config, config.figures_dir / "fig_token_coverage_by_date_single_shilin.png")
     plot_token_persistence_survival_single(config, config.figures_dir / "fig_token_persistence_survival_single_shilin.png")
     plot_ladder_decision_flip(config, ladder, config.figures_dir / "fig_ladder_decision_flip_shilin.png")
+    plot_paired_case_ladder(config, ladder, config.figures_dir / "fig_paired_case_ladder_shilin.png")
     plot_rpc_deepening_gain(config, config.figures_dir / "fig_rpc_deepening_gain_shilin.png")
     plot_horizon_ridgeline(config, config.figures_dir / "fig_horizon_ridgeline_shilin.png")
     plot_readiness_gap_heatmap(config, config.figures_dir / "fig_readiness_gap_heatmap_shilin.png")

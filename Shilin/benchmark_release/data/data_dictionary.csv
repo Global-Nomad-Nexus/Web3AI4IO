@@ -1,0 +1,33 @@
+sheet,field,type,description
+events.csv,event_id,string,Stable event key used to join release sheets.
+events.csv,eligibility_status,category,"accepted, rejected, or conditional eligibility."
+metrics_panel.csv,unit_id,string,"Platform-day, token-horizon, or token-cohort unit key."
+metrics_panel.csv,token_id,string,Token mint when row is token-level.
+metrics_panel.csv,horizon_days,integer,"Fixed outcome horizon, especially 1, 7, and 30 days."
+metrics_panel.csv,claim_boundary,string,Formal limit on what the row can support.
+metrics_panel.csv,buy_count,integer,Decoded buy count when available from an indexer sample.
+metrics_panel.csv,sell_count,integer,Decoded sell count when available from an indexer sample.
+metrics_panel.csv,first_trade_at,timestamp,First observed trade or pool transaction inside the row window.
+metrics_panel.csv,last_trade_at,timestamp,Last observed trade or pool transaction inside the row window.
+metrics_panel.csv,holder_concentration_top10,float,Top-10 holder concentration when wallet or ERC20 holder reconstruction is available.
+metrics_panel.csv,holder_count,integer,Number of positive-balance holders in reconstructed token holder snapshots when available.
+metrics_panel.csv,early_sender_concentration_top10,float,Top-10 swap-caller concentration in the first 60 seconds for bounded Base samples.
+artifacts/external_validation/clanker_base_pool_swaps_raw.csv,pool_id,string,Raw Base Uniswap v4 PoolManager pool identifier used to rebuild Clanker token-horizon swaps.
+artifacts/external_validation/clanker_base_token_transfers_raw.csv,token_id,string,Raw Base ERC20 token address used to rebuild holder concentration snapshots.
+covariates.csv,covariate_family,category,"Social metadata, Discord, TVL, or RWA context."
+covariates.csv,telegram_present,0/1,Token-level Telegram metadata indicator when available.
+mirror_case_ladder.csv,decision,category,Per-rung status for the preliminary Telegram/social mirror case.
+telegram_mirror_design.csv,decision,category,Matched-design stage decision and claim boundary.
+telegram_mirror_balance.csv,standardized_mean_difference,float,Full and matched balance diagnostics for Telegram design covariates.
+telegram_exposure_design.csv,shock_id,string,Public Telegram shock used for exposure-design rows when supported.
+telegram_shock_candidates.csv,supported_for_exposure_design,boolean,Whether a public Telegram shock overlaps the RED-PUMP launch window with enough support.
+clanker_base_full_cohort_manifest.csv,token_id,string,Matched Base token row requiring archive/indexer outcome coverage.
+clanker_base_full_cohort_pool_query_bounds.csv,pool_id,string,PoolManager pool query key for full-cohort swap export.
+clanker_base_full_cohort_transfer_query_bounds.csv,contract_address,string,ERC20 token contract query key for full holder reconstruction.
+clanker_base_full_cohort_expected_horizons.csv,unit_id,string,Expected Base token-horizon row to fill after archive/indexer import.
+clanker_base_full_cohort_import_contract.csv,required_columns,string,CSV columns required by the full-cohort import path.
+clanker_base_full_cohort_import_coverage.csv,coverage_status,category,Processed-row status for full-cohort swap and transfer backfill units.
+clanker_base_causal_diagnostics.csv,att_mean_pair_diff,float,Matched-pair v4.1-minus-v4.0 difference for covered Base sample rows.
+teacher_requirements_alignment_shilin.csv,status,category,Shilin-only status against Luyao's revision requirements.
+claim_scope_ledger.csv,claim_not_allowed,string,Explicit claims blocked by current evidence.
+data_gap_ledger.csv,next_action,string,Concrete validation step needed to close the gap.

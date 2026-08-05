@@ -1,0 +1,122 @@
+{
+  "activation_block": 34725785,
+  "activation_evidence_type": "first_onchain_token_created_with_v41_mev_module",
+  "activation_mev_module": "0xebb25bb797d82cb78e1bc70406b13233c0854413",
+  "activation_pool_hook": "0x3765e0791a745f086acaa63a46837298d32fa8cc",
+  "activation_pool_id": "0xacf262ec3426b7f3adf60de843efb3d5163bfee4a3e04314a6d2ba999425b334",
+  "activation_timestamp_utc": "2025-08-26T20:41:57Z",
+  "activation_token_id": "0x4ba3702a27ffd7127df63c4ac909ac8e65362ff1",
+  "activation_transaction_hash": "0x5c076d1967b9f4873d36191321ccf015015b48687d0f176c6ad7091a84551985",
+  "chain": "Base",
+  "claim_boundary": "Accepted as an on-chain verified Base rule/adoption event with token-horizon outcomes and holder-level concentration reconstruction where logs are available. It is not yet a platform-wide causal replication because matched sample still depends on v4.1 adoption in the search window.",
+  "cohort_tokens": 2,
+  "comparison_unit_status": "matched v4.1 launches and nearest v4.0 controls",
+  "event_id": "CLANKER_SNIPER_DECAY_V41_BASE_20250826",
+  "holder_reconstruction_row_share": 0.0,
+  "holder_reconstruction_rows": 0,
+  "holder_reconstruction_token_share": 0.0,
+  "holder_reconstruction_tokens": 0,
+  "horizon_rows": 6,
+  "horizon_summary": [
+    {
+      "cohort_side": "post_v4_1_treated",
+      "horizon_days": 1,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    },
+    {
+      "cohort_side": "post_v4_1_treated",
+      "horizon_days": 7,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    },
+    {
+      "cohort_side": "post_v4_1_treated",
+      "horizon_days": 30,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    },
+    {
+      "cohort_side": "pre_v4_0_control",
+      "horizon_days": 1,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    },
+    {
+      "cohort_side": "pre_v4_0_control",
+      "horizon_days": 7,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    },
+    {
+      "cohort_side": "pre_v4_0_control",
+      "horizon_days": 30,
+      "median_active_traders": 0.0,
+      "median_early_sender_top10_share_60s": NaN,
+      "median_holder_concentration_top10": NaN,
+      "median_holder_count": 0.0,
+      "median_swaps": 0.0,
+      "median_volume_usd": 0.0,
+      "tokens": 1
+    }
+  ],
+  "outputs": {
+    "cohort": "artifacts/external_validation/clanker_base_import_smoke/clanker_base_event_cohort.csv",
+    "raw_swaps": "artifacts/external_validation/clanker_base_import_smoke/swaps_raw.csv",
+    "raw_transfers": "artifacts/external_validation/clanker_base_import_smoke/transfers_raw.csv",
+    "token_created": "artifacts/external_validation/clanker_base_import_smoke/clanker_base_token_created.csv",
+    "token_horizons": "artifacts/external_validation/clanker_base_import_smoke/clanker_base_token_horizons.csv"
+  },
+  "platform": "Clanker",
+  "raw_swap_rows": 0,
+  "raw_transfer_rows": 0,
+  "rule_change": "First observed Clanker v4.1 MEV/sniper-protection module token launch on Base.",
+  "rule_family": "trader_protection",
+  "search_end_block": 35200000,
+  "search_start_block": 34350000,
+  "selection": {
+    "controls_available_before_activation": 22049,
+    "controls_selected": 1,
+    "matched_pairs": 1,
+    "selection_mode": "matched",
+    "treated_available": 6,
+    "treated_selected": 1,
+    "uses_all_treated_in_window": false
+  },
+  "source_urls": [
+    "https://github.com/clanker-devco/DOCS",
+    "https://github.com/clanker-devco/v4-contracts",
+    "https://developers.uniswap.org/docs/protocols/v4/deployments"
+  ],
+  "status": "accepted_matched_onchain_sample",
+  "token_created_rows": 36798,
+  "version_class_counts": {
+    "v4.0_mev_or_hook": 36792,
+    "v4.1_mev_or_hook": 6
+  }
+}
