@@ -6,12 +6,9 @@ This directory contains the code, data interfaces, generated artifacts, and visu
 
 *Trustworthy Causal Inference for Token Launch Platforms: An Interdisciplinary Approach of Platform Economics, Causal Econometrics, and AI Evaluation.*
 
-For a concise academic write-up of the methodology, results, and interpretation, see [Pump.fun to PumpSwap Research Report](SHILIN-REPORT.md).
+For the integrated academic project report for the current version, see [Trustworthy Causal Inference for Token Launch Platforms: Current Shilin Project Report](SHILIN-CURRENT-PROJECT-REPORT.md).
 
-For the current Shilin-only revision path toward the August 7 draft, see [Shilin August 7 Revision Plan](SHILIN-AUGUST7-REVISION-PLAN.md).
-
-For the literature review and top-conference assessment behind the August 7
-direction, see [Shilin Literature Review and Top-Conference Assessment](SHILIN-LITERATURE-REVIEW-AUGUST7.md).
+Supporting source notes remain available in [Pump.fun to PumpSwap Research Report](SHILIN-REPORT.md), [Shilin August 7 Revision Plan](SHILIN-AUGUST7-REVISION-PLAN.md), and [Shilin Literature Review and Top-Conference Assessment](SHILIN-LITERATURE-REVIEW-AUGUST7.md).
 
 The paper source remains outside this repository. This GitHub package is a replication and audit bundle: it keeps the computational evidence, but intentionally excludes paper `.tex`, `.sty`, and `.bib` files.
 
