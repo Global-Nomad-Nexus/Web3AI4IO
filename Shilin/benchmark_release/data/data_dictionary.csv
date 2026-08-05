@@ -21,6 +21,9 @@ telegram_mirror_design.csv,decision,category,Matched-design stage decision and c
 telegram_mirror_balance.csv,standardized_mean_difference,float,Full and matched balance diagnostics for Telegram design covariates.
 telegram_exposure_design.csv,shock_id,string,Public Telegram shock used for exposure-design rows when supported.
 telegram_shock_candidates.csv,supported_for_exposure_design,boolean,Whether a public Telegram shock overlaps the RED-PUMP launch window with enough support.
+agentic_multimodel_ablation_manifest.csv,ablation_id,string,Registered baseline or leave-one-scaffold-out agentic condition.
+agentic_multimodel_ablation_scores.csv,ok_runs,integer,Successful real model outputs scored for a provider/model/rung/ablation cell.
+agentic_multimodel_ablation_scores.csv,method_omission_rate,float,"Mean omission rate across control, pretrend, stakeholder, and uncertainty mentions."
 clanker_base_full_cohort_manifest.csv,token_id,string,Matched Base token row requiring archive/indexer outcome coverage.
 clanker_base_full_cohort_pool_query_bounds.csv,pool_id,string,PoolManager pool query key for full-cohort swap export.
 clanker_base_full_cohort_transfer_query_bounds.csv,contract_address,string,ERC20 token contract query key for full holder reconstruction.
@@ -28,6 +31,15 @@ clanker_base_full_cohort_expected_horizons.csv,unit_id,string,Expected Base toke
 clanker_base_full_cohort_import_contract.csv,required_columns,string,CSV columns required by the full-cohort import path.
 clanker_base_full_cohort_import_coverage.csv,coverage_status,category,Processed-row status for full-cohort swap and transfer backfill units.
 clanker_base_causal_diagnostics.csv,att_mean_pair_diff,float,Matched-pair v4.1-minus-v4.0 difference for covered Base sample rows.
+solana_early_wallet_concentration.csv,decoded_buyer_proxy_wallets,integer,Unique fee-payer wallets conservatively classified as early buyer proxies from Solana token-balance deltas.
+solana_early_wallet_concentration.csv,decoded_holder_proxy_wallets,integer,Unique fee-payer wallets conservatively classified as early holder proxies from Solana post-token balances.
+solana_early_wallet_concentration.csv,classified_early_transactions,integer,Early pool transactions with decoded buyer/seller/holder proxy labels; unclassified rows remain claim-bounded.
+solana_parsed_transaction_proxies.csv,buyer_holder_classification,category,Per-transaction conservative fee-payer buyer/seller/holder proxy label from token-balance changes.
+solana_parsed_transaction_proxies.csv,classification_source,string,"Decoder source used for the buyer/holder proxy classification, usually Solana pre/post token balances."
 teacher_requirements_alignment_shilin.csv,status,category,Shilin-only status against Luyao's revision requirements.
+paired_case_ladder.csv,paired_interpretation,string,Same-ladder interpretation linking Case A and Case B at each evidence stage.
+full_cohort_coverage_audit.csv,processed_share_of_manifest,float,Share of Clanker/Base full-cohort manifest units processed by coverage type.
+requirement_closure_audit.csv,top_conference_status,category,Whether the requirement is closed for workshop review or still a top-conference gap.
+top_conference_gap_ledger.csv,experiment_to_close,string,Concrete experiment or credentialed data pull needed for top-tier causal claims.
 claim_scope_ledger.csv,claim_not_allowed,string,Explicit claims blocked by current evidence.
 data_gap_ledger.csv,next_action,string,Concrete validation step needed to close the gap.

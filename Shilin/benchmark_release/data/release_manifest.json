@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-04T07:35:32.440509+00:00",
+  "generated_at_utc": "2026-08-05T09:54:21.569001+00:00",
   "primary_sheets": [
     "events.csv",
     "metrics_panel.csv",
@@ -12,6 +12,7 @@
     "cross_chain_event_candidates.csv",
     "mirror_case_candidates.csv",
     "mirror_case_ladder.csv",
+    "paired_case_ladder.csv",
     "telegram_mirror_design.csv",
     "telegram_mirror_balance.csv",
     "telegram_mirror_matched_cells.csv",
@@ -23,9 +24,15 @@
     "clanker_base_full_cohort_expected_horizons.csv",
     "clanker_base_full_cohort_import_contract.csv",
     "clanker_base_full_cohort_import_coverage.csv",
+    "full_cohort_coverage_audit.csv",
     "clanker_base_causal_diagnostics.csv",
     "teacher_requirements_alignment_shilin.csv",
+    "requirement_closure_audit.csv",
+    "top_conference_gap_ledger.csv",
     "agentic_evaluation_panel.csv",
+    "agentic_multimodel_ablation_manifest.csv",
+    "agentic_multimodel_ablation_scores.csv",
     "data_dictionary.csv"
-  ]
+  ],
+  "zenodo_metadata": "zenodo_metadata.json"
 }

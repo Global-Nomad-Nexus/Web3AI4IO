@@ -2,19 +2,21 @@
   "claim_boundary": "Backfill summary tracks processed query units and imported rows. Full-cohort causal claims require processed swap and transfer coverage for the complete manifest plus reconstructed token horizons.",
   "coverage_by_type": {
     "erc20_transfers": {
-      "observed_rows": 100,
-      "processed_share_of_manifest": 0.0010086455331412103,
-      "processed_units": 14,
-      "units_with_observed_rows": 14
+      "collection_error_units": 0,
+      "observed_rows": 279,
+      "processed_share_of_manifest": 0.004755043227665706,
+      "processed_units": 66,
+      "units_with_observed_rows": 66
     },
     "poolmanager_swaps": {
-      "observed_rows": 30,
-      "processed_share_of_manifest": 0.0010086455331412103,
-      "processed_units": 14,
-      "units_with_observed_rows": 7
+      "collection_error_units": 1,
+      "observed_rows": 36,
+      "processed_share_of_manifest": 0.004899135446685879,
+      "processed_units": 68,
+      "units_with_observed_rows": 10
     }
   },
-  "generated_at_utc": "2026-08-04T07:35:10Z",
+  "generated_at_utc": "2026-08-05T03:53:47Z",
   "manifest_rows": 13880,
   "manifest_tokens": 13880,
   "outputs": {
@@ -22,6 +24,6 @@
     "swaps": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/artifacts/external_validation/clanker_base_full_cohort_swaps_import.csv",
     "transfers": "/Users/oushilin/Desktop/SRS/Web3AI4IO/Shilin/artifacts/external_validation/clanker_base_full_cohort_transfers_import.csv"
   },
-  "swap_import_rows": 30,
-  "transfer_import_rows": 100
+  "swap_import_rows": 36,
+  "transfer_import_rows": 279
 }

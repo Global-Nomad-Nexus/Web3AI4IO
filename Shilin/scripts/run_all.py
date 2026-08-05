@@ -13,7 +13,12 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from trustworthy_launchpads.agentic import score_agent_runs, write_prompt_templates
+from trustworthy_launchpads.agentic import (
+    score_agent_runs,
+    score_agentic_ablation_runs,
+    write_agentic_ablation_manifest,
+    write_prompt_templates,
+)
 from trustworthy_launchpads.causal_validation import build_h1_rpc_mechanism_causal_audit
 from trustworthy_launchpads.deterministic_ladder import run_ladder
 from trustworthy_launchpads.free_public import scan_free_public_assets
@@ -40,6 +45,8 @@ def main() -> None:
     battery = build_metric_battery(config)
     prompt_manifest = write_prompt_templates(config)
     agent_scores = score_agent_runs(config, ladder_outputs.ladder)
+    write_agentic_ablation_manifest(config)
+    score_agentic_ablation_runs(config)
     build_readiness_audit(config, ladder_outputs.ladder, agent_scores)
 
     make_all_figures(
