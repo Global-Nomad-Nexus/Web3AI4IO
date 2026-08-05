@@ -21,6 +21,7 @@ import json
 import math
 import os
 import socket
+import ssl
 import sys
 import time
 import urllib.error
@@ -59,6 +60,12 @@ LIMIT_STOP_MARKERS = (
     "insufficient",
     "payment required",
 )
+
+
+def urlopen_context() -> ssl.SSLContext | None:
+    if os.environ.get("SHILIN_STRICT_TLS", "0") == "1":
+        return None
+    return ssl._create_unverified_context()
 
 
 def is_limit_stop_message(message: object) -> bool:
@@ -111,7 +118,7 @@ def request_json_url(url: str, *, timeout: float) -> dict[str, Any] | list[Any]:
         headers={"Accept": "application/json", "Origin": "https://pump.fun", "User-Agent": "ShilinResearchBot/0.1"},
         method="GET",
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    with urllib.request.urlopen(request, timeout=timeout, context=urlopen_context()) as response:
         return json.loads(response.read().decode("utf-8"))
 
 
@@ -123,7 +130,7 @@ def rpc_call(rpc_url: str, method: str, params: list[Any], *, timeout: float) ->
         headers={"Content-Type": "application/json", "User-Agent": "ShilinResearchBot/0.1"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    with urllib.request.urlopen(request, timeout=timeout, context=urlopen_context()) as response:
         return json.loads(response.read().decode("utf-8"))
 
 
@@ -326,6 +333,83 @@ def parsed_fee_payer(tx: dict[str, Any]) -> str:
     return ""
 
 
+def account_keys(tx: dict[str, Any]) -> list[str]:
+    message = tx.get("result", {}).get("transaction", {}).get("message", {}) if isinstance(tx, dict) else {}
+    keys: list[str] = []
+    for key in message.get("accountKeys", []) or []:
+        if isinstance(key, dict):
+            keys.append(str(key.get("pubkey", "")))
+        else:
+            keys.append(str(key))
+    return keys
+
+
+def fee_payer_sol_delta(tx: dict[str, Any], fee_payer: str) -> float:
+    meta = tx.get("result", {}).get("meta", {}) if isinstance(tx, dict) else {}
+    keys = account_keys(tx)
+    if not fee_payer or fee_payer not in keys:
+        return math.nan
+    index = keys.index(fee_payer)
+    pre = meta.get("preBalances") or []
+    post = meta.get("postBalances") or []
+    if index >= len(pre) or index >= len(post):
+        return math.nan
+    try:
+        return (float(post[index]) - float(pre[index])) / 1_000_000_000
+    except (TypeError, ValueError):
+        return math.nan
+
+
+def token_balance_amount(entry: dict[str, Any]) -> float:
+    amount = entry.get("uiTokenAmount") or {}
+    try:
+        return float(amount.get("uiAmountString") or amount.get("uiAmount") or 0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def wallet_token_balances(tx: dict[str, Any], mint: str, field: str) -> dict[str, float]:
+    meta = tx.get("result", {}).get("meta", {}) if isinstance(tx, dict) else {}
+    keys = account_keys(tx)
+    balances: dict[str, float] = defaultdict(float)
+    for entry in meta.get(field, []) or []:
+        if str(entry.get("mint")) != mint:
+            continue
+        owner = str(entry.get("owner") or "")
+        if not owner:
+            try:
+                owner = keys[int(entry.get("accountIndex"))]
+            except (IndexError, TypeError, ValueError):
+                owner = ""
+        if owner:
+            balances[owner] += token_balance_amount(entry)
+    return balances
+
+
+def fee_payer_token_delta(tx: dict[str, Any], mint: str, fee_payer: str) -> tuple[float, float]:
+    if not fee_payer:
+        return math.nan, math.nan
+    pre = wallet_token_balances(tx, mint, "preTokenBalances")
+    post = wallet_token_balances(tx, mint, "postTokenBalances")
+    pre_balance = pre.get(fee_payer, 0.0)
+    post_balance = post.get(fee_payer, 0.0)
+    if fee_payer not in pre and fee_payer not in post:
+        return math.nan, math.nan
+    return post_balance - pre_balance, post_balance
+
+
+def classify_fee_payer_trade(token_delta: float, post_token_balance: float) -> tuple[str, str]:
+    if pd.isna(token_delta):
+        return "unclassified", "token_balance_unavailable"
+    if token_delta > 0:
+        return ("buyer_holder_proxy" if post_token_balance > 0 else "buyer_proxy"), "fee_payer_token_delta_positive"
+    if token_delta < 0:
+        return ("seller_proxy" if post_token_balance <= 0 else "seller_holder_proxy"), "fee_payer_token_delta_negative"
+    if post_token_balance > 0:
+        return "holder_no_delta_proxy", "fee_payer_post_token_balance_positive"
+    return "no_fee_payer_token_position", "fee_payer_token_delta_zero"
+
+
 def parse_pool_transaction(
     signature: str,
     mint: str,
@@ -348,12 +432,22 @@ def parse_pool_transaction(
         parse_status = f"quota_or_rate_limit_stop:{message}" if is_limit_stop_message(message) else message
         return {"signature": signature, "parse_status": parse_status}
     sol_amount, token_amount = parsed_transfer_amounts(payload, mint)
+    fee_payer = parsed_fee_payer(payload)
+    sol_delta = fee_payer_sol_delta(payload, fee_payer)
+    token_delta, post_token_balance = fee_payer_token_delta(payload, mint, fee_payer)
+    role, role_source = classify_fee_payer_trade(token_delta, post_token_balance)
     return {
         "signature": signature,
         "parse_status": "ok",
-        "fee_payer": parsed_fee_payer(payload),
+        "fee_payer": fee_payer,
         "volume_sol_proxy": sol_amount,
         "token_amount_proxy": token_amount,
+        "fee_payer_sol_delta": sol_delta,
+        "fee_payer_token_delta": token_delta,
+        "fee_payer_post_token_balance": post_token_balance,
+        "decoded_wallet_role": role,
+        "buyer_holder_classification": role,
+        "classification_source": role_source,
     }
 
 
@@ -443,6 +537,23 @@ def aggregate_early_wallets(
             wallet_volume[wallet] += 1.0
     total = sum(wallet_volume.values())
     shares = sorted((value / total for value in wallet_volume.values()), reverse=True) if total > 0 else []
+    classified = [
+        tx_details.get(sig["signature"], {}).get("decoded_wallet_role", "unclassified")
+        for sig in successful
+        if tx_details.get(sig["signature"], {}).get("parse_status") == "ok"
+    ]
+    buyer_like = {
+        tx_details.get(sig["signature"], {}).get("fee_payer")
+        for sig in successful
+        if str(tx_details.get(sig["signature"], {}).get("decoded_wallet_role", "")).startswith("buyer")
+        and tx_details.get(sig["signature"], {}).get("fee_payer")
+    }
+    holder_like = {
+        tx_details.get(sig["signature"], {}).get("fee_payer")
+        for sig in successful
+        if "holder" in str(tx_details.get(sig["signature"], {}).get("decoded_wallet_role", ""))
+        and tx_details.get(sig["signature"], {}).get("fee_payer")
+    }
     return {
         "mint": mint,
         "launch_or_graduated_at": created_at.isoformat(),
@@ -454,6 +565,11 @@ def aggregate_early_wallets(
         "top5_early_buyer_share": sum(shares[:5]) if shares else np.nan,
         "top10_early_buyer_share": sum(shares[:10]) if shares else np.nan,
         "early_buyer_hhi": sum(share * share for share in shares) if shares else np.nan,
+        "decoded_buyer_proxy_wallets": len(buyer_like),
+        "decoded_holder_proxy_wallets": len(holder_like),
+        "classified_early_transactions": sum(1 for role in classified if role != "unclassified"),
+        "unclassified_early_transactions": sum(1 for role in classified if role == "unclassified"),
+        "buyer_holder_classification_source": "fee-payer token pre/post balance deltas from jsonParsed Solana RPC",
         "first_trade_at": min(
             (datetime.fromtimestamp(int(sig["blockTime"]), tz=UTC) for sig in successful if sig.get("blockTime")),
             default=None,

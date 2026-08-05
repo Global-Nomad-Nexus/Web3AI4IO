@@ -11,7 +11,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import ssl
 import time
+import urllib.parse
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -33,6 +36,7 @@ from run_clanker_base_validation import (
 
 
 DEFAULT_BACKFILL_RPC = "https://mainnet.base.org"
+DEFAULT_BLOCKSCOUT_API = "https://base.blockscout.com/api"
 
 SWAP_IMPORT_COLUMNS = [
     "pool_id",
@@ -120,6 +124,30 @@ def dedupe_csv(path: Path, keys: list[str], columns: list[str]) -> None:
     write_csv(path, df, columns)
 
 
+def dedupe_coverage_csv(path: Path) -> None:
+    if not path.exists() or path.stat().st_size == 0:
+        return
+    coverage = pd.read_csv(path, low_memory=False)
+    keys = ["coverage_type", "unit_id"]
+    if not set(keys).issubset(coverage.columns):
+        write_csv(path, coverage, COVERAGE_COLUMNS)
+        return
+    rank = {
+        "collection_error": 0,
+        "processed_zero_rows": 1,
+        "processed_with_rows": 2,
+    }
+    coverage = coverage.copy()
+    coverage["_coverage_rank"] = coverage["coverage_status"].astype(str).map(rank).fillna(0)
+    coverage["_observed_rows_num"] = pd.to_numeric(coverage["observed_rows"], errors="coerce").fillna(0)
+    coverage = (
+        coverage.sort_values(keys + ["_coverage_rank", "_observed_rows_num", "collected_at_utc"])
+        .drop_duplicates(keys, keep="last")
+        .drop(columns=["_coverage_rank", "_observed_rows_num"])
+    )
+    write_csv(path, coverage, COVERAGE_COLUMNS)
+
+
 def load_manifest(
     path: Path,
     *,
@@ -158,8 +186,13 @@ def processed_units(coverage_path: Path, coverage_type: str) -> set[str]:
     coverage = read_csv(coverage_path, low_memory=False)
     if coverage.empty or "coverage_type" not in coverage or "unit_id" not in coverage:
         return set()
+    status = (
+        coverage["coverage_status"].astype(str).str.startswith("processed_")
+        if "coverage_status" in coverage
+        else pd.Series(True, index=coverage.index)
+    )
     return set(
-        coverage.loc[coverage["coverage_type"].astype(str).eq(coverage_type), "unit_id"]
+        coverage.loc[coverage["coverage_type"].astype(str).eq(coverage_type) & status, "unit_id"]
         .dropna()
         .astype(str)
         .unique()
@@ -175,6 +208,7 @@ def select_work(
     resume: bool,
     start_index: int,
     max_units: int,
+    sample_strategy: str,
 ) -> pd.DataFrame:
     work = manifest.copy()
     if resume:
@@ -183,7 +217,19 @@ def select_work(
     if start_index:
         work = work.iloc[start_index:].copy()
     if max_units > 0:
-        work = work.head(max_units).copy()
+        if sample_strategy == "evenly_spaced" and len(work) > max_units:
+            if max_units == 1:
+                positions = [0]
+            else:
+                positions = sorted(
+                    {
+                        round(i * (len(work) - 1) / (max_units - 1))
+                        for i in range(max_units)
+                    }
+                )
+            work = work.iloc[positions].copy()
+        else:
+            work = work.head(max_units).copy()
     return work.reset_index(drop=True)
 
 
@@ -305,6 +351,124 @@ def collect_transfer_batch(
     return transfers.reindex(columns=TRANSFER_IMPORT_COLUMNS)
 
 
+def blockscout_request_json(url: str, *, timeout: float) -> dict[str, Any]:
+    request = urllib.request.Request(url, headers={"User-Agent": "ShilinResearchBot/0.1"})
+    context = ssl._create_unverified_context()
+    with urllib.request.urlopen(request, timeout=timeout, context=context) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+def blockscout_legacy_logs(
+    *,
+    api_url: str,
+    address: str,
+    from_block: int,
+    to_block: int,
+    topic0: str,
+    topic1: str | None,
+    page_size: int,
+    chunk_size: int,
+    timeout: float,
+    label: str,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    start = int(from_block)
+    while start <= int(to_block):
+        end = min(start + chunk_size - 1, int(to_block))
+        page = 1
+        while True:
+            params = {
+                "module": "logs",
+                "action": "getLogs",
+                "fromBlock": str(start),
+                "toBlock": str(end),
+                "address": address,
+                "topic0": topic0,
+                "page": str(page),
+                "offset": str(page_size),
+            }
+            if topic1:
+                params["topic1"] = topic1
+                params["topic0_1_opr"] = "and"
+            url = api_url + "?" + urllib.parse.urlencode(params)
+            payload = blockscout_request_json(url, timeout=timeout)
+            result = payload.get("result") or []
+            if not isinstance(result, list):
+                raise RuntimeError(f"Blockscout {label} returned non-list result: {payload}")
+            rows.extend(result)
+            print(f"{label}: blocks {start}-{end} page={page} logs={len(result)} total={len(rows)}", flush=True)
+            if len(result) < page_size:
+                break
+            page += 1
+        start = end + 1
+    return rows
+
+
+def collect_swap_batch_blockscout(
+    *,
+    api_url: str,
+    batch: pd.DataFrame,
+    chunk_size: int,
+    page_size: int,
+    request_timeout: float,
+    source_layer: str,
+) -> pd.DataFrame:
+    rows = []
+    for _, token in batch.iterrows():
+        logs = blockscout_legacy_logs(
+            api_url=api_url,
+            address=UNISWAP_V4_POOL_MANAGER_BASE,
+            from_block=int(token["launch_block"]),
+            to_block=int(token["max_horizon_end_block"]),
+            topic0=SWAP_TOPIC,
+            topic1=str(token["pool_id"]).lower(),
+            page_size=page_size,
+            chunk_size=chunk_size,
+            timeout=request_timeout,
+            label=f"blockscout_swaps:{str(token['pool_id'])[:10]}",
+        )
+        for log in logs:
+            row = decode_swap(log)
+            row["log_index"] = int(log["logIndex"], 16)
+            rows.append(row)
+    swaps = pd.DataFrame(rows)
+    swaps = filter_by_bounds(swaps, batch, key_column="pool_id", manifest_key_column="pool_id")
+    if not swaps.empty:
+        swaps["source_layer"] = source_layer
+    return swaps.reindex(columns=SWAP_IMPORT_COLUMNS)
+
+
+def collect_transfer_batch_blockscout(
+    *,
+    api_url: str,
+    batch: pd.DataFrame,
+    chunk_size: int,
+    page_size: int,
+    request_timeout: float,
+    source_layer: str,
+) -> pd.DataFrame:
+    rows = []
+    for _, token in batch.iterrows():
+        logs = blockscout_legacy_logs(
+            api_url=api_url,
+            address=str(token["token_id"]).lower(),
+            from_block=int(token["launch_block"]),
+            to_block=int(token["max_horizon_end_block"]),
+            topic0=TRANSFER_TOPIC,
+            topic1=None,
+            page_size=page_size,
+            chunk_size=chunk_size,
+            timeout=request_timeout,
+            label=f"blockscout_transfers:{str(token['token_id'])[:10]}",
+        )
+        rows.extend(decode_transfer(log) for log in logs)
+    transfers = pd.DataFrame(rows)
+    transfers = filter_by_bounds(transfers, batch, key_column="token_id", manifest_key_column="token_id")
+    if not transfers.empty:
+        transfers["source_layer"] = source_layer
+    return transfers.reindex(columns=TRANSFER_IMPORT_COLUMNS)
+
+
 def coverage_rows(
     *,
     batch: pd.DataFrame,
@@ -372,13 +536,22 @@ def summarize(
     if not coverage.empty:
         by_type = {}
         for coverage_type, group in coverage.groupby("coverage_type"):
-            processed = int(group["unit_id"].nunique())
-            rows_with_data = int(group.loc[pd.to_numeric(group["observed_rows"], errors="coerce").gt(0), "unit_id"].nunique())
+            processed_group = group.loc[group["coverage_status"].astype(str).str.startswith("processed_")].copy()
+            processed = int(processed_group["unit_id"].nunique())
+            rows_with_data = int(
+                processed_group.loc[
+                    pd.to_numeric(processed_group["observed_rows"], errors="coerce").gt(0),
+                    "unit_id",
+                ].nunique()
+            )
             by_type[str(coverage_type)] = {
                 "processed_units": processed,
                 "processed_share_of_manifest": processed / len(manifest) if len(manifest) else 0,
                 "units_with_observed_rows": rows_with_data,
-                "observed_rows": int(pd.to_numeric(group["observed_rows"], errors="coerce").fillna(0).sum()),
+                "observed_rows": int(pd.to_numeric(processed_group["observed_rows"], errors="coerce").fillna(0).sum()),
+                "collection_error_units": int(
+                    group.loc[group["coverage_status"].astype(str).eq("collection_error"), "unit_id"].nunique()
+                ),
             }
         summary["coverage_by_type"] = by_type
     summary_path.parent.mkdir(parents=True, exist_ok=True)
@@ -459,7 +632,7 @@ def merge_existing_raw_sample(
         SWAP_IMPORT_COLUMNS,
     )
     dedupe_csv(transfers_path, ["transaction_hash", "log_index", "token_id"], TRANSFER_IMPORT_COLUMNS)
-    dedupe_csv(coverage_path, ["coverage_type", "unit_id"], COVERAGE_COLUMNS)
+    dedupe_coverage_csv(coverage_path)
     print(
         "merge_existing_raw_sample: "
         f"sample_tokens={sample_manifest['token_id'].nunique()} swaps={len(sample_swaps)} transfers={len(sample_transfers)}",
@@ -470,20 +643,26 @@ def merge_existing_raw_sample(
 def run_collection(
     *,
     kind: str,
+    source: str,
     manifest: pd.DataFrame,
     endpoint: str,
+    blockscout_api: str,
     batch_size: int,
     chunk_size: int,
     min_chunk_size: int,
+    blockscout_page_size: int,
+    request_timeout: float,
     progress: bool,
     source_layer: str,
     out_path: Path,
     coverage_path: Path,
     stop_after_seconds: int,
+    skip_errors: bool,
 ) -> None:
     started = time.time()
     if kind == "swaps":
         collect_fn = collect_swap_batch
+        blockscout_collect_fn = collect_swap_batch_blockscout
         columns = SWAP_IMPORT_COLUMNS
         coverage_type = "poolmanager_swaps"
         query_key = "swap_query_key"
@@ -491,6 +670,7 @@ def run_collection(
         dedupe_keys = ["transaction_hash", "pool_id", "block_number", "sender", "amount0_raw", "amount1_raw"]
     elif kind == "transfers":
         collect_fn = collect_transfer_batch
+        blockscout_collect_fn = collect_transfer_batch_blockscout
         columns = TRANSFER_IMPORT_COLUMNS
         coverage_type = "erc20_transfers"
         query_key = "transfer_query_key"
@@ -509,14 +689,41 @@ def run_collection(
             f"blocks={int(batch['launch_block'].min())}-{int(batch['max_horizon_end_block'].max())}",
             flush=True,
         )
-        observed = collect_fn(
-            endpoint=endpoint,
-            batch=batch,
-            chunk_size=chunk_size,
-            min_chunk_size=min_chunk_size,
-            progress=progress,
-            source_layer=source_layer,
-        )
+        try:
+            if source == "blockscout-legacy":
+                observed = blockscout_collect_fn(
+                    api_url=blockscout_api,
+                    batch=batch,
+                    chunk_size=chunk_size,
+                    page_size=blockscout_page_size,
+                    request_timeout=request_timeout,
+                    source_layer=source_layer,
+                )
+            else:
+                observed = collect_fn(
+                    endpoint=endpoint,
+                    batch=batch,
+                    chunk_size=chunk_size,
+                    min_chunk_size=min_chunk_size,
+                    progress=progress,
+                    source_layer=source_layer,
+                )
+        except Exception as exc:
+            if not skip_errors:
+                raise
+            error_source = f"{source_layer}; collection_error={type(exc).__name__}: {str(exc)[:180]}"
+            cov = coverage_rows(
+                batch=batch,
+                observed=pd.DataFrame(columns=columns),
+                coverage_type=coverage_type,
+                query_key=query_key,
+                observed_key=observed_key,
+                source_layer=error_source,
+            )
+            cov["coverage_status"] = "collection_error"
+            append_csv(coverage_path, cov, COVERAGE_COLUMNS)
+            print(f"{kind}: collection_error coverage_rows={len(cov)} error={type(exc).__name__}: {exc}", flush=True)
+            continue
         append_csv(out_path, observed, columns)
         cov = coverage_rows(
             batch=batch,
@@ -531,18 +738,22 @@ def run_collection(
     if not out_path.exists():
         write_csv(out_path, pd.DataFrame(columns=columns), columns)
     dedupe_csv(out_path, dedupe_keys, columns)
-    dedupe_csv(coverage_path, ["coverage_type", "unit_id"], COVERAGE_COLUMNS)
+    dedupe_coverage_csv(coverage_path)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", choices=["rpc", "blockscout-legacy"], default="rpc")
     parser.add_argument("--rpc-url", default=DEFAULT_BACKFILL_RPC)
+    parser.add_argument("--blockscout-api", default=DEFAULT_BLOCKSCOUT_API)
     parser.add_argument("--manifest", default=str(EXTERNAL / "clanker_base_full_cohort_manifest.csv"))
     parser.add_argument("--collect", choices=["swaps", "transfers", "both", "none"], default="both")
     parser.add_argument("--cohort-side", choices=["all", "pre_v4_0_control", "post_v4_1_treated"], default="all")
     parser.add_argument("--batch-size", type=int, default=24)
     parser.add_argument("--chunk-size", type=int, default=100_000)
     parser.add_argument("--min-chunk-size", type=int, default=5_000)
+    parser.add_argument("--blockscout-page-size", type=int, default=1_000)
+    parser.add_argument("--request-timeout", type=float, default=45.0)
     parser.add_argument("--blocks-per-day", type=int, default=43_500)
     parser.add_argument(
         "--max-horizon-days",
@@ -552,8 +763,19 @@ def main() -> None:
     )
     parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--max-units", type=int, default=0, help="0 means no explicit cap.")
+    parser.add_argument(
+        "--sample-strategy",
+        choices=["first", "evenly_spaced"],
+        default="first",
+        help="How to choose rows when --max-units is set after resume/start-index filtering.",
+    )
     parser.add_argument("--stop-after-seconds", type=int, default=0, help="0 means no time cap.")
     parser.add_argument("--no-resume", action="store_true")
+    parser.add_argument(
+        "--skip-errors",
+        action="store_true",
+        help="Record collection_error rows and continue instead of aborting a resumable backfill.",
+    )
     parser.add_argument("--quiet-logs", action="store_true")
     parser.add_argument(
         "--swaps-out",
@@ -596,10 +818,10 @@ def main() -> None:
     coverage_path = Path(args.coverage_out).expanduser().resolve()
     summary_path = Path(args.summary_out).expanduser().resolve()
 
-    if "mainnet.base.org" in args.rpc_url and args.chunk_size > 10_000:
+    if args.source == "rpc" and "mainnet.base.org" in args.rpc_url and args.chunk_size > 10_000:
         print("Base official RPC limits eth_getLogs to 10,000 blocks; reducing --chunk-size to 10000.", flush=True)
         args.chunk_size = 10_000
-    if "mainnet.base.org" in args.rpc_url and args.min_chunk_size > 10_000:
+    if args.source == "rpc" and "mainnet.base.org" in args.rpc_url and args.min_chunk_size > 10_000:
         args.min_chunk_size = 10_000
 
     full_manifest = load_manifest(
@@ -608,7 +830,11 @@ def main() -> None:
         max_horizon_days=args.max_horizon_days,
         blocks_per_day=args.blocks_per_day,
     )
-    source_layer = f"Base JSON-RPC/archive log backfill: {args.rpc_url}"
+    source_layer = (
+        f"Base Blockscout legacy getLogs backfill: {args.blockscout_api}"
+        if args.source == "blockscout-legacy"
+        else f"Base JSON-RPC/archive log backfill: {args.rpc_url}"
+    )
     if args.merge_existing_raw_sample:
         merge_existing_raw_sample(
             manifest=full_manifest,
@@ -628,19 +854,25 @@ def main() -> None:
             resume=not args.no_resume,
             start_index=args.start_index,
             max_units=args.max_units,
+            sample_strategy=args.sample_strategy,
         )
         run_collection(
             kind="swaps",
+            source=args.source,
             manifest=swap_work,
             endpoint=args.rpc_url,
+            blockscout_api=args.blockscout_api,
             batch_size=args.batch_size,
             chunk_size=args.chunk_size,
             min_chunk_size=args.min_chunk_size,
+            blockscout_page_size=args.blockscout_page_size,
+            request_timeout=args.request_timeout,
             progress=not args.quiet_logs,
             source_layer=source_layer,
             out_path=swaps_path,
             coverage_path=coverage_path,
             stop_after_seconds=args.stop_after_seconds,
+            skip_errors=args.skip_errors,
         )
     if args.collect in {"transfers", "both"}:
         transfer_work = select_work(
@@ -651,19 +883,25 @@ def main() -> None:
             resume=not args.no_resume,
             start_index=args.start_index,
             max_units=args.max_units,
+            sample_strategy=args.sample_strategy,
         )
         run_collection(
             kind="transfers",
+            source=args.source,
             manifest=transfer_work,
             endpoint=args.rpc_url,
+            blockscout_api=args.blockscout_api,
             batch_size=args.batch_size,
             chunk_size=args.chunk_size,
             min_chunk_size=args.min_chunk_size,
+            blockscout_page_size=args.blockscout_page_size,
+            request_timeout=args.request_timeout,
             progress=not args.quiet_logs,
             source_layer=source_layer,
             out_path=transfers_path,
             coverage_path=coverage_path,
             stop_after_seconds=args.stop_after_seconds,
+            skip_errors=args.skip_errors,
         )
     summarize(
         manifest=full_manifest,

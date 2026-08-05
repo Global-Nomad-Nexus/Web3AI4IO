@@ -3,7 +3,7 @@
   "event_date": "2025-03-20",
   "timezone": "UTC",
   "random_seed": 20260729,
-  "upstream_mvp_root": "../pumpfun_pumpswap_did_mvp_full_local",
+  "upstream_mvp_root": "../../01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local",
   "public_mvp_root": "../pumpfun-pumpswap-did-mvp-public-legacy",
   "market_panel": "data/processed/solana_dex_daily_did_panel.csv",
   "red_pump_token_outcomes": "data/processed/red_pump_token_outcomes.csv",

@@ -1260,6 +1260,60 @@ def build_telegram_shock_candidates() -> pd.DataFrame:
     return read_csv(ROOT / "artifacts" / "external_validation" / "telegram_shock_candidates.csv")
 
 
+def build_paired_case_ladder() -> pd.DataFrame:
+    ladder = read_csv(ROOT / "artifacts" / "tables" / "deterministic_ladder.csv")
+    mirror = build_mirror_case_ladder()
+    if ladder.empty or mirror.empty:
+        return pd.DataFrame()
+
+    def ladder_row(rung: str) -> dict[str, Any]:
+        rows = ladder.loc[ladder["rung"].eq(rung)]
+        return rows.iloc[0].to_dict() if len(rows) else {}
+
+    def mirror_row(rung: str) -> dict[str, Any]:
+        rows = mirror.loc[mirror["rung"].eq(rung)]
+        return rows.iloc[0].to_dict() if len(rows) else {}
+
+    stages = [
+        ("S0", "Naive read", "L0", "B0", "Case A starts as a positive dashboard result; Case B starts as a near-null aggregate quality read."),
+        ("S1", "Comparison or strata", "L1", "B1", "Adding a comparison weakens Case A but stratification reveals a Case B signal."),
+        ("S2", "Controls or model", "L2", "B2", "Fixed effects leave Case A uncertain; token-level controls keep Case B positive."),
+        ("S3", "Outcome depth", "L3", "B3", "Dynamic or token-horizon evidence is informative but does not by itself close claim boundaries."),
+        ("S4", "Diagnostic screen", "L4", "B5", "Pretrend and timing diagnostics constrain both cases before final claims."),
+        ("S5", "Inference or sensitivity", "L6", "B4", "Few-cluster inference makes Case A uncertain; matching and sensitivity support Case B as predictive."),
+        ("S6", "Claim boundary", "L7", "B6", "The same ladder produces opposite revisions while preventing welfare or Telegram-causality overclaims."),
+    ]
+    rows = []
+    for order, (stage_id, requirement, case_a_rung, case_b_rung, interpretation) in enumerate(stages):
+        a = ladder_row(case_a_rung)
+        b = mirror_row(case_b_rung)
+        rows.append(
+            {
+                "paired_stage": stage_id,
+                "stage_order": order,
+                "evidence_requirement": requirement,
+                "case_a_id": "CASE_A_PUMPSWAP_MARKET",
+                "case_a_rung": case_a_rung,
+                "case_a_component": a.get("component_added", ""),
+                "case_a_estimate": a.get("estimate", ""),
+                "case_a_ci95_low": a.get("ci95_low", ""),
+                "case_a_ci95_high": a.get("ci95_high", ""),
+                "case_a_decision": a.get("worked_decision", ""),
+                "case_a_claim_boundary": a.get("notes", ""),
+                "case_b_id": "CASE_B_TELEGRAM_SOCIAL_METADATA_PRELIMINARY",
+                "case_b_rung": case_b_rung,
+                "case_b_component": b.get("component_added", ""),
+                "case_b_estimate": b.get("estimate", ""),
+                "case_b_estimate_label": b.get("estimate_label", ""),
+                "case_b_decision": b.get("decision", ""),
+                "case_b_claim_boundary": b.get("claim_boundary", ""),
+                "paired_interpretation": interpretation,
+                "figure_artifact": "artifacts/figures/fig_paired_case_ladder_shilin.png",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def build_clanker_full_cohort_manifest() -> pd.DataFrame:
     return read_csv(ROOT / "artifacts" / "external_validation" / "clanker_base_full_cohort_manifest.csv")
 
@@ -1288,6 +1342,55 @@ def build_clanker_base_causal_diagnostics() -> pd.DataFrame:
     return read_csv(ROOT / "artifacts" / "tables" / "clanker_base_causal_diagnostics.csv")
 
 
+def build_full_cohort_coverage_audit() -> pd.DataFrame:
+    manifest = read_csv(ROOT / "artifacts" / "external_validation" / "clanker_base_full_cohort_manifest.csv")
+    expected = read_csv(ROOT / "artifacts" / "external_validation" / "clanker_base_full_cohort_expected_horizons.csv")
+    coverage = read_csv(ROOT / "artifacts" / "external_validation" / "clanker_base_full_cohort_import_coverage.csv")
+    backfill = read_json(ROOT / "artifacts" / "tables" / "clanker_base_full_cohort_backfill_summary.json")
+    manifest_rows = int(len(manifest))
+    expected_rows = int(len(expected))
+    rows = []
+    for coverage_type in ["poolmanager_swaps", "erc20_transfers"]:
+        subset = coverage.loc[coverage.get("coverage_type", pd.Series(dtype=str)).astype(str).eq(coverage_type)]
+        summary = backfill.get("coverage_by_type", {}).get(coverage_type, {})
+        processed_units = int(summary.get("processed_units", len(subset)) or 0)
+        observed_rows = int(summary.get("observed_rows", subset.get("observed_rows", pd.Series(dtype=float)).sum()) or 0)
+        processed_share = float(summary.get("processed_share_of_manifest", processed_units / manifest_rows if manifest_rows else 0) or 0)
+        rows.append(
+            {
+                "event_id": CLANKER_BASE_EVENT_ID,
+                "coverage_type": coverage_type,
+                "manifest_rows": manifest_rows,
+                "expected_horizon_rows": expected_rows,
+                "processed_units": processed_units,
+                "units_with_observed_rows": int(summary.get("units_with_observed_rows", 0) or 0),
+                "observed_rows": observed_rows,
+                "processed_share_of_manifest": processed_share,
+                "coverage_status": "partial_smoke_and_sample_import" if processed_share < 1 else "complete",
+                "claim_boundary": (
+                    "Full-cohort Base causal replication remains blocked until this coverage type is processed for every manifest row."
+                ),
+                "next_action": "Fill the import contract with archive RPC, Dune, Bitquery, or equivalent Base indexer exports.",
+            }
+        )
+    rows.append(
+        {
+            "event_id": CLANKER_BASE_EVENT_ID,
+            "coverage_type": "token_horizon_expected_rows",
+            "manifest_rows": manifest_rows,
+            "expected_horizon_rows": expected_rows,
+            "processed_units": int(min(row.get("processed_units", 0) for row in rows) if rows else 0),
+            "units_with_observed_rows": "",
+            "observed_rows": "",
+            "processed_share_of_manifest": float(min(row.get("processed_share_of_manifest", 0) for row in rows) if rows else 0),
+            "coverage_status": "registered_expected_rows_not_full_cohort_outcomes",
+            "claim_boundary": "Expected 1/7/30 day rows are release contracts, not observed full-cohort outcomes.",
+            "next_action": "Re-run run_clanker_base_validation.py with completed swap and transfer imports, then rebuild diagnostics.",
+        }
+    )
+    return pd.DataFrame(rows)
+
+
 def build_teacher_requirements_alignment() -> pd.DataFrame:
     return read_csv(ROOT / "artifacts" / "tables" / "teacher_requirements_alignment_shilin.csv")
 
@@ -1304,6 +1407,14 @@ def build_agentic_panel() -> pd.DataFrame:
     out.insert(0, "event_id", EVENT_ID)
     out["claim_boundary"] = "Evaluates agent evidence behavior by rung; model outputs are not causal evidence."
     return out
+
+
+def build_agentic_ablation_manifest() -> pd.DataFrame:
+    return read_csv(ROOT / "artifacts" / "tables" / "agentic_multimodel_ablation_manifest.csv")
+
+
+def build_agentic_ablation_scores() -> pd.DataFrame:
+    return read_csv(ROOT / "artifacts" / "tables" / "agentic_multimodel_ablation_scores.csv")
 
 
 def build_data_dictionary() -> pd.DataFrame:
@@ -1330,6 +1441,9 @@ def build_data_dictionary() -> pd.DataFrame:
         ("telegram_mirror_balance.csv", "standardized_mean_difference", "float", "Full and matched balance diagnostics for Telegram design covariates."),
         ("telegram_exposure_design.csv", "shock_id", "string", "Public Telegram shock used for exposure-design rows when supported."),
         ("telegram_shock_candidates.csv", "supported_for_exposure_design", "boolean", "Whether a public Telegram shock overlaps the RED-PUMP launch window with enough support."),
+        ("agentic_multimodel_ablation_manifest.csv", "ablation_id", "string", "Registered baseline or leave-one-scaffold-out agentic condition."),
+        ("agentic_multimodel_ablation_scores.csv", "ok_runs", "integer", "Successful real model outputs scored for a provider/model/rung/ablation cell."),
+        ("agentic_multimodel_ablation_scores.csv", "method_omission_rate", "float", "Mean omission rate across control, pretrend, stakeholder, and uncertainty mentions."),
         ("clanker_base_full_cohort_manifest.csv", "token_id", "string", "Matched Base token row requiring archive/indexer outcome coverage."),
         ("clanker_base_full_cohort_pool_query_bounds.csv", "pool_id", "string", "PoolManager pool query key for full-cohort swap export."),
         ("clanker_base_full_cohort_transfer_query_bounds.csv", "contract_address", "string", "ERC20 token contract query key for full holder reconstruction."),
@@ -1337,11 +1451,246 @@ def build_data_dictionary() -> pd.DataFrame:
         ("clanker_base_full_cohort_import_contract.csv", "required_columns", "string", "CSV columns required by the full-cohort import path."),
         ("clanker_base_full_cohort_import_coverage.csv", "coverage_status", "category", "Processed-row status for full-cohort swap and transfer backfill units."),
         ("clanker_base_causal_diagnostics.csv", "att_mean_pair_diff", "float", "Matched-pair v4.1-minus-v4.0 difference for covered Base sample rows."),
+        ("solana_early_wallet_concentration.csv", "decoded_buyer_proxy_wallets", "integer", "Unique fee-payer wallets conservatively classified as early buyer proxies from Solana token-balance deltas."),
+        ("solana_early_wallet_concentration.csv", "decoded_holder_proxy_wallets", "integer", "Unique fee-payer wallets conservatively classified as early holder proxies from Solana post-token balances."),
+        ("solana_early_wallet_concentration.csv", "classified_early_transactions", "integer", "Early pool transactions with decoded buyer/seller/holder proxy labels; unclassified rows remain claim-bounded."),
+        ("solana_parsed_transaction_proxies.csv", "buyer_holder_classification", "category", "Per-transaction conservative fee-payer buyer/seller/holder proxy label from token-balance changes."),
+        ("solana_parsed_transaction_proxies.csv", "classification_source", "string", "Decoder source used for the buyer/holder proxy classification, usually Solana pre/post token balances."),
         ("teacher_requirements_alignment_shilin.csv", "status", "category", "Shilin-only status against Luyao's revision requirements."),
+        ("paired_case_ladder.csv", "paired_interpretation", "string", "Same-ladder interpretation linking Case A and Case B at each evidence stage."),
+        ("full_cohort_coverage_audit.csv", "processed_share_of_manifest", "float", "Share of Clanker/Base full-cohort manifest units processed by coverage type."),
+        ("requirement_closure_audit.csv", "top_conference_status", "category", "Whether the requirement is closed for workshop review or still a top-conference gap."),
+        ("top_conference_gap_ledger.csv", "experiment_to_close", "string", "Concrete experiment or credentialed data pull needed for top-tier causal claims."),
         ("claim_scope_ledger.csv", "claim_not_allowed", "string", "Explicit claims blocked by current evidence."),
         ("data_gap_ledger.csv", "next_action", "string", "Concrete validation step needed to close the gap."),
     ]
     return pd.DataFrame(rows, columns=["sheet", "field", "type", "description"])
+
+
+def build_requirement_closure_audit() -> pd.DataFrame:
+    alignment = build_teacher_requirements_alignment()
+    lookup = {row["ownership_item"]: row for row in alignment.to_dict("records")} if not alignment.empty else {}
+    paired = build_paired_case_ladder()
+    coverage = build_full_cohort_coverage_audit()
+    min_base_coverage = (
+        float(pd.to_numeric(coverage["processed_share_of_manifest"], errors="coerce").dropna().min())
+        if not coverage.empty
+        else 0.0
+    )
+
+    def from_alignment(item: str, default_status: str = "gap") -> tuple[str, str]:
+        row = lookup.get(item, {})
+        return str(row.get("status", default_status)), str(row.get("evidence_or_gap", ""))
+
+    rows = []
+    specs = [
+        (
+            "R1_three_sheet_release",
+            "Three linked primary sheets with event_id and claim_boundary.",
+            "Three-sheet benchmark release",
+            "pass",
+            "Closed for benchmark release.",
+            "Keep schema contract tests in CI.",
+        ),
+        (
+            "R2_fixed_horizon_metrics",
+            "Platform-day and token-horizon metrics at 1/7/30 day windows.",
+            "Metrics panel at fixed horizons",
+            "pass",
+            "Closed for representative release; top-tier welfare claims still require decoded full-cohort USD/trader fields.",
+            "Backfill decoded token-level outcome gaps listed in data_gap_ledger.csv.",
+        ),
+        (
+            "R3_offchain_covariates",
+            "Telegram, Discord, sentiment, social metadata, and RWA/off-chain context.",
+            "Off-chain and behavioral covariates",
+            "pass",
+            "Closed as linked covariates; causal social exposure remains separate.",
+            "Collect timestamped exposure shocks or channel-level intervention data.",
+        ),
+        (
+            "R4_license_citation_data_gaps",
+            "Claim ledger, data dictionary, code/data license, citation metadata, Zenodo plan, and explicit gaps.",
+            "Claim ledger, data dictionary, licensing, citation, data gaps",
+            "partial",
+            "Release-ready except DOI minting; DOI requires an external Zenodo deposit step.",
+            "Use benchmark_release/zenodo_metadata.json when creating the Zenodo deposit.",
+        ),
+        (
+            "R5_cross_chain_case",
+            "At least one comparable cross-chain empirical case.",
+            "Cross-chain empirical case",
+            "partial",
+            f"Bounded Base case accepted; full-cohort processed share is {min_base_coverage:.3%}.",
+            "Complete Base archive/indexer swap and transfer imports for every manifest row.",
+        ),
+        (
+            "R6_onchain_offchain_integration",
+            "Integrate deployment/on-chain verification with social/community layers.",
+            "On-chain/off-chain evidence integration",
+            "partial",
+            "Schemas are linked, but no supported in-window Telegram shock exists.",
+            "Extend public-shock registry or collect token-level social exposure timestamps.",
+        ),
+        (
+            "R7_mirror_case_b",
+            "Case B: naive nothing happened to trustworthy supported effect.",
+            "Mirror empirical Case B",
+            "substantive_pass_claim_bounded",
+            "Matched Telegram signal supports the mirror direction but not a causal Telegram treatment effect.",
+            "Find an exogenous social-attention event if the paper needs causal rather than predictive language.",
+        ),
+        (
+            "R8_paired_case_figure",
+            "Present Case A and Case B in one paired evidence-ladder figure.",
+            "",
+            "pass" if not paired.empty else "gap",
+            "Paired ladder data and figure are generated from the same release artifacts.",
+            "Reference artifacts/figures/fig_paired_case_ladder_shilin.png in the joint draft.",
+        ),
+        (
+            "R9_agentic_ai_for_good",
+            "Agent evidence behavior, decision paths, scaffold effects, and societal-impact framing.",
+            "Agentic Trustworthy AI evaluation",
+            "partial",
+            "Single-model L0-L7 panel exists; top-tier extension needs multi-model and scaffold ablations.",
+            "Run additional model families and remove one scaffold at a time.",
+        ),
+    ]
+    for requirement_id, requirement, item, override_status, top_status, next_experiment in specs:
+        aligned_status, evidence = from_alignment(item, override_status) if item else (override_status, "")
+        current_status = override_status if override_status in {"pass", "substantive_pass_claim_bounded"} else aligned_status
+        rows.append(
+            {
+                "requirement_id": requirement_id,
+                "professor_requirement": requirement,
+                "current_status": current_status,
+                "evidence_artifact": evidence,
+                "top_conference_status": top_status,
+                "next_experiment": next_experiment,
+                "claim_boundary": "Do not upgrade partial or predictive rows into causal welfare claims.",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def build_top_conference_gap_ledger() -> pd.DataFrame:
+    exposure = read_json(ROOT / "artifacts" / "tables" / "telegram_exposure_design_summary.json")
+    backfill = read_json(ROOT / "artifacts" / "tables" / "clanker_base_full_cohort_backfill_summary.json")
+    h1 = read_json(ROOT / "artifacts" / "tables" / "h1_rpc_mechanism_summary.json")
+    early_wallet = read_json(ROOT / "artifacts" / "tables" / "solana_early_wallet_backfill_summary.json")
+    ablation_scores = read_csv(ROOT / "artifacts" / "tables" / "agentic_multimodel_ablation_scores.csv")
+    scored_ablations = (
+        ablation_scores.loc[ablation_scores.get("status", pd.Series(dtype=str)).astype(str).eq("scored")]
+        if not ablation_scores.empty
+        else pd.DataFrame()
+    )
+    if scored_ablations.empty:
+        agentic_ablation_status = "registered_ablation_manifest_only"
+    else:
+        model_cells = scored_ablations[["provider", "model"]].drop_duplicates()
+        ok_runs = int(pd.to_numeric(scored_ablations["ok_runs"], errors="coerce").fillna(0).sum())
+        agentic_ablation_status = (
+            f"partial_{len(model_cells)}_model_specs_"
+            f"{scored_ablations[['provider', 'model', 'rung', 'ablation_id']].drop_duplicates().shape[0]}_scored_cells_"
+            f"{ok_runs}_ok_runs"
+        )
+    return pd.DataFrame(
+        [
+            {
+                "gap_id": "zenodo_doi_minting",
+                "current_status": "release_metadata_ready_external_deposit_needed",
+                "why_top_conference_gap": "A public DOI strengthens dataset credibility and citation tracking.",
+                "data_or_credential_needed": "Zenodo account/deposit workflow.",
+                "experiment_to_close": "Upload the benchmark release with benchmark_release/zenodo_metadata.json and record the DOI.",
+                "claim_unlocked_if_closed": "Dataset artifact can be cited as an archived release.",
+            },
+            {
+                "gap_id": "base_full_cohort_archive_indexer",
+                "current_status": "partial_sample_import",
+                "why_top_conference_gap": "The accepted Base case is bounded, not platform-wide.",
+                "data_or_credential_needed": "Archive Base eth_getLogs or equivalent Dune/Bitquery exports for PoolManager Swap and ERC20 Transfer logs.",
+                "experiment_to_close": (
+                    f"Fill {backfill.get('manifest_rows', 0)} swap and transfer query units, then rebuild 1/7/30 day diagnostics."
+                ),
+                "claim_unlocked_if_closed": "Potential platform-wide Clanker/Base matched replication with holder reconstruction.",
+            },
+            {
+                "gap_id": "telegram_exogenous_attention_shock",
+                "current_status": f"{exposure.get('supported_shocks', 0)} supported shocks among {exposure.get('candidate_shocks', 0)} candidates",
+                "why_top_conference_gap": "Matched Telegram metadata is predictive but not exogenous.",
+                "data_or_credential_needed": "Timestamped Telegram-linking outage, channel exposure, or policy shock overlapping RED-PUMP launches.",
+                "experiment_to_close": "Estimate an event-time exposure design around a supported public shock or channel-level intervention.",
+                "claim_unlocked_if_closed": "Causal or quasi-causal Case B rather than claim-bounded matched association.",
+            },
+            {
+                "gap_id": "solana_full_cohort_decoded_outcomes",
+                "current_status": "partial_moralis_sample_and_rpc_proxy",
+                "why_top_conference_gap": "RPC proxy proves activity, not full USD volume, active traders, or welfare.",
+                "data_or_credential_needed": "Dune, Helius Enhanced Transactions, Moralis, Birdeye, or equivalent decoded export for all graduated tokens.",
+                "experiment_to_close": (
+                    f"Replace selected {h1.get('moralis_decoded_outcome_rows', 0)} Moralis rows with full-cohort decoded 1/7/30 day rows."
+                ),
+                "claim_unlocked_if_closed": "Token-level USD/trader outcome estimates with fewer sample-selection caveats.",
+            },
+            {
+                "gap_id": "same_cohort_h4_early_wallets",
+                "current_status": (
+                    f"partial_same_cohort_rpc_buyer_holder_proxy_"
+                    f"{early_wallet.get('early_wallet_tokens', 0)}_tokens_"
+                    f"{early_wallet.get('parsed_early_transactions', 0)}_parsed_txs_"
+                    f"{early_wallet.get('classified_early_transactions', 0)}_classified_txs"
+                ),
+                "why_top_conference_gap": "Retail-risk H4 remains external mechanism validation, not same-cohort causal evidence.",
+                "data_or_credential_needed": "Complete same-cohort early buyer/holder snapshots for all 1,651 graduated PumpSwap tokens.",
+                "experiment_to_close": "Join complete early-wallet concentration to 1/7/30 day token outcomes and rerun the stakeholder battery.",
+                "claim_unlocked_if_closed": "Within-cohort retail concentration/risk evidence rather than external proxy validation.",
+            },
+            {
+                "gap_id": "agentic_multimodel_scaffold_ablations",
+                "current_status": agentic_ablation_status,
+                "why_top_conference_gap": "A stronger AI evaluation needs model-family robustness and scaffold causal attribution.",
+                "data_or_credential_needed": "Additional model API access and registered ablation prompts.",
+                "experiment_to_close": "Run multi-model L0-L7 prompts plus leave-one-scaffold-out ablations.",
+                "claim_unlocked_if_closed": "Generalizable agent evidence-behavior benchmark claim.",
+            },
+        ]
+    )
+
+
+def build_zenodo_metadata() -> dict[str, Any]:
+    return {
+        "title": "Web3AI4IO Shilin PumpSwap Benchmark Release",
+        "upload_type": "dataset",
+        "description": (
+            "Machine-readable evidence-quality benchmark artifacts for the Shilin Pump.fun/PumpSwap application arm, "
+            "including linked events, metrics, covariates, claim boundaries, paired Case A/B ladder rows, "
+            "cross-chain Clanker/Base manifests, and data-gap ledgers."
+        ),
+        "creators": [{"name": "Global Nomad Nexus Web3AI4IO contributors"}],
+        "access_right": "open",
+        "license": "cc-by-4.0",
+        "keywords": [
+            "causal inference",
+            "token launchpads",
+            "PumpSwap",
+            "Clanker",
+            "trustworthy AI",
+            "evidence ladder",
+            "benchmark",
+        ],
+        "related_identifiers": [
+            {
+                "identifier": "https://github.com/Global-Nomad-Nexus/Web3AI4IO",
+                "relation": "isSupplementTo",
+                "scheme": "url",
+            }
+        ],
+        "notes": (
+            "Code is MIT licensed. Generated benchmark tables are prepared for CC BY 4.0 release subject to upstream "
+            "license compatibility. The DOI is not minted until this metadata is used in a Zenodo deposit."
+        ),
+    }
 
 
 def write_manifest(paths: list[Path]) -> None:
@@ -1373,6 +1722,7 @@ def write_manifest(paths: list[Path]) -> None:
                 "cross_chain_event_candidates.csv",
                 "mirror_case_candidates.csv",
                 "mirror_case_ladder.csv",
+                "paired_case_ladder.csv",
                 "telegram_mirror_design.csv",
                 "telegram_mirror_balance.csv",
                 "telegram_mirror_matched_cells.csv",
@@ -1384,11 +1734,17 @@ def write_manifest(paths: list[Path]) -> None:
                 "clanker_base_full_cohort_expected_horizons.csv",
                 "clanker_base_full_cohort_import_contract.csv",
                 "clanker_base_full_cohort_import_coverage.csv",
+                "full_cohort_coverage_audit.csv",
                 "clanker_base_causal_diagnostics.csv",
                 "teacher_requirements_alignment_shilin.csv",
+                "requirement_closure_audit.csv",
+                "top_conference_gap_ledger.csv",
                 "agentic_evaluation_panel.csv",
+                "agentic_multimodel_ablation_manifest.csv",
+                "agentic_multimodel_ablation_scores.csv",
                 "data_dictionary.csv",
             ],
+            "zenodo_metadata": "zenodo_metadata.json",
         },
     )
 
@@ -1411,6 +1767,7 @@ def main() -> None:
         "cross_chain_event_candidates.csv": (build_cross_chain_candidates(), None),
         "mirror_case_candidates.csv": (build_mirror_candidates(), None),
         "mirror_case_ladder.csv": (build_mirror_case_ladder(), None),
+        "paired_case_ladder.csv": (build_paired_case_ladder(), None),
         "telegram_mirror_design.csv": (build_telegram_mirror_design(), None),
         "telegram_mirror_balance.csv": (build_telegram_mirror_balance(), None),
         "telegram_mirror_matched_cells.csv": (build_telegram_mirror_matched_cells(), None),
@@ -1422,9 +1779,14 @@ def main() -> None:
         "clanker_base_full_cohort_expected_horizons.csv": (build_clanker_full_cohort_expected_horizons(), None),
         "clanker_base_full_cohort_import_contract.csv": (build_clanker_full_cohort_import_contract(), None),
         "clanker_base_full_cohort_import_coverage.csv": (build_clanker_full_cohort_import_coverage(), None),
+        "full_cohort_coverage_audit.csv": (build_full_cohort_coverage_audit(), None),
         "clanker_base_causal_diagnostics.csv": (build_clanker_base_causal_diagnostics(), None),
         "teacher_requirements_alignment_shilin.csv": (build_teacher_requirements_alignment(), None),
+        "requirement_closure_audit.csv": (build_requirement_closure_audit(), None),
+        "top_conference_gap_ledger.csv": (build_top_conference_gap_ledger(), None),
         "agentic_evaluation_panel.csv": (build_agentic_panel(), None),
+        "agentic_multimodel_ablation_manifest.csv": (build_agentic_ablation_manifest(), None),
+        "agentic_multimodel_ablation_scores.csv": (build_agentic_ablation_scores(), None),
         "data_dictionary.csv": (build_data_dictionary(), None),
     }
 
@@ -1433,7 +1795,9 @@ def main() -> None:
         path = DATA / filename
         write_csv(path, df, columns)
         paths.append(path)
-    write_manifest(paths + [DATA / "release_file_manifest.csv"])
+    zenodo_path = OUT / "zenodo_metadata.json"
+    write_json(zenodo_path, build_zenodo_metadata())
+    write_manifest(paths + [DATA / "release_file_manifest.csv", zenodo_path])
 
     print(f"Shilin benchmark release written to {DATA}")
     print(

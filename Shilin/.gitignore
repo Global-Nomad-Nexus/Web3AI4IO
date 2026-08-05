@@ -6,6 +6,7 @@ data/external/*.csv
 data/external/*.parquet
 artifacts/agent_runs/raw_responses/
 artifacts/agent_runs/raw/
+artifacts/agent_runs/raw_ablation/
 artifacts/download_failures/
 artifacts/external_validation/raw_coin_metadata/
 artifacts/external_validation/moralis_token_swaps.csv

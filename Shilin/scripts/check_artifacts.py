@@ -51,9 +51,12 @@ REQUIRED_TABLES = [
     "identification_strength_summary.json",
     "agentic_prompt_manifest.csv",
     "agentic_arm_scores.csv",
+    "agentic_multimodel_ablation_manifest.csv",
+    "agentic_multimodel_ablation_scores.csv",
     "paper_readiness_audit.csv",
     "paper_readiness_summary.json",
     "radar_evidence_profiles.csv",
+    "solana_early_wallet_backfill_summary.json",
 ]
 
 REQUIRED_FIGURES = [
@@ -153,6 +156,13 @@ def main() -> None:
     external_summary = json.loads((config.tables_dir / "external_validation_summary.json").read_text(encoding="utf-8"))
     if external_summary.get("status") != "computed_external_validation_sample":
         errors.append("external_validation_summary.json must record computed_external_validation_sample.")
+    if int(external_summary.get("early_wallet_rows", 0) or 0) <= 0:
+        errors.append("external_validation_summary.json must include at least one Solana early-wallet proxy row.")
+    early_wallet_summary = json.loads((config.tables_dir / "solana_early_wallet_backfill_summary.json").read_text(encoding="utf-8"))
+    if int(early_wallet_summary.get("parsed_early_transactions", 0) or 0) <= 0:
+        errors.append("solana_early_wallet_backfill_summary.json must record parsed early transactions.")
+    if int(early_wallet_summary.get("classified_early_transactions", 0) or 0) <= 0:
+        errors.append("solana_early_wallet_backfill_summary.json must record decoded buyer/holder proxy classifications.")
     for name in [
         "pumpfun_coin_metadata.csv",
         "solana_post_migration_pool_windows.csv",
@@ -257,6 +267,18 @@ def main() -> None:
     scores = pd.read_csv(config.tables_dir / "agentic_arm_scores.csv")
     if "registered_prompts_only" in set(scores["status"].astype(str)):
         errors.append("agentic_arm_scores.csv still contains registered_prompts_only; rerun run_all.py after agent runs.")
+    ablation_manifest = pd.read_csv(config.tables_dir / "agentic_multimodel_ablation_manifest.csv")
+    if len(ablation_manifest) < len(EXPECTED_RUNGS) * 5:
+        errors.append("agentic_multimodel_ablation_manifest.csv must register L0-L7 baseline plus scaffold removals.")
+    ablation_scores = pd.read_csv(config.tables_dir / "agentic_multimodel_ablation_scores.csv")
+    scored_ablation_cells = ablation_scores.loc[ablation_scores["status"].astype(str).eq("scored")]
+    if len(scored_ablation_cells) < len(EXPECTED_RUNGS) * 5:
+        errors.append("agentic_multimodel_ablation_scores.csv must include scored baseline plus scaffold-removal cells.")
+    scored_model_specs = scored_ablation_cells[["provider", "model"]].drop_duplicates()
+    if len(scored_model_specs) < 2:
+        errors.append("agentic_multimodel_ablation_scores.csv must include at least two scored model specs.")
+    if "Ollama" not in set(scored_ablation_cells["provider"].astype(str)):
+        errors.append("agentic_multimodel_ablation_scores.csv must include at least one no-API local Ollama model.")
 
     readiness = pd.read_csv(config.tables_dir / "paper_readiness_audit.csv")
     required_areas = {

@@ -109,11 +109,15 @@ The release contains three primary sheets:
 | `benchmark_release/data/metrics_panel.csv` | Platform-day, token-horizon, and token-cohort outcomes with fixed horizons and claim boundaries. |
 | `benchmark_release/data/covariates.csv` | Token social metadata plus Discord, sentiment, TVL, and RWA context rows. |
 
-Supplemental sheets record the claim-scope ledger, data gaps, mirror-case candidates, Telegram matched-design outputs, cross-chain event candidates, and agentic evaluation panel. Code remains MIT licensed. Generated data tables are prepared for CC BY 4.0 release, subject to upstream license compatibility checks before Zenodo publication.
+Supplemental sheets record the claim-scope ledger, data gaps, paired Case A/B ladder, mirror-case candidates, Telegram matched-design outputs, cross-chain event candidates, requirement closure audit, top-conference gap ledger, and agentic evaluation panels. Code remains MIT licensed. Generated data tables are prepared for CC BY 4.0 release, subject to upstream license compatibility checks before Zenodo publication.
 
 Shilin's current mirror case is stronger than a raw association but still not a final causal result. The strongest candidate is Telegram/social metadata: the overall RED-PUMP graduation rate is about `0.198%`, while Telegram-linked tokens graduate at about `1.485%` versus `0.166%` without Telegram. The release now includes `benchmark_release/data/telegram_mirror_design.csv`, `telegram_mirror_balance.csv`, and `telegram_mirror_matched_cells.csv`. The matched design supports 20,227 Telegram tokens, estimates a matched ATT of about `0.945` percentage points with a launch-day cluster bootstrap CI of `[0.738, 1.152]` percentage points, and records an E-value of `5.02`. Event-time diagnostics make the causal boundary stricter rather than looser: the same `0.945` percentage-point association appears within 5 minutes, while the delayed >60 minute outcome is zero. A public shock registry now records six Telegram outage/linking/App Store candidates, but none overlaps the RED-PUMP launch window with enough support. This is therefore a credible predictive/mechanism-supported mirror signal, not a causal Telegram effect without an exogenous attention shock or stronger exposure design.
 
 The cross-chain extension now has an accepted matched Base case. `scripts/run_clanker_base_validation.py` verifies the first observed Clanker v4.1 MEV/sniper-protection token launch on Base at `2025-08-26T20:41:57Z` in transaction `0x5c076d1967b9f4873d36191321ccf015015b48687d0f176c6ad7091a84551985`. The bounded on-chain outcome run matches the first six v4.1 treated launches to nearest v4.0 controls and computes 1/7/30 day Uniswap v4 PoolManager outcomes for a 12-token, 36-row matched cohort. It writes raw Base swap and ERC20 Transfer evidence (`30` PoolManager Swap rows and `94` ERC20 Transfer rows) and reconstructs holder concentration for all 12 matched tokens across all 36 horizon rows. A larger TokenCreated discovery scan now covers `61,080` Clanker v4 launches from block `34,350,000` to `36,250,000`, including `6,940` v4.1 rows through `2025-10-01T03:22:27Z`. `scripts/prepare_clanker_base_full_cohort.py` turns that discovery universe into a full-cohort archive/indexer manifest: `13,880` matched token rows, `13,880` PoolManager swap query bounds, `13,880` ERC20 Transfer query bounds, and `41,640` expected 1/7/30 day horizon rows. `scripts/backfill_clanker_base_full_cohort_logs.py` backfills those manifests into `--swap-import` and `--transfer-import` compatible CSVs with a resumable coverage ledger; the current ledger contains `30` swap import rows and `100` transfer import rows after merging the accepted sample and smoke-tested units. That result shows why the accepted matched case should still not be written as platform-wide causal replication: the universe and import path are now specified and smoke-tested, but full-cohort 30-day swaps, transfers, and holder reconstruction still require an archive/indexer endpoint. A live public endpoint retry on August 4, 2026 hit an archive-token requirement for historical `eth_getLogs`, so the package keeps the import path explicit. Four.meme on BNB and SunPump on TRON are retained as discovery candidates.
+
+H4 same-cohort early-wallet validation has moved from an empty placeholder to a bounded decoded-proxy sample. `scripts/backfill_solana_early_wallets_from_metadata.py` uses the 1,651-token graduated metadata universe and Solana JSON-RPC transaction details to populate early-wallet concentration rows. The current checked-in sample covers 10 tokens and 298 early parsed pool transactions; 101 transactions have conservative buyer/seller/holder proxy labels from pre/post token-balance changes, producing 53 decoded buyer-proxy wallets and 60 decoded holder-proxy wallets. This is useful mechanism evidence, but it is not the all-1,651-token decoded buyer/holder classification needed for a top-conference H4 claim.
+
+The agentic extension now includes registered multi-model scaffold ablations. `scripts/run_agentic_multimodel_ablation.py` records API-backed runs when credentials are available, while `scripts/run_agentic_ollama_ablation.py` runs no-API local Ollama models. The current release contains 65 scored ablation cells and 105 successful model outputs across four model specs: DeepSeek `deepseek-chat`, Ollama `llama3.1`, Ollama `deepseek-r1:8b`, and Ollama `qwen2.5:0.5b`. These rows support a real multi-model benchmark scaffold audit, but not causal claims about individual prompt components.
 
 ## Slim Release Policy
 
@@ -168,8 +172,10 @@ To regenerate the package from upstream data, first edit `configs/pumpswap_case.
 cd Shilin
 .venv/bin/python scripts/run_all.py
 .venv/bin/python scripts/run_agentic_deepseek.py --env-file /path/to/local/.env --overwrite
+.venv/bin/python scripts/run_agentic_ollama_ablation.py --models llama3.1,deepseek-r1:8b,qwen2.5:0.5b --rungs L0,L6 --ablation-ids baseline,omit_uncertainty_inference
 .venv/bin/python scripts/run_dune_token_exports.py --max-tokens 0
 .venv/bin/python scripts/run_solana_external_validation.py --max-tokens 300 --resume
+.venv/bin/python scripts/backfill_solana_early_wallets_from_metadata.py --max-tokens 10 --resume --refresh-existing
 .venv/bin/python scripts/download_free_public_data.py --include all
 .venv/bin/python scripts/run_all.py
 .venv/bin/python scripts/check_artifacts.py
@@ -199,8 +205,14 @@ If a high-throughput Solana RPC key is available, set `HELIUS_API_KEY` or `SOLAN
 | Shilin benchmark covariates | `benchmark_release/data/covariates.csv` |
 | Shilin mirror case candidates | `benchmark_release/data/mirror_case_candidates.csv` |
 | Shilin preliminary mirror-case ladder | `benchmark_release/data/mirror_case_ladder.csv` |
+| Shilin paired Case A/B ladder | `benchmark_release/data/paired_case_ladder.csv` |
 | Shilin cross-chain candidates | `benchmark_release/data/cross_chain_event_candidates.csv` |
+| Shilin requirement closure audit | `benchmark_release/data/requirement_closure_audit.csv` |
+| Shilin top-conference gap ledger | `benchmark_release/data/top_conference_gap_ledger.csv` |
+| Shilin Base full-cohort coverage audit | `benchmark_release/data/full_cohort_coverage_audit.csv` |
 | Shilin agentic evaluation panel | `benchmark_release/data/agentic_evaluation_panel.csv` |
+| Shilin agentic ablation manifest | `benchmark_release/data/agentic_multimodel_ablation_manifest.csv` |
+| Shilin agentic ablation scores | `benchmark_release/data/agentic_multimodel_ablation_scores.csv` |
 | Deterministic L0-L7 ladder | `artifacts/tables/deterministic_ladder.csv` |
 | Event-study coefficients | `artifacts/tables/event_study_coefficients_shilin.csv` |
 | Pre-trend diagnostics | `artifacts/tables/pretrend_diagnostics.json` |
@@ -212,6 +224,7 @@ If a high-throughput Solana RPC key is available, set `HELIUS_API_KEY` or `SOLAN
 | H1 mechanism summary | `artifacts/tables/h1_rpc_mechanism_summary.json` |
 | Moralis decoded summary | `artifacts/tables/moralis_decoded_outcomes_summary.json` |
 | Dune indexer export summary | `artifacts/tables/dune_indexer_export_summary.json` |
+| Solana early-wallet decoded proxy summary | `artifacts/tables/solana_early_wallet_backfill_summary.json` |
 | Paper readiness audit | `artifacts/tables/paper_readiness_audit.csv` |
 | Paper readiness summary | `artifacts/tables/paper_readiness_summary.json` |
 
@@ -225,6 +238,8 @@ The current run produces a conclusion flip that is useful for the paper's benchm
 - L6 exact Rademacher wild-cluster inference over four protocol units widens uncertainty and remains non-significant.
 - L5 finds that high-concentration tokens have a substantially higher source-coded high/critical risk rate, but this is a proxy association, not H4 causal proof.
 - L7 reframes the evaluation as stakeholder-dependent rather than a single aggregate-volume verdict.
+- The H4 early-wallet backfill currently provides a 10-token decoded-proxy sample with 101 classified early transactions, 53 buyer-proxy wallets, and 60 holder-proxy wallets; the full 1,651-token decoded buyer/holder pass remains open.
+- The agentic ablation table now includes 65 scored cells and 105 successful outputs across DeepSeek plus local Ollama Llama, DeepSeek-R1, and Qwen models.
 
 Mechanism validation is stronger than welfare causality. The RPC audit covers 1,651 graduated tokens, finds 1,636 with observed 30-day pool activity, records a 99.09% all-token observed active lower bound, and finds 100.0% active share among complete 30-day windows. Complete windows have a median transaction-count proxy of 826 and zero temporal-order violations. Moralis decoded outcomes add a covered-token sample with wallet-level and USD-valued swaps, but not a full-cohort welfare-causal estimate.
 
@@ -236,15 +251,16 @@ The package supports:
 
 - a market-level benchmark showing how naive and trustworthy pipelines diverge;
 - mechanism-level evidence that PumpSwap functioned as a post-migration liquidity venue for graduated tokens;
-- token-level H4 proxy evidence based on holder concentration and source-coded risk;
+- token-level H4 proxy evidence based on holder concentration, source-coded risk, and a bounded 10-token early-wallet buyer/holder proxy sample;
 - a transparent data-availability ledger separating computed evidence from registered validation gaps;
-- agentic-evaluation scaffolds and compact run summaries for L0-L7 conclusion reliability.
+- agentic-evaluation scaffolds, compact run summaries, and multi-model scaffold-ablation scores for conclusion reliability.
 
 The package does not support:
 
 - full welfare causality;
 - full-cohort USD-volume, price-quality, active-trader, or trade-direction claims;
 - same-cohort H4 early-wallet causal effects;
+- all-1,651-token decoded early buyer/holder classification;
 - replacing decoded indexer evidence with public-RPC signature proxies.
 
 ## Manuscript Boundary
