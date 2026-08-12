@@ -1,0 +1,69 @@
+{
+  "source_id": "fourmeme_bsc_archive_rpc_contract_events",
+  "dataset_role": "canonical_core",
+  "collected_at_utc": "2026-08-12T01:06:03.447325+00:00",
+  "rpc_url": "https://bsc.rpc.sentio.xyz",
+  "snapshot_block": 115357949,
+  "deployment_blocks": {
+    "v1": 40138454,
+    "v2": 41983675
+  },
+  "contracts": [
+    {
+      "version": "v1",
+      "address": "0xec4549cadce5da21df6e6422d448034b5233bfbc",
+      "lifecycle_event": "TradeStop"
+    },
+    {
+      "version": "v2",
+      "address": "0x5c952063c7fc8610ffdb798152d69f0b9550762b",
+      "lifecycle_event": "LiquidityAdded"
+    }
+  ],
+  "scans": [
+    {
+      "manager_version": "v1",
+      "manager_address": "0xec4549cadce5da21df6e6422d448034b5233bfbc",
+      "deployment_block": 40138454,
+      "snapshot_block": 115357949,
+      "next_block": 115357950,
+      "chunk_size": 10000,
+      "batch_windows": 20,
+      "token_create_rows": 5570,
+      "lifecycle_rows": 106,
+      "complete": true,
+      "token_create_sha256": "c650072b685c843ab87dcd9aa70f4566f9e80d52a86e3d7ca18c491eaadccabb",
+      "lifecycle_sha256": "858618c0b7e6c0cec92fcc726002104a52e055aaf89ad02aabbd0f6d140ca963"
+    },
+    {
+      "manager_version": "v2",
+      "manager_address": "0x5c952063c7fc8610ffdb798152d69f0b9550762b",
+      "deployment_block": 41983675,
+      "snapshot_block": 115357949,
+      "next_block": 115357950,
+      "chunk_size": 5000,
+      "batch_windows": 20,
+      "token_create_rows": 1588109,
+      "lifecycle_rows": 15403,
+      "complete": true,
+      "token_create_sha256": "f8b59c101ec17f8ad53e20ffcbf6f79137e3e3fa025778a411f0ed2f9e883379",
+      "lifecycle_sha256": "4ef5c3de8cc8c34a85b7ef819ce1858fb3a7ecb2c8bcd84f1ba7b1841b0f954e"
+    }
+  ],
+  "unique_token_creates": 1593679,
+  "onchain_launches_sha256": "e47cf2bd22e822d3fcf6a2187ffb9dc72a54b8977e88bd14d1613e7b923708c3",
+  "lifecycle_receipts": {
+    "rows": 15509,
+    "with_pool_mapping": 15403,
+    "with_liquidity_mint": 15403,
+    "sha256": "30b07f7ffde0a541c1fc1cd36376fadd130a5a441bb6ade505f9e70bfa85cd63"
+  },
+  "metadata_enrichment_source": "Four.meme official public API capped at 1,000 rows",
+  "exclusions": [
+    "TokenPurchase",
+    "TokenSale",
+    "Transfer",
+    "holder data",
+    "decoded trading"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "release": "v1",
+  "release_name": "bnb",
+  "built_at_utc": "2026-08-12T11:10:02.360865+00:00",
+  "source": {
+    "path": "data/external/fourmeme/20260811/onchain/onchain_launches.jsonl",
+    "rows": 1593679,
+    "sha256": "e47cf2bd22e822d3fcf6a2187ffb9dc72a54b8977e88bd14d1613e7b923708c3"
+  },
+  "tables": {
+    "tokens": {
+      "rows": 1593679,
+      "sha256": "7cccd3e59e1747fbe43cbb344caa6bd31a712764a99be1f2aed021e156362c38"
+    },
+    "launches": {
+      "rows": 1593679,
+      "sha256": "3ae6fe3eb87fc03add796a47e2a8143419e19e74200cb144965bd751716a02a9"
+    },
+    "protocol_config": {
+      "rows": 1593679,
+      "sha256": "2f837c6fadcf9c2be7dd8bd8557ae489999cfa1d0d582f7506b8eeefe7adf472"
+    },
+    "pools": {
+      "rows": 15403,
+      "sha256": "bc15bbf06876a7dc40e380c4b53711cc17fe4eaf177bd4f4d7002c849c996443"
+    },
+    "liquidity_initializations": {
+      "rows": 15403,
+      "sha256": "c473f1dd3f00ed3e05d195b49c0c2faf0d9612d99f12514e618618c48afb6aaa"
+    },
+    "lifecycle_events": {
+      "rows": 1639994,
+      "sha256": "3522efc91a523656eb7ebc34c6d3cf7b333af6c9d76282a6aa5b361b73f7531d"
+    },
+    "token_metadata": {
+      "rows": 999,
+      "sha256": "8f54c7b9936c0ac519289862c6fa9c651d0c32eee10c013b5c5df73d3a78fa22"
+    },
+    "token_state_snapshots": {
+      "rows": 0,
+      "sha256": "2c88f517094b15a27a07d4aa7104a21d39c3680e0d55487a2269db40e99f9f26"
+    },
+    "coverage_ledger": {
+      "rows": 1593679,
+      "sha256": "19bc4344b6335df693f746af6f3dda8d82046c1410ee2af058627c97297734ce"
+    }
+  },
+  "auxiliary_sources": [
+    {
+      "path": "data/external/fourmeme/20260811/onchain/ONCHAIN_SOURCE.json",
+      "rows": 69,
+      "sha256": "fc428d3745821761b6a6d2962a9482ebb7f52b6bf987fc0acce2823d709ccdfb"
+    },
+    {
+      "path": "data/external/fourmeme/20260811/onchain/lifecycle_core.jsonl",
+      "rows": 15509,
+      "sha256": "30b07f7ffde0a541c1fc1cd36376fadd130a5a441bb6ade505f9e70bfa85cd63"
+    },
+    {
+      "path": "data/external/fourmeme/20260811/onchain/existing_pool_mappings_v2.jsonl",
+      "rows": 3087,
+      "sha256": "1042280eea8c4cc246fa741b851b41178a602c563bf86ba592e65476cd708420"
+    },
+    {
+      "path": "data/external/fourmeme/20260811/onchain/historical_pool_initializations.jsonl",
+      "rows": 701,
+      "sha256": "5edbf6dba25d779dadf303e78b4ebedc2ce7ef2dce5cf918c0f27dc5119464f6"
+    },
+    {
+      "path": "data/external/fourmeme/20260811/snapshot/tokens.jsonl",
+      "rows": 1000,
+      "sha256": "4dc796c6167a013e779b00b456459ce701769089828669aae73581f48fb1f9ee"
+    }
+  ],
+  "canonical_core_coverage": {
+    "launch_universe": 1593679,
+    "creator_observed": 1593679,
+    "protocol_config_observed": 1593679,
+    "pool_mapping_observed": 15403,
+    "pool_mapping_not_collected": 106,
+    "pool_mapping_not_applicable": 1578170,
+    "pool_initialization_observed": 15403,
+    "liquidity_initialization_observed": 15403,
+    "graduation_observed": 15403,
+    "graduation_not_collected": 106,
+    "graduation_not_applicable": 1578170,
+    "migration_observed": 15403,
+    "migration_not_collected": 106,
+    "migration_not_applicable": 1578170,
+    "decoded_swaps_not_collected": 1593679
+  }
+}

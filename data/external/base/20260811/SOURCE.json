@@ -1,0 +1,18 @@
+{
+  "source_id": "base_pool_manager_launch_core_events",
+  "chain_id": "eip155:8453",
+  "platform_id": "clanker",
+  "dataset_role": "canonical_core",
+  "collected_at_utc": "2026-08-11T07:47:41.735823+00:00",
+  "endpoint": "https://mainnet.base.org",
+  "method": "eth_getLogs",
+  "contract": "0x498581ff718922c3f8e6a244956af099b2652b2b",
+  "scope": "Only pools and launch transactions already present in the fixed 62,618 launch universe.",
+  "rows": 219303,
+  "initialize_rows": 62618,
+  "modify_liquidity_rows": 156685,
+  "pools_with_initialize": 62618,
+  "pools_with_positive_initial_liquidity": 62618,
+  "sha256": "237df87273dc14f16b0822e38c424d600eb5fc8bb429a814f7ecf9ebb8289766",
+  "exclusions": ["TokenCreated recollection", "Swap", "Transfer", "holder data", "trading outcomes"]
+}

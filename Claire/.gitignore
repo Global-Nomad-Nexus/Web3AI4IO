@@ -4,3 +4,5 @@ __pycache__/
 .env
 .env.*
 api.txt
+data_expansion/raw/
+data_expansion/cache/

@@ -1,0 +1,11 @@
+{
+  "source_id": "fourmeme_official_public_token_search",
+  "chain_id": "eip155:56",
+  "platform_id": "four_meme",
+  "dataset_role": "metadata_validation_only",
+  "source_url": "https://four.meme/meme-api/v1/public/token/search",
+  "collected_at_utc": "2026-08-11T00:42:56.131989+00:00",
+  "unique_tokens": 1000,
+  "sha256": "4dc796c6167a013e779b00b456459ce701769089828669aae73581f48fb1f9ee",
+  "limitation": "The official list API exposes at most 1,000 rows and is not the full launch universe."
+}

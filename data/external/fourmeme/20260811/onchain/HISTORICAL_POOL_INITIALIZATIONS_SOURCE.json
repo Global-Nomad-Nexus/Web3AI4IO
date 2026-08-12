@@ -1,0 +1,27 @@
+{
+  "source_id": "fourmeme_pancake_pool_historical_initializations",
+  "collected_at_utc": "2026-08-12T00:36:14.730167+00:00",
+  "rpc_url": "https://bsc.rpc.sentio.xyz",
+  "selection": "LiquidityAdded with pool_address and without pair_created_log_index",
+  "source_method": "archive eth_getCode binary search followed by exact-block factory event lookup",
+  "factories": {
+    "pancake_v2": {
+      "address": "0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
+      "event_topic": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9"
+    },
+    "pancake_v3": {
+      "address": "0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
+      "event_topic": "0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"
+    }
+  },
+  "rows": 701,
+  "observed": 701,
+  "not_collected": 0,
+  "pool_address_matches_lifecycle": 701,
+  "amm_versions": {
+    "pancake_v2": 44,
+    "pancake_v3": 657
+  },
+  "sha256": "5edbf6dba25d779dadf303e78b4ebedc2ce7ef2dce5cf918c0f27dc5119464f6",
+  "block_timestamp_enrichment": "eth_getBlockByNumber at each creation block"
+}

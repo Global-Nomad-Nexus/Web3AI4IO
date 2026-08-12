@@ -1,0 +1,653 @@
+{
+  "tokens": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "symbol",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "created_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "token_program",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "nullable": true
+    }
+  ],
+  "launches": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "launch_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "observed_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "initial_market_cap_sol",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "description_length",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "has_twitter",
+      "type": "bool",
+      "nullable": true
+    },
+    {
+      "name": "has_website",
+      "type": "bool",
+      "nullable": true
+    },
+    {
+      "name": "has_telegram",
+      "type": "bool",
+      "nullable": true
+    },
+    {
+      "name": "social_count",
+      "type": "int8",
+      "nullable": true
+    },
+    {
+      "name": "source_record_type",
+      "type": "string",
+      "nullable": false
+    }
+  ],
+  "lifecycle_events": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "event_type",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "event_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "minutes_from_launch_observed",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "minutes_from_launch_chain",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "final_market_cap_sol",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "detection_lag_minutes",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "source_record_type",
+      "type": "string",
+      "nullable": false
+    }
+  ],
+  "token_metadata": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "metadata_status",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "metadata_complete",
+      "type": "bool",
+      "nullable": true
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "bonding_curve",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "associated_bonding_curve",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "pool_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "token_program",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "protocol",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "last_trade_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "ath_market_cap_usd",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "ath_market_cap_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "current_market_cap_usd",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "total_supply_raw",
+      "type": "double",
+      "nullable": true
+    }
+  ],
+  "pool_windows": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "graduated_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "horizon_days",
+      "type": "int16",
+      "nullable": false
+    },
+    {
+      "name": "pool_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "transaction_proxy_count",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "active_traders",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "volume_usd",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "first_trade_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "last_trade_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "signatures_scanned",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "transactions_parsed",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "window_status",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "validation_status",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "metric_semantics",
+      "type": "string",
+      "nullable": false
+    }
+  ],
+  "decoded_swaps": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "graduated_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "horizon_days",
+      "type": "int16",
+      "nullable": false
+    },
+    {
+      "name": "transaction_hash",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "transaction_index",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "transaction_type",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "block_timestamp",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "block_number",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "wallet_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "pair_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "exchange_name",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "bought_token_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "bought_amount",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "bought_usd_amount",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "sold_token_address",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "sold_amount",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "sold_usd_amount",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "total_value_usd",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "nullable": true
+    }
+  ],
+  "token_horizons": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "graduated_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "horizon_days",
+      "type": "int16",
+      "nullable": false
+    },
+    {
+      "name": "decoded_trade_count",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "decoded_buy_count",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "decoded_sell_count",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "decoded_volume_usd",
+      "type": "double",
+      "nullable": true
+    },
+    {
+      "name": "decoded_active_traders",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "first_decoded_trade_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "last_decoded_trade_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "window_status",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "name": "swaps_fetched",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "pages_fetched",
+      "type": "int64",
+      "nullable": true
+    },
+    {
+      "name": "is_complete_window",
+      "type": "bool",
+      "nullable": false
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "nullable": true
+    }
+  ],
+  "coverage_ledger": [
+    {
+      "name": "dataset_version",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "platform_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "token_id",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "mint",
+      "type": "string",
+      "nullable": false
+    },
+    {
+      "name": "graduated_at",
+      "type": "timestamp[us, tz=UTC]",
+      "nullable": true
+    },
+    {
+      "name": "metadata_available",
+      "type": "bool",
+      "nullable": false
+    },
+    {
+      "name": "pool_address_available",
+      "type": "bool",
+      "nullable": false
+    },
+    {
+      "name": "rpc_windows_available",
+      "type": "int8",
+      "nullable": false
+    },
+    {
+      "name": "decoded_windows_available",
+      "type": "int8",
+      "nullable": false
+    },
+    {
+      "name": "decoded_swaps_available",
+      "type": "bool",
+      "nullable": false
+    },
+    {
+      "name": "decoded_windows_complete",
+      "type": "int8",
+      "nullable": false
+    },
+    {
+      "name": "coverage_status",
+      "type": "string",
+      "nullable": false
+    }
+  ]
+}

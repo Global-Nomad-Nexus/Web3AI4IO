@@ -1,0 +1,11 @@
+{
+  "source_id": "sunpump_official_public_token_list",
+  "chain_id": "tron:mainnet",
+  "platform_id": "sunpump",
+  "dataset_role": "metadata_validation_only",
+  "source_url": "https://api-v2.sunpump.meme/pump-api/token",
+  "collected_at_utc": "2026-08-11T00:48:26.877518+00:00",
+  "unique_tokens": 1000,
+  "sha256": "716a3a7076e0a3e8d9dde5c5117af74f2d97c6b5fdc19265f870d3f39424c138",
+  "limitation": "The official list API exposes at most 1,000 rows and is not the full launch universe."
+}

@@ -1,0 +1,14 @@
+{
+  "manager_version": "v1",
+  "manager_address": "0xec4549cadce5da21df6e6422d448034b5233bfbc",
+  "deployment_block": 40138454,
+  "snapshot_block": 115357949,
+  "next_block": 115357950,
+  "chunk_size": 10000,
+  "batch_windows": 20,
+  "token_create_rows": 5570,
+  "lifecycle_rows": 106,
+  "complete": true,
+  "token_create_sha256": "c650072b685c843ab87dcd9aa70f4566f9e80d52a86e3d7ca18c491eaadccabb",
+  "lifecycle_sha256": "858618c0b7e6c0cec92fcc726002104a52e055aaf89ad02aabbd0f6d140ca963"
+}

@@ -1,0 +1,9 @@
+{
+  "snapshot_block": 115357949,
+  "confirmations": 20,
+  "deployment_blocks": {
+    "v1": 40138454,
+    "v2": 41983675
+  },
+  "state_rpc_url": "https://bsc-mainnet.public.blastapi.io"
+}

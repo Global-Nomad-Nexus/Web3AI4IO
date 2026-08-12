@@ -1,0 +1,11 @@
+{
+  "source_id": "fourmeme_pancake_v2_getpair_snapshot",
+  "collected_at_utc": "2026-08-11T21:31:36.891464+00:00",
+  "rpc_url": "https://bsc.rpc.sentio.xyz",
+  "factory_address": "0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
+  "snapshot_block": 115357949,
+  "rows": 3087,
+  "observed": 223,
+  "not_collected": 2864,
+  "sha256": "1042280eea8c4cc246fa741b851b41178a602c563bf86ba592e65476cd708420"
+}

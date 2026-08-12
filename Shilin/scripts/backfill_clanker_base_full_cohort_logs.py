@@ -187,10 +187,22 @@ def select_work(
     return work.reset_index(drop=True)
 
 
-def batch_frames(df: pd.DataFrame, size: int) -> list[pd.DataFrame]:
+def batch_frames(df: pd.DataFrame, size: int, max_launch_span_blocks: int) -> list[pd.DataFrame]:
     if df.empty:
         return []
-    return [df.iloc[start : start + size].copy() for start in range(0, len(df), size)]
+    batches: list[pd.DataFrame] = []
+    start = 0
+    while start < len(df):
+        end = start + 1
+        first_launch = int(df.iloc[start]["launch_block"])
+        while end < len(df) and end - start < size:
+            next_launch = int(df.iloc[end]["launch_block"])
+            if max_launch_span_blocks > 0 and next_launch - first_launch > max_launch_span_blocks:
+                break
+            end += 1
+        batches.append(df.iloc[start:end].copy())
+        start = end
+    return batches
 
 
 def block_timestamps(endpoint: str, blocks: list[int]) -> dict[int, int]:
@@ -480,6 +492,7 @@ def run_collection(
     out_path: Path,
     coverage_path: Path,
     stop_after_seconds: int,
+    max_launch_span_blocks: int,
 ) -> None:
     started = time.time()
     if kind == "swaps":
@@ -499,7 +512,7 @@ def run_collection(
     else:
         raise RuntimeError(f"Unknown collection kind: {kind}")
 
-    batches = batch_frames(manifest, batch_size)
+    batches = batch_frames(manifest, batch_size, max_launch_span_blocks)
     for index, batch in enumerate(batches):
         if stop_after_seconds and time.time() - started >= stop_after_seconds:
             print(f"{kind}: stopping after {stop_after_seconds}s with {len(batches) - index} batches remaining", flush=True)
@@ -541,6 +554,12 @@ def main() -> None:
     parser.add_argument("--collect", choices=["swaps", "transfers", "both", "none"], default="both")
     parser.add_argument("--cohort-side", choices=["all", "pre_v4_0_control", "post_v4_1_treated"], default="all")
     parser.add_argument("--batch-size", type=int, default=24)
+    parser.add_argument(
+        "--max-launch-span-blocks",
+        type=int,
+        default=25_000,
+        help="Do not batch tokens whose launch blocks span more than this distance. Use 0 to disable.",
+    )
     parser.add_argument("--chunk-size", type=int, default=100_000)
     parser.add_argument("--min-chunk-size", type=int, default=5_000)
     parser.add_argument("--blocks-per-day", type=int, default=43_500)
@@ -641,6 +660,7 @@ def main() -> None:
             out_path=swaps_path,
             coverage_path=coverage_path,
             stop_after_seconds=args.stop_after_seconds,
+            max_launch_span_blocks=args.max_launch_span_blocks,
         )
     if args.collect in {"transfers", "both"}:
         transfer_work = select_work(
@@ -664,6 +684,7 @@ def main() -> None:
             out_path=transfers_path,
             coverage_path=coverage_path,
             stop_after_seconds=args.stop_after_seconds,
+            max_launch_span_blocks=args.max_launch_span_blocks,
         )
     summarize(
         manifest=full_manifest,

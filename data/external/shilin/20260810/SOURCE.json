@@ -1,0 +1,12 @@
+{
+  "source_name": "Web3AI4IO_Shilin_Reproducibility_Bundle_20260810",
+  "received_date": "2026-08-10",
+  "source_collaborator": "Shilin",
+  "bundle_path": "data/external/shilin/20260810/bundle",
+  "listed_file_count": 2174,
+  "manifest_sha256": "e06f4b5d693d907c66c83eada16d1013ff3c7724b7c9f43ef760507ca9423c38",
+  "integrity_status": "all_listed_files_verified",
+  "reported_branch": "agent/h4-agentic-release-update",
+  "reported_commit": "e22ae233c097f3d05d2c850446dc60c4194942b1",
+  "mutation_policy": "immutable"
+}

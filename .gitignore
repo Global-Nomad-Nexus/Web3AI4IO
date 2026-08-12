@@ -203,6 +203,18 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Immutable collaborator data bundles
+data/external/shilin/*/bundle/
+data/external/fourmeme/*/snapshot/
+data/external/fourmeme/*/onchain/*.jsonl
+data/external/sunpump/*/snapshot/
+data/external/base/*/snapshot/
+data/external/base/*/onchain/*.csv
+data/canonical/
+data/checkpoints/
+dataset/.venv/
+*.egg-info/
+
 # Ruff stuff:
 .ruff_cache/
 
