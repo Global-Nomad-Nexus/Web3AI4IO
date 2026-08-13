@@ -1,5 +1,6 @@
 ---
 pretty_name: Web3AI4IO Multi Chain Launchpad Dataset
+license: cc-by-4.0
 task_categories:
   - tabular-classification
   - time-series-forecasting
@@ -82,4 +83,4 @@ The final local validation suite passed 14 tests covering identity uniqueness, f
 
 ## License and citation
 
-License selection and the final citation block will be set before the first remote publication.
+This dataset is released under the Creative Commons Attribution 4.0 International license (`CC BY 4.0`). Citation metadata will be added when the associated paper has a stable public identifier.
