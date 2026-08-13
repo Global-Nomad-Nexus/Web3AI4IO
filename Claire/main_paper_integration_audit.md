@@ -1,6 +1,6 @@
 # Main paper integration audit
 
-Audit date: 2026-08-02. Scope: Claire-owned content in `web3IO/neurips_2026.tex`, following `records/emails/0730-did-improve.docx`.
+Audit date: 2026-08-02. Scope: Claire-owned content in `manuscript/neurips_2026.tex`, following `records/0730-did-improve.docx`.
 
 ## Outcome
 

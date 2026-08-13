@@ -494,49 +494,49 @@
       "sha256": "409e68d27035db6334bf469301d3c47b70dd7f8081ff0c03a02fdaed79aaceb7"
     },
     {
-      "source_path": "dataset/source_registry.json",
+      "source_path": "data_pipeline/source_registry.json",
       "dataset_path": "metadata/source_registry.json",
       "role": "schema_or_manifest",
       "bytes": 6158,
       "sha256": "def8b401d59d3fbd998ba5ff4f19fcd7a688615d5136ffbed9dbac57a7c5b33a"
     },
     {
-      "source_path": "dataset/schemas/v1/schema_registry.json",
+      "source_path": "data_pipeline/schemas/v1/schema_registry.json",
       "dataset_path": "metadata/schema_registry.json",
       "role": "schema_or_manifest",
       "bytes": 12032,
       "sha256": "b02a87825f91e6f1e22998da7348ca88e1b9615b15bbb0144445ede6ae08bc52"
     },
     {
-      "source_path": "dataset/schemas/v1/crosschain_schema_registry.json",
+      "source_path": "data_pipeline/schemas/v1/crosschain_schema_registry.json",
       "dataset_path": "metadata/crosschain_schema_registry.json",
       "role": "schema_or_manifest",
       "bytes": 3364,
       "sha256": "3d401c96f2a7b64c1ca5e395d625b052e5db7ea4cd9a7f69e6023630a4b1c0ab"
     },
     {
-      "source_path": "dataset/releases/v1/solana_core.json",
+      "source_path": "data_pipeline/releases/v1/solana_core.json",
       "dataset_path": "metadata/solana_core.json",
       "role": "schema_or_manifest",
       "bytes": 1985,
       "sha256": "fc323a1b960b337a29bf27e00682ae4a079d6cb949d1b728484451a1327dc0d0"
     },
     {
-      "source_path": "dataset/releases/v1/base_core.json",
+      "source_path": "data_pipeline/releases/v1/base_core.json",
       "dataset_path": "metadata/base_core.json",
       "role": "schema_or_manifest",
       "bytes": 2339,
       "sha256": "f2f8d62bd92627cda3ef0c65d8e2af2ac1ed21280725251c863fdd8381437cf6"
     },
     {
-      "source_path": "dataset/releases/v1/bnb_core.json",
+      "source_path": "data_pipeline/releases/v1/bnb_core.json",
       "dataset_path": "metadata/bnb_core.json",
       "role": "schema_or_manifest",
       "bytes": 3171,
       "sha256": "3d34e53b2d61c23505698ae455c946610ee2edc8cff04376fa602237ccd84698"
     },
     {
-      "source_path": "dataset/releases/v1/tron_core.json",
+      "source_path": "data_pipeline/releases/v1/tron_core.json",
       "dataset_path": "metadata/tron_core.json",
       "role": "schema_or_manifest",
       "bytes": 2532,

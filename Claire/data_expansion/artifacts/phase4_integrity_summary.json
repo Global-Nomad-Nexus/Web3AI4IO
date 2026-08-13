@@ -4,7 +4,7 @@
   "pytest": "14 passed in 16.20s",
   "chains": {
     "bnb": {
-      "manifest": "dataset/releases/v1/bnb_core.json",
+      "manifest": "data_pipeline/releases/v1/bnb_core.json",
       "launch_universe": 1593679,
       "tables": {
         "tokens": {
@@ -153,7 +153,7 @@
       }
     },
     "tron": {
-      "manifest": "dataset/releases/v1/tron_core.json",
+      "manifest": "data_pipeline/releases/v1/tron_core.json",
       "launch_universe": 104548,
       "tables": {
         "tokens": {

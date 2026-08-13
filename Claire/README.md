@@ -27,9 +27,9 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 
 ## Paper handoff
 
-The clean standalone contribution is `web3IO/claire_contribution.tex` and compiles independently with the shared bibliography. The same verified content is now integrated into the active shared manuscript `web3IO/neurips_2026.tex`. It contains the related-work strand, H0, H3, Method Pillar 3, the independent benchmark design, Result 2, sequential-event handling, the naive rerun, and the rule-event L0 through L7 ladder.
+The clean standalone contribution is `manuscript/claire_contribution.tex` and compiles independently with the shared bibliography. The same verified content is now integrated into the active shared manuscript `manuscript/neurips_2026.tex`. It contains the related-work strand, H0, H3, Method Pillar 3, the independent benchmark design, Result 2, sequential-event handling, the naive rerun, and the rule-event L0 through L7 ladder.
 
-The deterministic decision cells in `web3IO/tabs/tab_arms.tex` and `web3IO/tabs/tab_ablation.tex` agree exactly for L0 through L7. Snapshot copies under `paper_tables/` make the executable audit portable when this folder is published without the paper source. The output is `artifacts/deterministic_crosscheck.json`.
+The deterministic decision cells in `manuscript/tabs/tab_arms.tex` and `manuscript/tabs/tab_ablation.tex` agree exactly for L0 through L7. Snapshot copies under `paper_tables/` make the executable audit portable when this folder is published without the paper source. The output is `artifacts/deterministic_crosscheck.json`.
 
 ## Remaining research boundary
 

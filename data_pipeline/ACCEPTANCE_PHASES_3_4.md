@@ -52,8 +52,8 @@ The 1,000 row limits apply only to the official metadata APIs. They were bypasse
 Run:
 
 ```text
-dataset/.venv/bin/python dataset/scripts/build_crosschain_core.py
-dataset/.venv/bin/pytest dataset/tests
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_crosschain_core.py
+data_pipeline/.venv/bin/pytest data_pipeline/tests
 ```
 
 Release manifests record source row counts, source SHA256 digests, output row counts, and output SHA256 digests.

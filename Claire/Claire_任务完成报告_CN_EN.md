@@ -8,7 +8,7 @@ Prepared for Claire | 2026-08-02 | Internal research handoff
 
 ## 0. 执行结论 | Executive conclusion
 
-本次工作已经把 Claire 在 `records/emails/0730-did-improve.docx` 中承担的部分，从旧 MVP 完全重置为一套新的、可复现的 platform rule event study。已完成 related work、H0、H3、Method Pillar 3、独立 §2.2、Result 2、sequential event handling、naive rerun，以及 L0 至 L7 deterministic table cross check。代码、SQL、数据、证据和 artifacts 均独立存放于 `claire_study/`。已验证的内容同时写入独立 LaTeX 和 active shared manuscript `web3IO/neurips_2026.tex`。
+本次工作已经把 Claire 在 `records/0730-did-improve.docx` 中承担的部分，从旧 MVP 完全重置为一套新的、可复现的 platform rule event study。已完成 related work、H0、H3、Method Pillar 3、独立 §2.2、Result 2、sequential event handling、naive rerun，以及 L0 至 L7 deterministic table cross check。代码、SQL、数据、证据和 artifacts 均独立存放于 `Claire/`。已验证的内容同时写入独立 LaTeX 和 active shared manuscript `manuscript/neurips_2026.tex`。
 
 最重要的研究结论不是一个漂亮的 causal estimate，而是一个经过数据验证的 claim boundary。Pump.fun creator fee 的经济激活时间得到 onchain verification，但 LaunchLab 与 Moonshot 都没有通过 causal control gate。因此，H0 的现有数值只能作为 diagnostic comparison，不能写成 creator fee 导致 market thickness 变化。H3 识别了 creator vault 收到 gross mechanical transfer，但没有识别 creator net welfare、trader welfare 或 platform incidence。
 
@@ -38,7 +38,7 @@ English companion: Claire explicitly reset the empirical contribution. H0 concer
 
 如何完成：从 launch platform 的实际识别问题反推 literature position，而不是从方法列表出发。最终 positioning 是 “modern staggered DiD is an eligible estimator after design gates pass, not a default applied whenever dates differ.”
 
-证据：`web3IO/claire_contribution.tex` 的 “Positioning: difference in differences under staggered adoption”。
+证据：`manuscript/claire_contribution.tex` 的 “Positioning: difference in differences under staggered adoption”。
 
 English companion: The related work section positions modern staggered DiD as conditional on design validity. It explains both what the estimators solve and what they cannot solve, with direct relevance to launch platform rules.
 
@@ -52,7 +52,7 @@ H3 完成定义：A mandatory platform rule can create opposing incidence across
 
 关键修正：Pump event 同时包含 creator subsidy、trader fee burden 与 program upgrade，因此 estimand 必须是 reduced form rule bundle effect，不能写成 isolated creator subsidy effect。
 
-证据：`claire_study/research_design.md`，`web3IO/claire_contribution.tex`，`claire_study/artifacts/h0_summary.json`，`claire_study/artifacts/h3_incidence.json`。
+证据：`Claire/research_design.md`，`manuscript/claire_contribution.tex`，`Claire/artifacts/h0_summary.json`，`Claire/artifacts/h3_incidence.json`。
 
 English companion: H0 separates gross and quality adjusted market thickness. H3 separates stakeholder specific incidence and distinguishes gross transfers from behavioral and welfare effects. The observed treatment is defined as a rule bundle rather than an isolated subsidy.
 
@@ -66,7 +66,7 @@ English companion: H0 separates gross and quality adjusted market thickness. H3 
 
 实现结果：当前 registry 没有 event 被 accepted 为 causal event，`staggered_gate_passes=false`。这不是失败的写作，而是 protocol 正确拒绝了不满足识别条件的估计。
 
-证据：`claire_study/research_design.md`，`claire_study/event_registry.csv`，`claire_study/src/web3io_claire/registry.py`。
+证据：`Claire/research_design.md`，`Claire/event_registry.csv`，`Claire/src/web3io_claire/registry.py`。
 
 English companion: The independent method draft precommits the estimand and design gates. The staggered estimator becomes applicable only after sufficient comparable events and platforms exist. The current registry correctly closes that gate.
 
@@ -98,11 +98,11 @@ English companion: Result 2 was revised because the newly collected evidence doe
 
 原要求：逐 rung 核对 `tab_arms` deterministic column 与 `tab_ablation`，两表必须一致。
 
-完成内容：为 `web3IO/tabs/tab_arms.tex` 增加 deterministic decision column，并实现 parser 对两个 LaTeX tables 的 L0 至 L7 decision cells 进行逐项比较。8 个 rungs 全部 exact match。
+完成内容：为 `manuscript/tabs/tab_arms.tex` 增加 deterministic decision column，并实现 parser 对两个 LaTeX tables 的 L0 至 L7 decision cells 进行逐项比较。8 个 rungs 全部 exact match。
 
 结果：`all_rungs_agree=true`。
 
-证据：`claire_study/src/web3io_claire/crosscheck_ladder.py`，`claire_study/artifacts/deterministic_crosscheck.json`。
+证据：`Claire/src/web3io_claire/crosscheck_ladder.py`，`Claire/artifacts/deterministic_crosscheck.json`。
 
 English companion: The deterministic decision labels in the two paper tables are now machine checked. All eight rungs agree exactly.
 
@@ -110,11 +110,11 @@ English companion: The deterministic decision labels in the two paper tables are
 
 原要求：在 GitHub repository 中将 Claire 产生的 code、data 与 artifacts 放在自己的 folder。
 
-完成内容：NatureSD root 与 `web3IO/` 没有被擅自初始化为 Git repository。Claire empirical materials 被隔离在 `claire_study/`，并按任务书边界发布到 `Global-Nomad-Nexus/Web3AI4IO` 的 `Claire/`。论文源文件继续留在 Overleaf 工作流，GitHub 只承载 code、data、artifacts、evidence 与 reproducibility documents。
+完成内容：NatureSD root 与 `manuscript/` 没有被擅自初始化为 Git repository。Claire empirical materials 被隔离在 `Claire/`，并按任务书边界发布到 `Global-Nomad-Nexus/Web3AI4IO` 的 `Claire/`。论文源文件继续留在 Overleaf 工作流，GitHub 只承载 code、data、artifacts、evidence 与 reproducibility documents。
 
 主要内容：SQL queries、raw derived CSV、event registry、data contract、JSON schemas、Solana verification code、H0 and H3 analysis、table cross check、Kimi audit、tests 与 machine readable artifacts。
 
-English companion: All Claire owned empirical materials are isolated under `claire_study/`. No repository was initialized without authorization. The folder is ready to move into the intended GitHub repository.
+English companion: All Claire owned empirical materials are isolated under `Claire/`. No repository was initialized without authorization. The folder is ready to move into the intended GitHub repository.
 
 ### 2.7 Critical thinking, creativity, leadership, open science
 
@@ -216,45 +216,45 @@ English companion: The external audit used exact model `k3-256k` with high reaso
 
 ## 6. 交付物 | Deliverables
 
-Active paper：`web3IO/neurips_2026.tex`
+Active paper：`manuscript/neurips_2026.tex`
 
-Standalone paper draft：`web3IO/claire_contribution.tex`
+Standalone paper draft：`manuscript/claire_contribution.tex`
 
-Compiled draft：`web3IO/claire_contribution.pdf`
+Compiled draft：`manuscript/claire_contribution.pdf`
 
-Research handoff：`claire_study/CLAIRE.md`
+Research handoff：`Claire/CLAIRE.md`
 
-Research design：`claire_study/research_design.md`
+Research design：`Claire/research_design.md`
 
-Event registry：`claire_study/event_registry.csv`
+Event registry：`Claire/event_registry.csv`
 
-Activation evidence：`claire_study/event_activation_evidence.md`
+Activation evidence：`Claire/event_activation_evidence.md`
 
-Data contract：`claire_study/data_contract.md`
+Data contract：`Claire/data_contract.md`
 
-Dune query：`claire_study/queries/03_pump_moonshot_cohort_panel.sql`
+Dune query：`Claire/queries/03_pump_moonshot_cohort_panel.sql`
 
-Panel data：`claire_study/data/pump_moonshot_cohort_panel.csv`
+Panel data：`Claire/data/pump_moonshot_cohort_panel.csv`
 
-H0 code：`claire_study/src/web3io_claire/analyze_h0.py`
+H0 code：`Claire/src/web3io_claire/analyze_h0.py`
 
-H3 code：`claire_study/src/web3io_claire/analyze_h3.py`
+H3 code：`Claire/src/web3io_claire/analyze_h3.py`
 
-Cross check code：`claire_study/src/web3io_claire/crosscheck_ladder.py`
+Cross check code：`Claire/src/web3io_claire/crosscheck_ladder.py`
 
-Kimi audit code：`claire_study/src/web3io_claire/k3_subagent_audit.py`
+Kimi audit code：`Claire/src/web3io_claire/k3_subagent_audit.py`
 
-H0 artifacts：`claire_study/artifacts/h0_estimates.csv`，`h0_summary.json`
+H0 artifacts：`Claire/artifacts/h0_estimates.csv`，`h0_summary.json`
 
-H3 artifact：`claire_study/artifacts/h3_incidence.json`
+H3 artifact：`Claire/artifacts/h3_incidence.json`
 
-Table audit：`claire_study/artifacts/deterministic_crosscheck.json`
+Table audit：`Claire/artifacts/deterministic_crosscheck.json`
 
-Kimi audit：`claire_study/artifacts/k3_subagent_audit.json`
+Kimi audit：`Claire/artifacts/k3_subagent_audit.json`
 
-Completion audit：`claire_study/pre_submission_audit.md`
+Completion audit：`Claire/pre_submission_audit.md`
 
-Main paper integration audit：`claire_study/main_paper_integration_audit.md`
+Main paper integration audit：`Claire/main_paper_integration_audit.md`
 
 English companion: The deliverables cover paper text, code, SQL, data, event evidence, machine readable artifacts, independent audit, and reproducibility documentation.
 

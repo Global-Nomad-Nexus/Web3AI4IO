@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def manifest(chain: str) -> dict:
-    return json.loads((ROOT / f"dataset/releases/v1/{chain}_core.json").read_text())
+    return json.loads((ROOT / f"data_pipeline/releases/v1/{chain}_core.json").read_text())
 
 
 def table_path(chain: str, name: str) -> Path:

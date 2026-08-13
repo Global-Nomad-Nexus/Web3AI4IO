@@ -212,7 +212,7 @@ data/external/base/*/snapshot/
 data/external/base/*/onchain/*.csv
 data/canonical/
 data/checkpoints/
-dataset/.venv/
+data_pipeline/.venv/
 *.egg-info/
 
 # Ruff stuff:

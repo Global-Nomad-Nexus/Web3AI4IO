@@ -29,7 +29,7 @@ def column(chain: str, table: str, name: str):
 
 
 def chain_summary(chain: str) -> dict:
-    manifest_path = ROOT / f"dataset/releases/v1/{chain}_core.json"
+    manifest_path = ROOT / f"data_pipeline/releases/v1/{chain}_core.json"
     manifest = json.loads(manifest_path.read_text())
     tokens = column(chain, "tokens", "token_id")
     token_set = tokens

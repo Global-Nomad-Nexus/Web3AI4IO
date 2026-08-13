@@ -16,8 +16,8 @@ MODEL = "deepseek-v4-flash"
 URL = "https://api.deepseek.com/chat/completions"
 OUTPUT = ROOT / "Claire/data_expansion/artifacts/deepseek_phase4_review.json"
 INPUTS = (
-    ROOT / "dataset/releases/v1/bnb_core.json",
-    ROOT / "dataset/releases/v1/tron_core.json",
+    ROOT / "data_pipeline/releases/v1/bnb_core.json",
+    ROOT / "data_pipeline/releases/v1/tron_core.json",
     ROOT / "data/external/fourmeme/20260811/onchain/ONCHAIN_SOURCE.json",
     ROOT / "data/external/sunpump/20260811/snapshot/ONCHAIN_SOURCE.json",
     ROOT / "Claire/data_expansion/artifacts/phase4_integrity_summary.json",

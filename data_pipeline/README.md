@@ -1,6 +1,8 @@
-# Web3AI4IO Dataset
+# Web3AI4IO Data Pipeline
 
 This package builds an extensible multi chain launchpad dataset. It separates immutable external sources, canonical tables, coverage evidence, and experiment specific derived datasets.
+
+This is project level infrastructure implemented by Claire. It integrates Shilin supplied source data and constructs the unified Web3AI4IO release. Its repository root placement indicates project scope, not joint code authorship.
 
 ## Current accepted scope
 
@@ -21,9 +23,9 @@ This package builds an extensible multi chain launchpad dataset. It separates im
 From the repository root:
 
 ```text
-dataset/.venv/bin/python dataset/scripts/build_solana_core.py
-dataset/.venv/bin/python dataset/scripts/build_crosschain_core.py
-dataset/.venv/bin/pytest dataset/tests
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_solana_core.py
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_crosschain_core.py
+data_pipeline/.venv/bin/pytest data_pipeline/tests
 ```
 
 The build writes `data/canonical/v1/solana/quality_report.json`. This report includes source and table SHA256 digests, exact row counts, and decoded swap coverage status.

@@ -26,7 +26,7 @@ Credentialed or paid bulk collection must not start until a feasibility and cost
 
 ## Current state
 
-The verified Shilin bundle is stored under `data/external/shilin/20260810/bundle`. The reproducible Solana canonical release is generated under `data/canonical/v1/solana`. Versioned code, schemas, source definitions, and the compact release manifest live under `dataset/`.
+The verified Shilin bundle is stored under `data/external/shilin/20260810/bundle`. The reproducible Solana canonical release is generated under `data/canonical/v1/solana`. Versioned code, schemas, source definitions, and the compact release manifest live under `data_pipeline/`.
 
 The raw RED PUMP baseline and graduated metadata are complete for the delivered cohort. The bundle contains 173,102 decoded rows for 294 of 1,651 graduated tokens, and most delivered windows reached a page limit. These rows are retained as validation data only. `coverage_ledger` records this explicitly, and no additional decoded Solana swap collection is planned.
 
@@ -40,4 +40,4 @@ python3 Claire/data_expansion/scripts/audit_coverage.py
 
 The script writes `Claire/data_expansion/artifacts/coverage_audit.csv` and `coverage_audit.json`.
 
-Current evidence and feasibility notes are in `SHILIN_DATA_AUDIT.md` and `FEASIBILITY.md`. Required units, keys, completeness, and missingness states are in `SCHEMA_CONTRACT.md`. Solana canonical tables can be reproduced with `dataset/scripts/build_solana_core.py`. Base, BNB Chain, and TRON canonical tables can be reproduced with `dataset/scripts/build_crosschain_core.py`.
+Current evidence and feasibility notes are in `SHILIN_DATA_AUDIT.md` and `FEASIBILITY.md`. Required units, keys, completeness, and missingness states are in `SCHEMA_CONTRACT.md`. Solana canonical tables can be reproduced with `data_pipeline/scripts/build_solana_core.py`. Base, BNB Chain, and TRON canonical tables can be reproduced with `data_pipeline/scripts/build_crosschain_core.py`.

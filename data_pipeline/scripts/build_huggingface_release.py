@@ -67,7 +67,7 @@ def add_file(entries: list[dict], repo: Path, source: Path, destination: str, ro
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=Path.cwd())
-    parser.add_argument("--output", type=Path, default=Path("dataset/huggingface/release_manifest.json"))
+    parser.add_argument("--output", type=Path, default=Path("data_pipeline/huggingface/release_manifest.json"))
     args = parser.parse_args()
     repo = args.repo.resolve()
     entries: list[dict] = []
@@ -108,13 +108,13 @@ def main() -> None:
         add_file(entries, repo, delivered / name, f"external/solana/validation/{name}", "onchain_validation")
 
     for path in (
-        repo / "dataset/source_registry.json",
-        repo / "dataset/schemas/v1/schema_registry.json",
-        repo / "dataset/schemas/v1/crosschain_schema_registry.json",
-        repo / "dataset/releases/v1/solana_core.json",
-        repo / "dataset/releases/v1/base_core.json",
-        repo / "dataset/releases/v1/bnb_core.json",
-        repo / "dataset/releases/v1/tron_core.json",
+        repo / "data_pipeline/source_registry.json",
+        repo / "data_pipeline/schemas/v1/schema_registry.json",
+        repo / "data_pipeline/schemas/v1/crosschain_schema_registry.json",
+        repo / "data_pipeline/releases/v1/solana_core.json",
+        repo / "data_pipeline/releases/v1/base_core.json",
+        repo / "data_pipeline/releases/v1/bnb_core.json",
+        repo / "data_pipeline/releases/v1/tron_core.json",
     ):
         add_file(entries, repo, path, f"metadata/{path.name}", "schema_or_manifest")
 

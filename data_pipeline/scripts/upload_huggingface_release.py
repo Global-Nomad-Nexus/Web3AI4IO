@@ -14,7 +14,7 @@ def main() -> None:
     parser.add_argument("--repo", type=Path, default=Path.cwd())
     parser.add_argument("--repo-id", required=True)
     parser.add_argument("--private", action="store_true")
-    parser.add_argument("--manifest", type=Path, default=Path("dataset/huggingface/release_manifest.json"))
+    parser.add_argument("--manifest", type=Path, default=Path("data_pipeline/huggingface/release_manifest.json"))
     parser.add_argument("--retries", type=int, default=8)
     args = parser.parse_args()
     try:
@@ -56,7 +56,7 @@ def main() -> None:
         upload(repo / entry["source_path"], entry["dataset_path"], f"Upload {entry['dataset_path']}")
 
     upload(repo / args.manifest, "release_manifest.json", "Publish Web3AI4IO release manifest v1")
-    upload(repo / "dataset/huggingface/README.md", "README.md", "Publish Web3AI4IO dataset card v1")
+    upload(repo / "data_pipeline/huggingface/README.md", "README.md", "Publish Web3AI4IO dataset card v1")
     info = api.dataset_info(args.repo_id, files_metadata=True)
     print(json.dumps({"repo_id": args.repo_id, "revision": info.sha, "files": len(info.siblings), "private": info.private}))
 

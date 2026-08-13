@@ -41,4 +41,4 @@ The Shilin bundle contains decoded Moralis swaps for 294 of 1,651 graduated toke
 9. Baseline identity and outcome mismatches against Shilin processed data: zero across 832,941 rows.
 10. Automated tests: 4 passed.
 
-Exact table digests are stored in `dataset/releases/v1/solana_core.json`.
+Exact table digests are stored in `data_pipeline/releases/v1/solana_core.json`.

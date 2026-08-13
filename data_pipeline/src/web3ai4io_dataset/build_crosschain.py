@@ -858,7 +858,7 @@ def main() -> None:
     base_pool = repo / "data/external/base/20260811/snapshot/pool_core_events.jsonl"
     bnb_root = repo / "data/external/fourmeme/20260811"
     tron_root = repo / "data/external/sunpump/20260811/snapshot"
-    releases = repo / "dataset/releases/v1"
+    releases = repo / "data_pipeline/releases/v1"
     releases.mkdir(parents=True, exist_ok=True)
     configs = [
         ("base", base_source, repo / "data/canonical/v1/base", build_base(base_source, base_pool), [base_pool]),

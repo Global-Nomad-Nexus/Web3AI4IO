@@ -16,7 +16,7 @@ The objective is to build a reusable dataset that future researchers can extend,
 4. Every applicable core field has an explicit coverage state.
 5. Decoded trading, swap, and holder collection is excluded unless separately approved and documented.
 
-The storage model separates three layers. Immutable source artifacts live under `data/external/`. Generated Parquet tables live under `data/canonical/`. Schemas, source registries, collection and build code, release manifests, quality reports, and acceptance records live under `dataset/`.
+The storage model separates three layers. Immutable source artifacts live under `data/external/`. Generated Parquet tables live under `data/canonical/`. Schemas, source registries, collection and build code, release manifests, quality reports, and acceptance records live under `data_pipeline/`.
 
 ## Phase 1: Shilin bundle integration and reproducibility validation
 
@@ -24,13 +24,13 @@ Phase 1 preserves the supplied reproducibility bundle as an immutable validation
 
 The canonical result was compared against Shilin's processed baseline across all 832,941 mint and outcome pairs, with zero mismatches. This phase establishes a reproducible baseline without attempting to reconstruct or improve Shilin's decoded swap acquisition.
 
-The delivered Moralis snapshot contains 173,102 decoded swap rows for 294 of 1,651 graduated tokens. Most token horizons reached the configured page limit, so those windows remain lower bounds and validation data only. No further decoded Solana swap collection is planned. This limitation is recorded in `dataset/SHILIN_LIMITATION.md`.
+The delivered Moralis snapshot contains 173,102 decoded swap rows for 294 of 1,651 graduated tokens. Most token horizons reached the configured page limit, so those windows remain lower bounds and validation data only. No further decoded Solana swap collection is planned. This limitation is recorded in `data_pipeline/SHILIN_LIMITATION.md`.
 
 ## Phase 2: Solana canonical core
 
 Phase 2 converts the accepted Shilin baseline into typed canonical tables with stable identifiers, source provenance, SHA256 digests, and per token coverage records. The release includes tokens, launches, lifecycle events, graduated metadata, bounded pool transaction proxy windows, delivered decoded swaps, decoded horizon summaries, and a coverage ledger.
 
-The 1, 7, and 30 day RPC window values are explicitly labelled transaction proxies and are not presented as decoded swap counts. Page capped Moralis windows are never labelled complete. Exact source and output digests are stored in `dataset/releases/v1/solana_core.json`.
+The 1, 7, and 30 day RPC window values are explicitly labelled transaction proxies and are not presented as decoded swap counts. Page capped Moralis windows are never labelled complete. Exact source and output digests are stored in `data_pipeline/releases/v1/solana_core.json`.
 
 ## Phase 3: Base Clanker canonical core
 
@@ -101,16 +101,16 @@ The Solana denominator is a terminal outcome cohort while the other three denomi
 
 ## Quality assurance and reproducibility
 
-The release tests validate primary key uniqueness, foreign key integrity, common dimensions, manifest driven row counts, coverage states, API metadata subset rules, and the absence of excluded trading and holder tables. The test sources are `dataset/tests/test_solana_release.py` and `dataset/tests/test_crosschain_release.py`. The final suite result is 14 passed.
+The release tests validate primary key uniqueness, foreign key integrity, common dimensions, manifest driven row counts, coverage states, API metadata subset rules, and the absence of excluded trading and holder tables. The test sources are `data_pipeline/tests/test_solana_release.py` and `data_pipeline/tests/test_crosschain_release.py`. The final suite result is 14 passed.
 
 Every release manifest records source paths, source row counts, source SHA256 values, table row counts, table SHA256 values, and coverage summaries. `Claire/data_expansion/artifacts/phase4_integrity_summary.json` independently verifies manifest counts and hashes.
 
 From the repository root, the accepted build and tests are reproduced with:
 
 ```text
-dataset/.venv/bin/python dataset/scripts/build_solana_core.py
-dataset/.venv/bin/python dataset/scripts/build_crosschain_core.py
-dataset/.venv/bin/pytest dataset/tests
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_solana_core.py
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_crosschain_core.py
+data_pipeline/.venv/bin/pytest data_pipeline/tests
 ```
 
 ## Known boundaries and future extension

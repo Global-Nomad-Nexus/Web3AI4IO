@@ -11,7 +11,7 @@ WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
 
 def resolve_table(name: str) -> Path:
     candidates = [
-        WORKSPACE_ROOT / "web3IO" / "tabs" / name,
+        WORKSPACE_ROOT.parent / "manuscript" / "tabs" / name,
         STUDY_ROOT / "paper_tables" / name,
     ]
     for candidate in candidates:

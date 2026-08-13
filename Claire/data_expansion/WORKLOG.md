@@ -38,7 +38,7 @@
 34. Confirmed that the Moralis token swap endpoint requires an API key and cursor pagination. No configured Moralis, Helius, Dune, or BigQuery credential is available in the current environment.
 35. Evaluated the newly published Pumpfun Memecoin Corpus. Its stated data period begins on 2026 06 09, so it cannot fill the RED PUMP cohort beginning on 2026 05 08.
 36. Accepted the Moralis pagination limitation and ended further decoded Solana swap acquisition.
-37. Classified Shilin's delivered decoded swap snapshot as validation data only and documented its permitted and prohibited uses in `dataset/SHILIN_LIMITATION.md`.
+37. Classified Shilin's delivered decoded swap snapshot as validation data only and documented its permitted and prohibited uses in `data_pipeline/SHILIN_LIMITATION.md`.
 38. Extended the official Base public RPC scan to the complete declared 2025 08 18 through 2025 10 01 UTC window and decoded 62,618 unique Clanker TokenCreated events.
 39. Built the Base canonical launch core with tokens, launches, metadata placeholders, state snapshot placeholders, and per token coverage evidence.
 40. Collected 1,000 Four.meme records and 1,000 SunPump records from their official public APIs.

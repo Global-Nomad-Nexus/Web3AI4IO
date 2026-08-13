@@ -1,6 +1,6 @@
 # Claire contribution completion audit
 
-Audit date: 2026-08-02. Scope: the assignment in `records/emails/0730-did-improve.docx`.
+Audit date: 2026-08-02. Scope: the assignment in `records/0730-did-improve.docx`.
 
 ## Completed
 
@@ -12,9 +12,9 @@ Audit date: 2026-08-02. Scope: the assignment in `records/emails/0730-did-improv
 6. Result 2 has a new Dune extract, exact schema, estimates, pretrend diagnostics, an in-time placebo, sequential-event handling, and a naive rerun.
 7. The deterministic decision cells in `tab_arms.tex` and `tab_ablation.tex` agree for all eight rungs. The result is machine checked.
 8. H3 has verified creator-side mechanical incidence and an explicit boundary for unidentified trader and platform outcomes.
-9. Code, data, SQL, evidence, and artifacts are isolated under `claire_study/`.
-10. A clean standalone paper contribution compiles from `web3IO/claire_contribution.tex`.
-11. The same verified content is integrated into `web3IO/neurips_2026.tex`, including two manuscript tables for the estimates and rule-event ladder.
+9. Code, data, SQL, evidence, and artifacts are isolated under `Claire/`.
+10. A clean standalone paper contribution compiles from `manuscript/claire_contribution.tex`.
+11. The same verified content is integrated into `manuscript/neurips_2026.tex`, including two manuscript tables for the estimates and rule-event ladder.
 
 ## Evidence-driven deviations from the assignment's provisional wording
 
