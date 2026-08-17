@@ -2,6 +2,26 @@
   "dataset_version": "v1",
   "sources": [
     {
+      "source_id": "shilin_pumpswap_case_config",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "registered PumpSwap analysis event boundary",
+      "dataset_role": "event_registry_evidence",
+      "granularity": "one analysis configuration",
+      "coverage": "registered event date 2025-03-20 UTC",
+      "limitation": "The configuration does not identify an exact activation transaction or next-block verification.",
+      "path_glob": "Shilin/configs/pumpswap_case.json"
+    },
+    {
+      "source_id": "shilin_clanker_event_validation_summary",
+      "chain_id": "eip155:8453",
+      "role": "Clanker v4.1 first-observed module-adoption event evidence",
+      "dataset_role": "event_registry_evidence",
+      "granularity": "one validation summary with activation transaction, block, timestamp, and bounded matched cohort",
+      "coverage": "declared Base search window around block 34,725,785",
+      "limitation": "Supports a first-observed adoption boundary and bounded sample, not platform-wide causal replication or an independently verified announcement date.",
+      "path_glob": "Shilin/artifacts/tables/clanker_base_event_validation_summary.json"
+    },
+    {
       "source_id": "shilin_red_pump_launches_2026_v1",
       "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
       "role": "launch baseline",

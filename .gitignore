@@ -211,9 +211,25 @@ data/external/sunpump/*/snapshot/
 data/external/base/*/snapshot/
 data/external/base/*/onchain/*.csv
 data/canonical/
+data/release/
 data/checkpoints/
 data_pipeline/.venv/
 *.egg-info/
+
+# Local experiment environments and generated outputs
+Claire/experiments/**/.venv/
+Claire/experiments/**/artifacts/
+Claire/experiments/s4_endogenous/R/
+Claire/experiments/s4_endogenous/NA/
+Claire/experiment_plans/
+
+# Shilin generated tables and figures stay local
+Shilin/artifacts/tables/
+Shilin/artifacts/figures/
+Shilin/artifacts/external_validation/
+Shilin/artifacts/agent_runs/*.csv
+Shilin/artifacts/run_manifest.json
+Shilin/benchmark_release/data/
 
 # Ruff stuff:
 .ruff_cache/

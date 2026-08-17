@@ -1,7 +1,0 @@
-metric,metric_label,reducer,covered_n,uncovered_n,covered_value,uncovered_value,difference,standardized_mean_difference,interpretation
-complete_30d,Share with complete 30d RPC window,mean,294,1357,1.0,0.34487840825350036,0.6551215917464996,1.3137388887135457,Moralis decoded sample differs materially from the rest of the RPC cohort; report it as a covered-token sample.
-active_30d,Share with observed 30d RPC pool activity,mean,294,1357,1.0,0.9889462048636699,0.011053795136330091,0.11646344728046217,Moralis decoded sample is not materially different on this RPC/metadata diagnostic.
-swap_count_30d,Median 30d RPC transaction-count proxy,median,294,1357,2830.5,4183.0,-1352.5,-0.615264242779103,Moralis decoded sample differs materially from the rest of the RPC cohort; report it as a covered-token sample.
-log1p_swap_count_30d,Mean log1p 30d RPC transaction-count proxy,mean,294,1357,7.913619346372199,7.247597234622482,0.6660221117497169,0.3731055905608048,Moralis decoded sample differs materially from the rest of the RPC cohort; report it as a covered-token sample.
-first_trade_lag_seconds_30d,Median seconds from graduation to first observed pool transaction,median,293,1342,0.554,472.0745,-471.5205,-0.0025537459046466805,Moralis decoded sample is not materially different on this RPC/metadata diagnostic.
-ath_market_cap,Median Pump.fun ATH market cap in metadata,median,294,1357,95259.81209916991,110889.22921932062,-15629.417120150712,-0.006503976818729994,Moralis decoded sample is not materially different on this RPC/metadata diagnostic.

@@ -42,6 +42,8 @@ Decoded trading and holder data are not collected for Base, BNB Chain, or TRON. 
 
 ## Canonical tables
 
+The project-level event layer adds `event_registry` and `event_evidence`, together with a flat `events.csv` export. These tables distinguish accepted, conditional, and rejected rule-event candidates. Canonical chain coverage does not by itself make a chain eligible for event-aligned inference.
+
 Crosschain releases use the following common tables where applicable:
 
 1. `tokens`

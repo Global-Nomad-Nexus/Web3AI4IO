@@ -111,10 +111,15 @@ def main() -> None:
         repo / "data_pipeline/source_registry.json",
         repo / "data_pipeline/schemas/v1/schema_registry.json",
         repo / "data_pipeline/schemas/v1/crosschain_schema_registry.json",
+        repo / "data_pipeline/schemas/v1/event_schema_registry.json",
+        repo / "data_pipeline/events/v1/event_registry.json",
+        repo / "data_pipeline/events/v1/event_evidence.json",
         repo / "data_pipeline/releases/v1/solana_core.json",
         repo / "data_pipeline/releases/v1/base_core.json",
         repo / "data_pipeline/releases/v1/bnb_core.json",
         repo / "data_pipeline/releases/v1/tron_core.json",
+        repo / "data_pipeline/releases/v1/events_core.json",
+        repo / "data/release/v1/events.csv",
     ):
         add_file(entries, repo, path, f"metadata/{path.name}", "schema_or_manifest")
 

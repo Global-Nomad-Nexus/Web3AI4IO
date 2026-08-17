@@ -40,4 +40,4 @@ python3 Claire/data_expansion/scripts/audit_coverage.py
 
 The script writes `Claire/data_expansion/artifacts/coverage_audit.csv` and `coverage_audit.json`.
 
-Current evidence and feasibility notes are in `SHILIN_DATA_AUDIT.md` and `FEASIBILITY.md`. Required units, keys, completeness, and missingness states are in `SCHEMA_CONTRACT.md`. Solana canonical tables can be reproduced with `data_pipeline/scripts/build_solana_core.py`. Base, BNB Chain, and TRON canonical tables can be reproduced with `data_pipeline/scripts/build_crosschain_core.py`.
+Required units, keys, completeness, and missingness states are in `SCHEMA_CONTRACT.md`. Solana canonical tables can be reproduced with `data_pipeline/scripts/build_solana_core.py`. Base, BNB Chain, and TRON canonical tables can be reproduced with `data_pipeline/scripts/build_crosschain_core.py`.

@@ -4,6 +4,12 @@ __pycache__/
 .DS_Store
 data/external/*.csv
 data/external/*.parquet
+artifacts/tables/
+artifacts/figures/
+artifacts/external_validation/
+artifacts/agent_runs/*.csv
+artifacts/run_manifest.json
+benchmark_release/data/
 artifacts/agent_runs/raw_responses/
 artifacts/agent_runs/raw/
 artifacts/download_failures/

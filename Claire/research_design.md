@@ -2,7 +2,7 @@
 
 Status: approved design direction, 2026-08-02
 
-This study starts from the current paper in `manuscript/` and the assignment in `records/0730-did-improve.docx`. The previous MVP is excluded from the research design. It is not a baseline, data source, event source, result source, or prior for expected findings.
+This study started from the now archived legacy manuscript and the assignment in `records/0730-did-improve.docx`. The current paper is `paper/neurips_2026.tex`. The previous MVP is excluded from the research design. It is not a baseline, data source, event source, result source, or prior for expected findings.
 
 ## Role in the paper
 

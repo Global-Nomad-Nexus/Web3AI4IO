@@ -10,8 +10,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "artifacts" / "tables"
 FIGURES = ROOT / "artifacts" / "figures"
+_LOCAL_ARTIFACTS = (TABLES / "deterministic_ladder.csv").exists()
 
 
+@unittest.skipUnless(_LOCAL_ARTIFACTS, "local Shilin artifacts are not part of the GitHub tree")
 class ArtifactIntegrityTest(unittest.TestCase):
     def test_ladder_records_the_naive_to_trustworthy_flip(self) -> None:
         ladder = pd.read_csv(TABLES / "deterministic_ladder.csv")

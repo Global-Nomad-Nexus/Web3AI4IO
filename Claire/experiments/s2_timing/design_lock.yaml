@@ -1,0 +1,77 @@
+experiment: s2_timing
+title: S2 Solana Pump.fun announcement vs activation timing
+status: COMPLETED
+plan: Claire/experiment_plans/S2_announcement_activation_timing.md
+
+# Amendment approved by plan owner (2026-08-13): injected post effect is
+# 0.15 log (primary) with 0.10 log as a robustness effect, replacing the
+# original 0.20 that failed the scale gate. The scale-window rule itself is
+# unchanged. Anticipation-interval effect keeps the plan's 0.08/0.20 = 0.4
+# ratio to the post effect (0.06 primary, 0.04 robustness). Gate check:
+# 0.15 -> 0.861 (launches) / 0.915 (creators); 0.10 -> 0.574 / 0.610;
+# all within [0.25, 1.0].
+
+event:
+  event_id: PUMP_CREATOR_FEE_20250513
+  chain: Solana
+  platform: Pump.fun
+  comparison_series: Moonshot  # noise-calibration only, NOT a causal control
+  announcement_date: "2025-05-08"        # first public documentation commit
+  activation_utc: "2025-05-13T11:27:06Z" # verified onchain economic activation
+  anticipation_days: 5
+  upgrade_tx: 4NK8jLTKV6rwPTLsNWHejfbJrnYuJERp3z3sJGhzuPzezVvp4e7FCz4BKAnnomdJFVqNgVNQMz67P6NBdgNNYvGm
+  first_payment_tx: 5rj8FxQ8z2aTnwCiFgXxZTkveSiSUjm7nBnBcadiZg9LacP3XjkFjxjxssMw27FAZ9S5YUfpgDGRzFuLhqWLGAzs
+
+windows:
+  clean_pre: ["2025-04-17", "2025-05-07"]   # 21 days
+  announcement_interval: ["2025-05-08", "2025-05-12"]
+  partial_activation_day: "2025-05-13"      # dropped at daily frequency
+  clean_post: ["2025-05-14", "2025-06-03"]  # 21 days, estimand window
+
+outcomes:
+  primary: launches
+  secondary: unique_creators
+  transform: log1p
+
+estimand:
+  target: average log ATT of Pump.fun relative to Moonshot over the 21 complete
+    calendar days after activation (2025-05-14..2025-06-03)
+  regression: "d_t = intercept + weekday FE + beta * post_t, d_t = log1p(Pump) - log1p(Moonshot)"
+  inference: Newey-West HAC, lag 7
+  true_beta: {zero: 0.0, no_anticipation: effect, anticipation: effect}
+
+dgp:
+  calibration: clean pre only; per-platform weekday FE on log1p(outcome)
+  residual_bootstrap: paired daily residual vector, 7-day moving-block bootstrap,
+    preserves same-day Pump/Moonshot correlation
+  effects: {primary: 0.15, robustness: 0.10}  # approved amendment; anticipation = 0.4 x effect
+  arms:
+    zero: null
+    no_anticipation: "Pump +effect log from 2025-05-13 onward"
+    anticipation: "Pump +0.4*effect log on announcement..2025-05-12, +effect from 2025-05-13 onward"
+  announcement_gap_grid_days: [3, 5, 7, 10]  # synthetic announcement = activation minus gap; 5 is the real setting
+  moonshot_effect: 0.0  # competitor interference disabled by design
+  scale_gate: "stop unless 0.25 <= effect / pre residual SD <= 1.0; both approved effects pass (0.86/0.92 and 0.57/0.61)"
+
+methods:
+  naive_announcement: "post_t = 1 from announcement day; sample = clean pre + announcement..2025-06-03"
+  verified_activation: "post_t = 1 only 2025-05-14..2025-06-03; announcement interval kept as pre; 2025-05-13 dropped"
+  activation_plus_anticipation_gate: "HAC-7 Wald test of announcement interval vs clean pre
+    weekday-adjusted mean difference; p < 0.05 -> decision unidentified; point estimate uses
+    clean pre + clean post only, announcement interval fully excluded"
+
+run:
+  python: "3.12"
+  dependencies: [numpy, pandas, scipy, statsmodels]  # experiment-local lock; pyarrow/matplotlib used only for artifact I/O and the figure
+  replications_per_cell: 2000  # per outcome x gap x arm x effect_size = 48 cells, 96,000 total
+  metrics: [bias, rmse, coverage, fpr, fnr, sign_correctness, claim_accuracy,
+    attenuation_ratio, anticipation_classification_accuracy, gate_rejection_rate,
+    unidentified_rate, monte_carlo_se]
+
+history:
+  - date: "2026-08-13"
+    event: "original 0.20 effect failed the scale gate (ratio 1.148 launches / 1.220
+      creators); run stopped and blocker reported per plan section 3"
+  - date: "2026-08-13"
+    event: "plan owner approved 0.15 primary + 0.10 robustness, scale-window rule
+      unchanged; formal run executed under the approved effects"

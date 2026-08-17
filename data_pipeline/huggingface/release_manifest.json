@@ -116,6 +116,20 @@
       "sha256": "7cccd3e59e1747fbe43cbb344caa6bd31a712764a99be1f2aed021e156362c38"
     },
     {
+      "source_path": "data/canonical/v1/events/event_evidence.parquet",
+      "dataset_path": "canonical/v1/events/event_evidence.parquet",
+      "role": "canonical_onchain_core",
+      "bytes": 8872,
+      "sha256": "82aefd8b293d155a82c700108a80b725f57934c159370c77af2346d978297b32"
+    },
+    {
+      "source_path": "data/canonical/v1/events/event_registry.parquet",
+      "dataset_path": "canonical/v1/events/event_registry.parquet",
+      "role": "canonical_onchain_core",
+      "bytes": 9224,
+      "sha256": "61af230839045a037d2a4f765d7574f3803cfd58beb33a889f7a914e35ba5cd3"
+    },
+    {
       "source_path": "data/canonical/v1/solana/coverage_ledger.parquet",
       "dataset_path": "canonical/v1/solana/coverage_ledger.parquet",
       "role": "canonical_onchain_core",
@@ -497,8 +511,8 @@
       "source_path": "data_pipeline/source_registry.json",
       "dataset_path": "metadata/source_registry.json",
       "role": "schema_or_manifest",
-      "bytes": 6158,
-      "sha256": "def8b401d59d3fbd998ba5ff4f19fcd7a688615d5136ffbed9dbac57a7c5b33a"
+      "bytes": 7362,
+      "sha256": "ab58dab280d32f184c9f5f76b126fce294382816422e92beb10b1c6e2ace3aeb"
     },
     {
       "source_path": "data_pipeline/schemas/v1/schema_registry.json",
@@ -513,6 +527,27 @@
       "role": "schema_or_manifest",
       "bytes": 3364,
       "sha256": "3d401c96f2a7b64c1ca5e395d625b052e5db7ea4cd9a7f69e6023630a4b1c0ab"
+    },
+    {
+      "source_path": "data_pipeline/schemas/v1/event_schema_registry.json",
+      "dataset_path": "metadata/event_schema_registry.json",
+      "role": "schema_or_manifest",
+      "bytes": 1159,
+      "sha256": "6997575c118a501574d264bc222b2ecd3f050dff1622c17c0b7b9805f65a4b01"
+    },
+    {
+      "source_path": "data_pipeline/events/v1/event_registry.json",
+      "dataset_path": "metadata/event_registry.json",
+      "role": "schema_or_manifest",
+      "bytes": 4412,
+      "sha256": "e471a783c47cac2f4296ee117f94263737c917c5a9d958a511f0be16d368c822"
+    },
+    {
+      "source_path": "data_pipeline/events/v1/event_evidence.json",
+      "dataset_path": "metadata/event_evidence.json",
+      "role": "schema_or_manifest",
+      "bytes": 5381,
+      "sha256": "0cae501616736c8dfb4732e1d95234f04b99f8bade2d94bde2bf19538ee81d79"
     },
     {
       "source_path": "data_pipeline/releases/v1/solana_core.json",
@@ -541,8 +576,22 @@
       "role": "schema_or_manifest",
       "bytes": 2532,
       "sha256": "12269e373eac59e164880f4a4c5cbb9983491947b0df66365e707d4b6ad80d78"
+    },
+    {
+      "source_path": "data_pipeline/releases/v1/events_core.json",
+      "dataset_path": "metadata/events_core.json",
+      "role": "schema_or_manifest",
+      "bytes": 826,
+      "sha256": "7a4ca6992c01f519c1ad3662062ce2b2c66beaf1eec864f590cf8fcc0bb753f1"
+    },
+    {
+      "source_path": "data/release/v1/events.csv",
+      "dataset_path": "metadata/events.csv",
+      "role": "schema_or_manifest",
+      "bytes": 3390,
+      "sha256": "934a2c3221f902c0a5b0c54cf8528d0b90a1d1a4f02bc699cd8ede70565ebf11"
     }
   ],
-  "file_count": 77,
-  "total_bytes": 3186448262
+  "file_count": 84,
+  "total_bytes": 3186482730
 }

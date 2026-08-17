@@ -1,8 +1,0 @@
-{
-  "areas": 10,
-  "gap": 0,
-  "minimum_standard_note": "The code package is reproducible and now includes event-date, window, control-set, placebo, unit-permutation, and decoded-sample selection audits. These raise the artifact standard for a workshop benchmark paper, but full welfare-causal claims still require full-cohort decoded outcomes and same-cohort H4 early-wallet features.",
-  "pass": 5,
-  "readiness_label": "strong_replication_draft_not_submission_ready",
-  "warning": 5
-}

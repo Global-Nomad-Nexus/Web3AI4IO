@@ -1,8 +1,16 @@
 # Web3AI4IO Data Pipeline
 
-This package builds an extensible multi chain launchpad dataset. It separates immutable external sources, canonical tables, coverage evidence, and experiment specific derived datasets.
+## Event layer
 
-This is project level infrastructure implemented by Claire. It integrates Shilin supplied source data and constructs the unified Web3AI4IO release. Its repository root placement indicates project scope, not joint code authorship.
+The project-level event layer is built from reviewed registry records and traceable evidence:
+
+```text
+data_pipeline/.venv/bin/python data_pipeline/scripts/build_events.py
+```
+
+It writes canonical `event_registry` and `event_evidence` Parquet tables under `data/canonical/v1/events/`, plus the teacher-facing `data/release/v1/events.csv`. Event eligibility is deliberately separate from chain coverage. In v1, Base has one accepted first-observed module-adoption event, Solana has one conditional registered event boundary, and BNB Chain and TRON remain rejected event candidates despite having canonical chain datasets.
+
+This package builds an extensible multi chain launchpad dataset. It separates immutable external sources, canonical tables, coverage evidence, and experiment specific derived datasets. The published tables live on Hugging Face. This directory keeps builders, schemas, tests, and release manifests.
 
 ## Current accepted scope
 
@@ -25,7 +33,7 @@ From the repository root:
 ```text
 data_pipeline/.venv/bin/python data_pipeline/scripts/build_solana_core.py
 data_pipeline/.venv/bin/python data_pipeline/scripts/build_crosschain_core.py
-data_pipeline/.venv/bin/pytest data_pipeline/tests
+PYTHONPATH=data_pipeline/src data_pipeline/.venv/bin/python -m pytest data_pipeline/tests
 ```
 
 The build writes `data/canonical/v1/solana/quality_report.json`. This report includes source and table SHA256 digests, exact row counts, and decoded swap coverage status.
