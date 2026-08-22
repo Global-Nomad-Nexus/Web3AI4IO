@@ -1,0 +1,41 @@
+{
+  "release": "v1",
+  "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+  "platform_id": "pump_fun",
+  "built_at": "2026-08-10",
+  "scope": "Phase 1 canonical application baseline and Phase 2 Solana core",
+  "raw_reproduction": {
+    "outcome_rows": 833171,
+    "malformed_outcomes_removed": 215,
+    "nonpositive_graduation_times_removed": 1,
+    "deduplicated_terminal_outcomes": 832941,
+    "launch_rows": 860213,
+    "unique_launch_mints": 860194,
+    "joined_token_rows": 832941,
+    "graduated_tokens": 1651,
+    "timeout_tokens": 831290,
+    "processed_baseline_rows_compared": 832941,
+    "identity_outcome_mismatches": 0
+  },
+  "tables": {
+    "tokens": {"rows": 832941, "sha256": "32e858b522ee34f79edb6e0e26ff795ff9cbd4fdd4f2bf2d16589209c8fe7581"},
+    "launches": {"rows": 832941, "sha256": "d005218000dfdfbc0f6e01b6587b14897628a70b64df7e3a0ec03365528b275e"},
+    "lifecycle_events": {"rows": 832941, "sha256": "c5ab33790b62885a2be398b919ab48156effa0ecbd86ce709e0a46c63624e61e"},
+    "token_metadata": {"rows": 1651, "sha256": "eaebd301646412b643d1d15bd5ca915bd3354a6255b00c70553cdbf161beb7dd"},
+    "pool_windows": {"rows": 4953, "sha256": "c18377280e1196c616cc96ac19b52b9f0bd83bf406c3ec1438fe588ef76db979"},
+    "decoded_swaps": {"rows": 173102, "sha256": "c591bb2847da0b3aff8de5db14cdb394a6d8c57465c8d1fc951f80de4395ee22"},
+    "token_horizons": {"rows": 882, "sha256": "b71df8d61b844cfad9c07824a600a91bf1fbc4c43567089b1132c882ce818fab"},
+    "coverage_ledger": {"rows": 1651, "sha256": "119e6b49540783613b2d45e5b83632a6201d2478622490017fd8d4aac82bf5c1"}
+  },
+  "decoded_coverage": {
+    "graduated_tokens": 1651,
+    "tokens_with_delivered_decoded_swaps": 294,
+    "tokens_without_delivered_decoded_swaps": 1357,
+    "complete_1_7_30_day_tokens": 0,
+    "interpretation": "Delivered decoded swap observations are lower bounds because most windows reached the configured page limit."
+  },
+  "validation": {
+    "pytest": "4 passed",
+    "git_diff_check": "passed"
+  }
+}

@@ -1,0 +1,26 @@
+\begin{table}[t]
+\centering
+\caption{Deterministic and agentic execution across the ablation ladder. The
+deterministic decision is cross-checked against Table~\ref{tab:ablation} at
+every rung. The remaining columns report the agent's mean decision over
+$n=10$ runs, sign stability, calibration gap, and run-to-run dispersion.}
+\label{tab:arms}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.14\textwidth}cc@{}}
+\toprule
+\textbf{Rung} & \textbf{Component added} & \textbf{Deterministic decision} & \textbf{Agent decision} &
+\textbf{Sign stab.} & \textbf{Cal.\ gap / disp.} \\
+\midrule
+L0 & None (before--after means) & Yes, but naive treated-only evidence. & Yes & 1.00 & $-0.75$ / $<10^{-12}$ \\
+L1 & Control group & No/uncertain. & No/uncertain & 1.00 & $-0.75$ / 0 \\
+L2 & Two-way fixed effects & No/uncertain. & No/uncertain & 1.00 & $-0.75$ / $<10^{-12}$ \\
+L3 & Single-event dynamic analogue & Yes in event-study analogue. & Yes & 1.00 & $-0.50$ / $<10^{-12}$ \\
+L4 & Event study / pre-trends & Diagnostic, not clean causal evidence. & No/uncertain & 1.00 & $-0.75$ / $1.7{\times}10^{-5}$ \\
+L5 & Token heterogeneity & Retail risk higher. & Retail risk higher & 1.00 & $-0.50$ / 0 \\
+L6 & Honest few-cluster inference & No/uncertain. & No/uncertain & 1.00 & $-0.40$ / $<10^{-12}$ \\
+\rowcolor{okgreen!8}
+L7 & Data richness + metric battery & Depends on stakeholder. & Depends on stakeholder & 1.00 & $-0.25$ / $<10^{-12}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}

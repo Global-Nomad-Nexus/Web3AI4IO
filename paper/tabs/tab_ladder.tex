@@ -1,0 +1,24 @@
+\begin{table*}[t]
+  \centering
+  \caption{The L0 to L7 claim validity ladder. Each rung adds evidence or a validity gate while preserving the research claim whenever the data permit. Deterministic code evaluates statistical behavior; the parallel agentic arm evaluates whether an artificial-intelligence (AI) system respects the same evidence boundary.}
+  \label{tab:ladder}
+  \footnotesize
+  \setlength{\tabcolsep}{3.8pt}
+  \renewcommand{\arraystretch}{1.02}
+  \rowcolors{2}{tablealt}{white}
+  \begin{tabularx}{\linewidth}{@{}C{0.72cm} L{2.50cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \rowcolor{tablehead}
+    \textbf{Level} & \textbf{Evidence added} & \textbf{Question answered} & \textbf{Failure made visible} \\
+    \midrule
+    \textbf{\textcolor{scopered}{L0}} & Treated before-and-after summary & Did the outcome change? & No comparison, estimand, or stakeholder boundary \\
+    \textbf{\textcolor{scopered}{L1}} & Explicit comparison rule & Did treated and comparison outcomes diverge? & Interference, concurrent shocks, inadmissible controls \\
+    \textbf{\textcolor{scopered}{L2}} & Unit and time adjustment & Is the contrast robust to unit and time factors? & Functional-form and aggregation dependence \\
+    \textbf{\textcolor{partialamber}{L3}} & Cohort and event-time structure & Are timing and heterogeneous exposure represented? & Forbidden comparisons and estimand mismatch \\
+    \textbf{\textcolor{partialamber}{L4}} & Timing, anticipation, and pretrend gates & Does nominal timing match economic activation? & Misdated treatment and unstable counterfactual trends \\
+    \textbf{\textcolor{partialamber}{L5}} & Fixed horizons and sequential-event rules & Are exposure and later interventions aligned? & Censoring and overlapping interventions \\
+    \textbf{\textcolor{okgreen}{L6}} & Design-appropriate uncertainty & Does inference respect dependence and cluster count? & Undercoverage, coarse exact tests, low power \\
+    \textbf{\textcolor{okgreen}{L7}} & Stakeholder claim vector and sensitivity & Which claims remain supported, for whom? & Aggregate activity presented as welfare or inclusion \\
+    \bottomrule
+  \end{tabularx}
+\end{table*}

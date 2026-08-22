@@ -1,0 +1,27 @@
+\begin{table*}[t]
+  \centering
+  \caption{Representative blockchain datasets and evaluation scope. Columns denote launchpad lifecycle (LP), multiple chains (MC), onchain and offchain linkage (OC), provenance or coverage states (PC), event validity (EV), known causal truth (KT), and artificial-intelligence agent audit (AA). A cross denotes a capability outside the evaluated scope, not a defect; a partial mark denotes bounded support.}
+  \label{tab:related-work}
+  \scriptsize
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lccccccc}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Data scope}} & \multicolumn{3}{c}{\textbf{Claim validity}} & \textbf{AI} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-8}
+    \textbf{Dataset or framework} & \textbf{LP} & \textbf{MC} & \textbf{OC} & \textbf{PC} & \textbf{EV} & \textbf{KT} & \textbf{AA} \\
+    \midrule
+    Chartalist~\citep{shamsi2022chartalist}       & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+    EX Graph~\citep{wang2024exgraph}              & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark \\
+    Uniswap Indices~\citep{chemaya2025uniswap}    & \xmark & \cmark & \xmark & \pmark & \xmark & \xmark & \xmark \\
+    Multi Chain GoG~\citep{luo2024gog}            & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+    XChainDataGen~\citep{augusto2025xchain}       & \xmark & \cmark & \xmark & \pmark & \xmark & \xmark & \xmark \\
+    FinML Chain~\citep{chen2024finml}             & \xmark & \xmark & \cmark & \xmark & \pmark & \xmark & \xmark \\
+    MemeTrans~\citep{hu2026memetrans}             & \cmark & \xmark & \pmark & \xmark & \xmark & \xmark & \xmark \\
+    \rowcolor{lightgray}\textbf{Web3AI4IO}       & \cmark & \cmark & \pmark & \cmark & \cmark & \cmark & \cmark \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \begin{minipage}{0.98\textwidth}
+    \footnotesize LP: launchpad lifecycle; MC: multiple chains; OC: onchain and offchain linkage; PC: explicit provenance or coverage states; EV: event validity; KT: known causal truth; AA: agent evidence audit. \cmark\ full support; \pmark\ bounded support; \xmark\ outside the evaluated scope. ``Known truth'' means calibrated evaluation with a known causal target, rather than predictive labels or observational outcomes.
+  \end{minipage}
+\end{table*}

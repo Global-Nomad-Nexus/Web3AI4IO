@@ -1,0 +1,10 @@
+{
+  "cluster_count": 4,
+  "estimate": 0.4116991342312808,
+  "method": "Exact Rademacher wild-cluster bootstrap over protocol units",
+  "sign_assignments": 16,
+  "std_error_hc1": 0.2753661276007016,
+  "wild_bootstrap_ci95_high": 1.342315753937705,
+  "wild_bootstrap_ci95_low": -1.3423157539376223,
+  "wild_bootstrap_p_value": 0.6875
+}

@@ -1,0 +1,36 @@
+{
+  "run_records": 80,
+  "raw_responses": 80,
+  "requested_model_aliases": [
+    "deepseek-chat"
+  ],
+  "returned_models": [
+    "deepseek-v4-flash"
+  ],
+  "system_fingerprints": [
+    "fp_8b330d02d0_prod0820_fp8_kvcache_20260402"
+  ],
+  "scored_prompt_hashes": [
+    "12717fed75cd7085c44c3ac4c92f0cf4088b6068f8ceb4746613478aeede960a",
+    "313f382a0a13e51d27e9c787f95b0e44e3753dcd53723876b9d32cf0814a6c3d",
+    "62b580cea7171de500d67a685cbcc17211e6e390be3fc1d1fe6f18af0d66459b",
+    "6ae25e63beafd12c2ccfdb1cc1358a5683c0f9e195150b9cd22f2879a10ce80f",
+    "7cd03fef879a0534b66f09500a4da7696eb543d29228afb5b3b352d049b5d4b4",
+    "84793c5766713904b59461e4cd303f504fb15f8af5ac2a69cf8b3b761fe4b3dd",
+    "8c7b03cbb6f2d09deee24d3f2c161548d5479a2e03fbb18474c207d470bb2adb",
+    "e64b0c232a7e99483d206002b556ed2f75f9e46b3feeb029eb59ef73903cd03e"
+  ],
+  "current_template_manifest_hashes": [
+    "1bd5a127e81c632e3f57b3b2ba83eafdbf45dccea25d5e1fee25a7e1abd73d37",
+    "307cdac7ddeddbcc8072d062c4970f7f4872a95ec800d24b4adc784358f0a9fc",
+    "346dc48c98e86836e1c89b2a0b023008e35dc5174d906c795e9b59751c966492",
+    "59fb1c2ca6b87badfa23b803b1941123a0bfe783c8b91fa4bdfd6404e6725f8d",
+    "5a7a21ea21fb15b8c30047e80dfd3fffbd19cc6b79529e21d1b183a52cb2378a",
+    "7b359a311bfb3cc62ae441a69d946d2e9d1c18f5bced673476cbea2a721ec3b5",
+    "960b6a3f67145275966dc83249115dbd06b8356331974e63888b191721c70349",
+    "b9ae53e87556f5a5667a07eab08792fafff3489cec364143c963945b81425e7f"
+  ],
+  "hash_sets_overlap": false,
+  "exact_runtime_prompt_payload": "not archived",
+  "audit_boundary": "Raw responses and scored hashes are complete. The current prompt templates do not reconstruct the scored runtime payload hashes, so the exact runtime payload is not independently repeatable."
+}

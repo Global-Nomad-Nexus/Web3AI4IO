@@ -1,0 +1,299 @@
+{
+  "phase": 4,
+  "scope": "BNB/Four.meme and TRON/SunPump canonical core",
+  "pytest": "14 passed in 16.20s",
+  "chains": {
+    "bnb": {
+      "manifest": "data_pipeline/releases/v1/bnb_core.json",
+      "launch_universe": 1593679,
+      "tables": {
+        "tokens": {
+          "declared_rows": 1593679,
+          "actual_rows": 1593679,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "launches": {
+          "declared_rows": 1593679,
+          "actual_rows": 1593679,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "protocol_config": {
+          "declared_rows": 1593679,
+          "actual_rows": 1593679,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "pools": {
+          "declared_rows": 15403,
+          "actual_rows": 15403,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "liquidity_initializations": {
+          "declared_rows": 15403,
+          "actual_rows": 15403,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "lifecycle_events": {
+          "declared_rows": 1639994,
+          "actual_rows": 1639994,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "token_metadata": {
+          "declared_rows": 999,
+          "actual_rows": 999,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "token_state_snapshots": {
+          "declared_rows": 0,
+          "actual_rows": 0,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "coverage_ledger": {
+          "declared_rows": 1593679,
+          "actual_rows": 1593679,
+          "rows_match": true,
+          "sha256_match": true
+        }
+      },
+      "identities": {
+        "token_id_unique": true,
+        "launch_id_unique": true,
+        "coverage_token_id_unique": true
+      },
+      "foreign_keys": {
+        "launches.token_id_subset": true,
+        "protocol_config.token_id_subset": true,
+        "pools.token_id_subset": true,
+        "liquidity_initializations.token_id_subset": true,
+        "lifecycle_events.token_id_subset": true,
+        "token_metadata.token_id_subset": true,
+        "coverage_ledger.token_id_subset": true
+      },
+      "coverage": {
+        "launch_universe": 1593679,
+        "creator_observed": 1593679,
+        "protocol_config_observed": 1593679,
+        "pool_mapping_observed": 15403,
+        "pool_mapping_not_collected": 106,
+        "pool_mapping_not_applicable": 1578170,
+        "pool_initialization_observed": 15403,
+        "liquidity_initialization_observed": 15403,
+        "graduation_observed": 15403,
+        "graduation_not_collected": 106,
+        "graduation_not_applicable": 1578170,
+        "migration_observed": 15403,
+        "migration_not_collected": 106,
+        "migration_not_applicable": 1578170,
+        "decoded_swaps_not_collected": 1593679
+      },
+      "observed_status_values": {
+        "pool_mapping_status": [
+          "not_applicable",
+          "not_collected",
+          "observed"
+        ],
+        "pool_initialization_status": [
+          "not_applicable",
+          "not_collected",
+          "observed"
+        ],
+        "liquidity_initialization_status": [
+          "not_applicable",
+          "not_collected",
+          "observed"
+        ],
+        "graduation_status": [
+          "not_applicable",
+          "not_collected",
+          "observed"
+        ],
+        "migration_status": [
+          "not_applicable",
+          "not_collected",
+          "observed"
+        ],
+        "decoded_swaps_status": [
+          "not_collected"
+        ],
+        "holder_data_status": [
+          "not_collected"
+        ],
+        "trading_data_status": [
+          "not_collected"
+        ],
+        "coverage_status": [
+          "canonical_core_complete",
+          "canonical_core_partial"
+        ]
+      },
+      "official_api_metadata_rows": 999,
+      "state_snapshot_rows": 0,
+      "forbidden_tables_absent": true,
+      "reconciliation": {
+        "official_api_input_rows": 1000,
+        "metadata_rows_in_onchain_universe": 999,
+        "metadata_rows_outside_onchain_universe": 1,
+        "lifecycle_events_formula": "1593679 token_created + 15509 declared lifecycle + 15403 pool_initialized + 15403 initial_liquidity_added = 1639994",
+        "trade_stop_semantics": "106 V1 TradeStop events are retained literally. They do not encode pool mapping, pool initialization, graduation, or migration, so those applicable-but-unobserved fields are not_collected.",
+        "non_lifecycle_token_semantics": "Tokens without an observed lifecycle transition have pool, liquidity, graduation, and migration marked not_applicable to their currently observed created state. This does not claim the token can never transition later."
+      },
+      "scope_semantics": {
+        "official_api_role": "metadata enrichment only; never universe membership or denominator",
+        "decoded_swaps": "not_collected because outside the declared Phase 4 collection scope",
+        "holder_data": "not_collected because outside the declared Phase 4 collection scope",
+        "trading_data": "not_collected because outside the declared Phase 4 collection scope",
+        "metadata_completeness_claimed": false
+      }
+    },
+    "tron": {
+      "manifest": "data_pipeline/releases/v1/tron_core.json",
+      "launch_universe": 104548,
+      "tables": {
+        "tokens": {
+          "declared_rows": 104548,
+          "actual_rows": 104548,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "launches": {
+          "declared_rows": 104548,
+          "actual_rows": 104548,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "protocol_config": {
+          "declared_rows": 104548,
+          "actual_rows": 104548,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "pools": {
+          "declared_rows": 1831,
+          "actual_rows": 1831,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "liquidity_initializations": {
+          "declared_rows": 1831,
+          "actual_rows": 1831,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "lifecycle_events": {
+          "declared_rows": 110041,
+          "actual_rows": 110041,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "token_metadata": {
+          "declared_rows": 1000,
+          "actual_rows": 1000,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "token_state_snapshots": {
+          "declared_rows": 0,
+          "actual_rows": 0,
+          "rows_match": true,
+          "sha256_match": true
+        },
+        "coverage_ledger": {
+          "declared_rows": 104548,
+          "actual_rows": 104548,
+          "rows_match": true,
+          "sha256_match": true
+        }
+      },
+      "identities": {
+        "token_id_unique": true,
+        "launch_id_unique": true,
+        "coverage_token_id_unique": true
+      },
+      "foreign_keys": {
+        "launches.token_id_subset": true,
+        "protocol_config.token_id_subset": true,
+        "pools.token_id_subset": true,
+        "liquidity_initializations.token_id_subset": true,
+        "lifecycle_events.token_id_subset": true,
+        "token_metadata.token_id_subset": true,
+        "coverage_ledger.token_id_subset": true
+      },
+      "coverage": {
+        "launch_universe": 104548,
+        "creator_observed": 104548,
+        "protocol_config_observed": 104548,
+        "pool_mapping_observed": 1831,
+        "pool_mapping_not_collected": 0,
+        "pool_mapping_not_applicable": 102717,
+        "pool_initialization_observed": 1831,
+        "liquidity_initialization_observed": 1831,
+        "graduation_observed": 1831,
+        "graduation_not_collected": 0,
+        "graduation_not_applicable": 102717,
+        "migration_observed": 1831,
+        "migration_not_collected": 0,
+        "migration_not_applicable": 102717,
+        "decoded_swaps_not_collected": 104548
+      },
+      "observed_status_values": {
+        "pool_mapping_status": [
+          "not_applicable",
+          "observed"
+        ],
+        "pool_initialization_status": [
+          "not_applicable",
+          "observed"
+        ],
+        "liquidity_initialization_status": [
+          "not_applicable",
+          "observed"
+        ],
+        "graduation_status": [
+          "not_applicable",
+          "observed"
+        ],
+        "migration_status": [
+          "not_applicable",
+          "observed"
+        ],
+        "decoded_swaps_status": [
+          "not_collected"
+        ],
+        "holder_data_status": [
+          "not_collected"
+        ],
+        "trading_data_status": [
+          "not_collected"
+        ],
+        "coverage_status": [
+          "canonical_core_complete"
+        ]
+      },
+      "official_api_metadata_rows": 1000,
+      "state_snapshot_rows": 0,
+      "forbidden_tables_absent": true,
+      "reconciliation": {
+        "official_api_input_rows": 1000,
+        "metadata_rows_in_onchain_universe": 1000,
+        "metadata_rows_outside_onchain_universe": 0,
+        "lifecycle_events_formula": "104548 token_created + 1831 token_launched + 1831 pool_initialized + 1831 initial_liquidity_added = 110041",
+        "non_lifecycle_token_semantics": "Tokens without an observed TokenLaunched transition have pool, liquidity, graduation, and migration marked not_applicable to their currently observed created state. This does not claim the token can never transition later."
+      },
+      "scope_semantics": {
+        "official_api_role": "metadata enrichment only; never universe membership or denominator",
+        "decoded_swaps": "not_collected because outside the declared Phase 4 collection scope",
+        "holder_data": "not_collected because outside the declared Phase 4 collection scope",
+        "trading_data": "not_collected because outside the declared Phase 4 collection scope",
+        "metadata_completeness_claimed": false
+      }
+    }
+  },
+  "accepted": true
+}

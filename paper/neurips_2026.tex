@@ -1,0 +1,295 @@
+\documentclass{article}
+%\usepackage[dblblindworkshop,final]{neurips_2026} % use after acceptance 
+\usepackage[dblblindworkshop]{neurips_2026}
+\workshoptitle{Trustworthy AI for Good}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks=true,citecolor=green!45!black,linkcolor=red!65!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{url}
+\usepackage{microtype}
+\input{preamble}
+
+\title{Trustworthy Causal Inference and AI Evaluation of Stakeholder Claims for Token Launch Platforms}
+
+\author{Anonymous Authors}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+  \vspace{-0.8em}
+  \includegraphics[width=\linewidth]{figs/teaser_figure.pdf}
+  \captionof{figure}{Evidence-contract overview. Chain-specific coverage, stakeholder outcomes, data resolution, and causal identification narrow aggregate evidence to supported claims.}
+  \label{fig:evidence-contract-overview}
+  \vspace{-0.3em}
+\end{center}
+
+\begin{abstract}
+Token launch platforms govern market entry and secondary trading through automated price discovery and fee rules, yet their effects are often assessed with aggregate before-and-after statistics whose counterfactual and stakeholder meaning are unclear. We develop an evidence contract that connects platform economics to causal design and tests whether AI-assisted analysis preserves the resulting claim boundaries. A provenance-aware dataset covers Pump.fun and PumpSwap on Solana, Clanker on Base, Four.meme on BNB Chain, and SunPump on TRON while retaining chain-specific lifecycle and coverage states. Real applications and five platform-calibrated experiments with known causal truth show how design choices can narrow or overturn an initial conclusion. In a bounded evaluation of one pretrained language model, structured evidence disclosure improves evidence following, although method omissions remain. We report the narrowest supported stakeholder claim and treat ``not identified'' as an informative outcome. The review artifact provides deterministic builders, archived evidence objects, and generated outputs for auditing the reported claim boundaries.
+
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Permissionless token launch platforms automate issuance and connect initial price discovery to secondary liquidity at exceptional scale. In the released Solana cohort, 832{,}941 terminal outcomes are observed from May~8 to June~10, 2026, but only 1{,}651 are graduations. Pump.fun also surpassed \$1~billion in cumulative protocol revenue by early 2026 \citep{defillama}. Platform rules therefore shape economically consequential outcomes whose incidence can differ across market participants and host ecosystems.
+
+Existing theory explains token adoption, platform membership, entrepreneurial finance, and two-sided market design \citep{cong2021tokenomics,sockinxiong2023,gryglewicz2021,malinovapark2023,rochettirole2003}. Yet empirical claims about launch platforms often rely on aggregate before-and-after comparisons, such as early PumpSwap volume or monthly revenue changes \citep{theblock2025pumpswap,cointelegraph2025pumpswap,cryptoslate2025pumpfun}. Such comparisons do not by themselves establish a counterfactual, valid activation time, stakeholder outcome, or uncertainty statement. The problem is sharper under staggered adoption, where pooled two-way fixed effects can use inadmissible comparisons and negative weights \citep{goodmanbacon2021,dechaisemartin2020,roth2023trending}.
+
+We therefore treat each causal statement as a claim whose support depends on source coverage, intervention timing, comparison design, uncertainty, and incidence. Platform economics defines the mechanism and affected parties. Causal econometrics evaluates the counterfactual, and AI evaluation tests whether an analysis system preserves the resulting boundary. The central question is which conclusion survives this sequence, not simply whether activity changed. This distinction matters when aggregate activity can mask unequal fee incidence, access, or trading risk.
+
+The analysis connects evidence infrastructure, claim robustness, and reasoning calibration. A provenance-aware four-chain release establishes a common construction while preserving lifecycle semantics through explicit source boundaries and coverage states. Three real applications then trace how market, token, and rule evidence narrows platform claims once validity checks are imposed. Finally, five calibrated experiments provide known causal truth, and a bounded model evaluation examines whether structured disclosure improves evidence following.
+
+The empirical contribution is an extensible four-chain dataset with explicit coverage states. The methodological contribution is an evidence contract evaluated in real applications and known-truth experiments. Table~\ref{tab:claim-evidence} maps each focal claim to its stakeholder, evidentiary requirements, observed support, and status. The contract does not produce a universal welfare estimate or a new estimator. It determines which claims remain supportable and whether AI-assisted analysis respects that decision.
+
+\section{Related Work}
+\label{sec:related}
+
+Platform economics and market design define the relevant stakeholders and mechanisms. Price structure coordinates interdependent sides \citep{rochettirole2003}. Market rules govern thickness, congestion, and safety \citep{roth2008}, while token models extend these ideas to adoption, membership, and financing \citep{cong2021tokenomics,sockinxiong2023,gryglewicz2021,malinovapark2023}. Theory, however, does not identify the effect of a protocol change.
+
+Research on blockchain evidence infrastructure shows that reusable cross-chain representations are feasible. Existing datasets cover transaction graphs, hierarchical token graphs, cross-chain transfers, decentralized-exchange activity, social links, and offchain sentiment \citep{shamsi2022chartalist,luo2024gog,augusto2025xchain,chemaya2025uniswap,wang2024exgraph,chen2024finml}. MELT is closest in task scope, studying Pump.fun transactions and post-migration risk within a migrated-token subset \citep{hu2026memetrans}. None binds source coverage to the validity boundary of a launchpad intervention claim.
+
+Causal and evaluation methods supply alternatives to pooled staggered two-way fixed effects and diagnostics for pretrends and few clusters \citep{callaway2021,sunabraham2021,borusyak2024,rambachanroth2023,mackinnonwebb2018}. No estimator, however, repairs an invalid activation date, an uncollected outcome, or a welfare claim formed from aggregate activity.
+
+\input{tabs/tab_related_work}
+
+Table~\ref{tab:related-work} positions Web3AI4IO at the intersection of lifecycle data, coverage semantics, event validity, and known-truth evaluation. This combination motivates a data design that preserves chain-specific evidence boundaries rather than forcing a pooled panel.
+
+\section{Data}
+\label{sec:data}
+
+\subsection{Construction}
+
+The public data release\footnote{Anonymous review artifact. Not for distribution. The public dataset URL is withheld from the anonymized manuscript.} separates immutable inputs, canonical tables, and deterministic builders. It uses nine common tables where applicable, plus an event registry and event-evidence table. Manifests record source and output counts, Secure Hash Algorithm 256 digests, and declared scope. Builders test key uniqueness, referential integrity, counts, source roles, and coverage states. The schema is designed for extension rather than forced equivalence across chains.
+% Camera-ready dataset URL withheld from the anonymized manuscript.
+
+Missingness is interpreted relative to the acquisition process and the claim under study. The release distinguishes direct observations, completed queries with no qualifying record, applicable outcomes that were not acquired, mechanisms absent from a protocol, and information intentionally outside the released scope. These distinctions prevent an unobserved transition at a finite snapshot from being recoded as a structural zero. Figure~\ref{fig:data-layer-coverage} compares the resulting chain-specific evidence boundaries after standardization. Its event-design column is separate from data coverage because it assesses whether a registered intervention supports a credible causal comparison rather than grading the completeness or utility of a chain core. Appendix~\ref{app:data} reports the corresponding schema fields, acquisition procedures, and validation rules.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.84\linewidth]{figs/fig_data_layer_coverage_map.pdf}
+  \caption{A common schema preserves rather than erases chain-specific evidence boundaries. Cells distinguish observed, bounded or selected, uncollected, and release-excluded layers. Event-design status is a separate identification assessment: accepted, conditional, and rejected indicate whether a registered intervention passes the activation-evidence and comparison-design gates. These labels do not grade data quality or remove a chain from the release. All four chain cores contribute to the standardized cross-chain evidence map and support descriptive or mechanism claims within their declared coverage. Counts describe the released snapshot and are not pooled causal denominators.}
+  \label{fig:data-layer-coverage}
+\end{figure}
+
+\input{tabs/tab_data_scope}
+
+\subsection{Chain Scope}
+
+Table~\ref{tab:data-scope} summarizes the four chain cores. Solana supplies full terminal outcomes and selected post-graduation trading layers. Base, BNB Chain, and TRON instead supply launch universes with bounded lifecycle coverage. Official application programming interfaces enrich metadata but never define a universe when pagination is capped. The unified schema and explicit observation windows establish the scope of cross-chain analysis. The chains can share construction and field meaning, but their different denominators and outcome layers do not form a pooled causal panel. These scope differences also determine which claims the evidence can support. Detailed chain-specific scope appears in Appendix~\ref{app:data}.
+
+\section{Claim Validity}
+\label{sec:claim-validity}
+
+\subsection{Evidence Contract}
+
+A platform claim is evaluated as an evidence contract rather than a point estimate. A complete claim identifies whose outcome is measured and states the intervention, comparison rule, horizon, estimator, uncertainty procedure, and allowed interpretation. This structure first separates stakeholder outcomes. Platform activity is not a welfare scalar because a price or rule change can subsidize one side while monetizing another \citep{rochettirole2003}, and market design distinguishes thickness from congestion and safety \citep{roth2008}. Creator outcomes therefore describe participation, graduation, time to graduation, and gross fee receipts. Trader outcomes capture breadth, persistence, concentration, execution quality, and measurable harm. Platform outcomes concern fee revenue and sustained activity, while community and host-ecosystem outcomes cover inclusion, security, and spillovers. A result can be positive for one stakeholder and unidentified or negative for another. The resulting assessment ends with a stakeholder claim vector rather than an overall verdict. Appendix~\ref{app:metrics} defines the complete metric set and interpretation boundaries.
+
+The evidentiary meaning of these outcomes depends on source depth and temporal resolution. Market, token, transaction, wallet, and social layers answer different economic questions. Aggregate indices measure platform activity and decentralization at a common frequency \citep{chemaya2025uniswap}. Linked social and transaction data can instead reveal attention or entity relationships that remain invisible onchain \citep{wang2024exgraph,chen2024finml}. Aggregate volume may be complete but economically coarse, whereas decoded token outcomes may be rich but selected. Calendar aggregation can also change exposure to the intervention, which makes frequency part of the estimand. Every result is therefore paired with its source boundary, unit, horizon, frequency, and coverage state.
+
+Identification completes the contract by fixing the treatment family, target population, outcome, comparison rule, and estimand before the effect sign is inspected. The protocol requires activation evidence, anticipation and pretrend diagnostics, admissible controls, and design-appropriate uncertainty. Under staggered adoption, group-time or imputation estimators replace pooled two-way fixed effects when their assumptions are credible \citep{callaway2021,sunabraham2021,borusyak2024}. Repeated interventions require clean event windows or an intertemporal estimand \citep{dechaisemartin2026}. With few platform clusters, inference must disclose its attainable resolution \citep{mackinnonwebb2018}. Sensitivity analysis records departures from parallel trends rather than treating a failed diagnostic as validation \citep{rothsantanna2023,rambachanroth2023}. No estimator repairs an invalid event, contaminated comparison, or missing stakeholder outcome, so the contract retains ``not identified'' as a valid result.
+
+For the common-date PumpSwap intervention, the dynamic diagnostic takes the form
+\begin{equation}
+  y_{it}=\alpha_i+\lambda_t+
+  \sum_{k\neq-1}\beta_k D_i\mathbb{1}\{t-T=k\}+\varepsilon_{it},
+  \label{eq:event-study}
+\end{equation}
+where $D_i$ identifies the treated protocol and week $-1$ is omitted. The pre-event coefficients assess the stability of the comparison design. The post-event coefficients admit a causal interpretation only when the timing and comparison assumptions hold.
+
+\subsection{Evidence Ladder}
+
+The L0 to L7 ladder operationalizes the evidence contract. L0 captures the dashboard style treated before and after estimand. Each subsequent rung adds a comparison or validity gate. The ladder is not a claim that each level uniquely identifies the marginal contribution of one component. Components can interact, and their order is fixed for auditability rather than factorial attribution. Table~\ref{tab:ladder} defines the common contract used by the applications.
+
+\input{tabs/tab_ladder}
+
+\input{tabs/tab_claim_evidence}
+
+The ladder also structures the model evaluation through two execution arms. The deterministic arm implements the registered calculation and provides the reference evidence state. The agentic arm receives the same question and incrementally disclosed evidence at each rung. We score conclusion agreement, confidence calibration, run dispersion, method omissions, and claim-boundary violations. This is pretrained artificial intelligence (AI) model evaluation of one analysis scaffold. It is not architecture retraining, independent replication, or evidence that a language model can identify causal effects from raw data.
+
+\subsection{Stress Tests}
+
+Real applications reveal whether conclusions change, but they do not provide causal ground truth. We therefore add five semi-synthetic stress tests calibrated from active platform data. Real data determine untreated levels, cohort shares, serial dependence, weekday structure, or selection-relevant slopes. Synthetic assignment and effects provide known truth. All methods are scored against the same estimand and generated panel. The tests isolate staggered heterogeneity, announcement versus activation timing, inference with four clusters, adoption based on latent growth, and daily versus weekly aggregation. Their conclusions apply to the calibrated families of data-generating processes, not to all platforms or all causal methods.
+
+\section{Empirical Analysis}
+\label{sec:empirical}
+
+The empirical analysis applies the evidence contract to claim robustness in real applications and to calibration under known truth. Each real-world analysis first defines its unit, observation period, intervention, outcome, and comparison group. It then states the estimand, identifying assumptions, uncertainty procedure, coverage boundary, and principal alternative explanations. Full samples, equations, diagnostics, and simulation protocols appear in Appendices~\ref{app:empirical-designs} and~\ref{app:simulation-designs}.
+
+\subsection{Claim Robustness}
+\label{sec:claim-robustness}
+
+The applications trace how a platform conclusion changes as its timing, comparison design, uncertainty, and stakeholder scope become explicit. They move from a market-level migration claim to token-level social evidence and then to the incidence of a rule change. Across these settings, validity checks can weaken a causal conclusion while preserving a narrower descriptive, predictive, or mechanical result.
+
+PumpSwap provides the market-level application. The analysis uses protocol-day observations over a $\pm90$-day window around March 20, 2025. It begins with Pump ecosystem daily volume and adds Raydium, Orca, and Meteora as screened comparison series. The intervention is the verified PumpSwap launch date, the outcome is $\log(1+$ daily volume $)$, and the estimand is the market-level change relative to the screened controls. The design progresses from a treated before-and-after contrast to protocol and date fixed effects, a dynamic event study, and exact inference over four protocol clusters. Identification requires a valid activation date, a stable comparison set, and sufficiently regular pre-event behavior. The relevant question is whether the native migration venue caused higher market activity rather than whether Pump volume happened to rise after the event.
+
+The before-and-after contrast is 0.669 log points. With controls and two-way fixed effects it falls to 0.412, with a 95 percent confidence interval of $[-0.128,0.951]$. Pre-event instability in Figure~\ref{fig:pumpswap-event-study} and an exact Rademacher $p$ value of 0.6875 preclude an affirmative causal conclusion. Token-level evidence supports a narrower mechanism claim. Of 1,651 graduated tokens, 1,636 show observed 30-day transaction-proxy activity, and all 762 complete windows are active. PumpSwap is an operational post-migration venue for the observed tokens, but the causal migration effect, execution quality, and trader welfare remain unidentified.
+
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/fig_event_study_application.pdf}
+    \caption{Event-study coefficients}
+    \label{fig:pumpswap-event-study}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/fig_ladder_decision_flip_application.pdf}
+    \caption{Evidence-ladder path}
+    \label{fig:pumpswap-decision-path}
+  \end{subfigure}
+  \caption{PumpSwap evidence diagnostics. Panel (a) shows positive postperiod volume estimates alongside unstable preperiod coefficients. Week minus one is omitted, and shaded regions report the displayed uncertainty intervals. Panel (b) shows how the initially positive dashboard conclusion becomes uncertain once comparison design and few-cluster inference are introduced. Together the panels support a diagnostic description rather than an identified causal migration effect. The final stakeholder-specific claim at L7 is reported in the text and Table~\ref{tab:ladder}.}
+  \label{fig:pumpswap-evidence-path}
+\end{figure}
+
+The token-level application uses observations from the 832,941 terminal Solana outcomes and examines whether observed Telegram metadata is associated with a higher probability of graduation. Exposure is measured at launch, the outcome is terminal graduation, and the comparison is formed within launch-day and covariate-matched cells. The design combines launch-day fixed effects with coarsened exact matching and clustered bootstrap uncertainty. Outcome-timing falsification and a screen of six candidate public shocks address the central threat of endogenous signal adoption, under which higher-quality creators may supply metadata before any audience response occurs.
+
+Graduation is 1.485 percent among tokens with Telegram metadata and 0.166 percent without it. Matching yields a 0.945 percentage-point difference with a launch-day clustered interval of $[0.732,1.163]$ and an E-value of 5.02. Yet the association is already present in the five-minute outcome and disappears after 60 minutes, while no screened shock supplies exogenous exposure. Telegram metadata is therefore a strong predictive marker of preexisting quality or attention, not an identified treatment.
+
+The rule-incidence application distinguishes program support from economic activation using platform-day rows, fixed-horizon cohorts, and onchain transfers. A May 12 transaction produced zero creator-vault transfer. The verified May 13, 2025 activation at 11:27:06 coordinated universal time is followed by a 10,732-lamport vault increase. The comparison is a Pump-only before-and-after series because concurrent product changes and displacement prevent a clean platform counterfactual. The estimand is therefore mechanical incidence and descriptive outcome change rather than a general creator-welfare effect. Appendix~\ref{app:events} reports the event registry and transaction-level timing evidence.
+
+The transaction establishes positive gross mechanical incidence, but not creator net welfare. The Pump-minus-Moonshot launch diagnostic is $-0.966$ log points with a 95 percent interval of $[-1.252,-0.680]$, while the registered seven-day launch-minus-migration contrast is $0.182$ with an interval of $[-0.174,0.538]$. Concurrent changes and displacement make Moonshot inadmissible as a causal control. A bounded Base reconstruction with six treated and six comparison launches validates the event pipeline, not a platform-wide effect.
+
+\subsection{Calibration Results}
+\label{sec:reasoning-calibration}
+
+Five Monte Carlo experiments evaluate the conditions under which an analysis pipeline remains calibrated under known truth. They combine platform-calibrated untreated structure with synthetic assignment and effects. Each targets a different source of claim failure, so success in one experiment does not imply general robustness. Figure~\ref{fig:stress-test-atlas} places their results on a common evidence map.
+
+\begin{figure}[!b]
+  \centering
+  \includegraphics[width=0.98\linewidth]{figs/fig_stress_test_atlas.pdf}
+  \caption{The five calibrated stress tests locate different claim-validity boundaries rather than a single universally superior estimator. Panels A and D separate heterogeneous-effect contamination from latent adoption selection. Panel B shows attenuation from announcement-time miscoding. Panel C shows the calibration and resolution tradeoff with four clusters. Panel E shows that calendar aggregation can discard the exposure pattern required to recover a transient effect. Intervals in Panel A are 95 percent Monte Carlo intervals.}
+  \label{fig:stress-test-atlas}
+\end{figure}
+
+The first two experiments establish that specification diagnostics must be interpreted against the realized design. Across eight Clanker v4.1 cohorts, pooled two-way fixed effects and a group-time average treatment effect are approximately unbiased when cohort modifiers are symmetric and effective weights align. Two-way fixed effects also has lower root mean squared error, about 0.005 versus 0.018. Negative weights are therefore a diagnostic threat, but they do not imply material bias in every realized design. Timing error produces a separate failure. In the observed five-day gap, coding the announcement recovers 81 percent of the known effect, whereas verified activation recovers essentially all of it. Across the coded announcement-activation gaps, the short-sample pre-event gate nevertheless fires in 32 to 50 percent of zero-effect or no-anticipation replications. Verified timing removes one source of bias, although a noisy gate can still create false confidence or rejection.
+
+Correct specification does not resolve the separate limits imposed by inference and identification. In the four-cluster PumpSwap panel, the normal reference over-rejects at 6.46 percent, while a $t(3)$ reference is conservative at 2.59 percent. Exact sign and assignment procedures avoid asymptotic overstatement, but their smallest attainable two-sided $p$ values of 0.125 and 0.25 prevent rejection at five percent. A more suitable estimator likewise cannot repair endogenous adoption. When Clanker adoption depends on latent creator growth, static two-way fixed-effects bias rises to 0.465 under moderate selection and 0.707 under strong selection. The event-time-zero group-time estimator reduces the corresponding biases to 0.016 and 0.026. Nominal coverage is not restored because the identifying assumption remains violated.
+
+Even a credible design can change meaning when time is aggregated. For the Thursday PumpSwap intervention, naive weekly aggregation recovers about 43 to 44 percent of a transient target and 47 to 48 percent of a persistent target. Exposure weighting helps when effects persist, but it cannot reconstruct a short-lived response after temporal information has been discarded. Frequency is therefore part of the estimand rather than a neutral reporting choice.
+
+Together, these deterministic results define the reference evidence state for model evaluation. At each of eight ladder rungs, the DeepSeek request alias \texttt{deepseek-chat} receives the same question and rung-specific evidence in ten temperature-zero runs; archived API responses identify the returned model as \texttt{deepseek-v4-flash}. We record decision agreement, confidence calibration, run dispersion, method omissions, and claim-boundary violations; Appendix~\ref{app:agent} gives the prompt provenance and scoring rules. For PumpSwap, the deterministic decision moves from affirmative to uncertain and then to a stakeholder-specific claim. The model follows this direction at every rung, while its absolute calibration gap falls from 0.75 to 0.25 and method omissions remain at the final rung. Because the evaluation covers one pretrained model and one scaffold, improved evidence following does not establish model generalization, architecture retraining, or autonomous causal reasoning.
+
+\begin{figure}[!t]
+  \centering
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.15\textheight,keepaspectratio]{figs/fig_metric_battery_status_application.pdf}
+    \caption{Stakeholder quantities}
+    \label{fig:application-stakeholder}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.15\textheight,keepaspectratio]{figs/fig_frequency_sensitivity_application.pdf}
+    \caption{Aggregation sensitivity}
+    \label{fig:application-frequency}
+  \end{subfigure}
+  \caption{Application diagnostics for stakeholder denominators (a) and temporal aggregation (b).}
+  \label{fig:application-boundaries}
+\end{figure}
+
+\input{figs/fig_application_appendix}
+
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+The data construction, empirical design, and AI evaluation address successive stages of one evidence problem. Coverage states prevent invalid pooling, platform economics links outcomes to stakeholders, causal diagnostics assess identification, and model evaluation tests whether the resulting boundary survives summarization. Because claims remain tied to observed outcomes rather than generalized to welfare, ``not identified'' states what additional data or design a stronger conclusion would require.
+
+Coverage is uneven across chains. Solana provides terminal outcomes, but decoded swaps are selected and page capped; the other chains provide bounded launch universes with capped metadata and incomplete trading and holder layers. Neither Solana event has a clean platform counterfactual. PumpSwap has four clusters and unstable preperiod behavior, while the fee event has one eligible treatment. Telegram exposure is observational, and the Base reconstruction contains six treated and six comparison tokens. The applications therefore support descriptive, predictive, or mechanism claims rather than general treatment effects.
+
+Appendix~\ref{app:reproducibility} records the generated-table pipeline and the commands that rebuild the empirical artifacts from archived summaries.
+
+The evaluation is narrower than the evidence contract. The semi-synthetic tests cover registered design families, and the sequential ladder does not identify factorial contributions. The agentic arm covers one pretrained model, ten runs per rung, and one prompt scaffold. Auditable artifacts do not support broader model claims. Stronger evidence requires comparable cross-chain swap and holder outcomes, independently timed events or new snapshots, and evaluation with humans or additional models.
+
+PumpSwap operated after migration, but neither the aggregate migration effect nor stakeholder welfare is identified. The evidence contract preserves that distinction and allows the agentic evaluation to test whether AI-assisted analysis does the same.
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\newpage
+\appendix
+
+\section{Data and Coverage}
+\label{app:data}
+
+The release separates immutable source artifacts, canonical outputs, and construction code. The common schema contains tokens, launches, protocol configuration, pools, liquidity initializations, lifecycle events, token metadata, token state snapshots, and a coverage ledger where applicable. The event extension contains an event registry and evidence records. Manifests bind each output to source and output row counts, SHA-256 digests, and a declared acquisition boundary. Validation checks primary-key uniqueness, foreign-key integrity, accepted coverage states, expected table exclusions, and agreement between manifests and physical files.
+
+Coverage is classified according to whether evidence is directly observed, an applicable query completes with no qualifying record, an outcome was not acquired, the corresponding mechanism is absent, or the information falls outside the released scope. These distinctions preserve the evidentiary meaning of missingness and prevent an unobserved transition from being interpreted as a structural zero.
+
+The Solana core contains 832,941 deduplicated terminal outcomes, including 1,651 graduations and 831,290 timeouts, plus 4,953 token-by-horizon transaction proxies and 173,102 decoded swaps for a selected sample of 294 graduated tokens. Base contains 62,618 Clanker launches, the same number of observed Uniswap v4 pool initializations, and 149,921 positive initial-liquidity positions. BNB Chain contains 1,593,679 Four.meme launches and 15,403 observed pools. TRON contains 104,548 SunPump launches and 1,831 observed pools. The latter three cores represent launch universes within their observation windows rather than complete terminal-outcome cohorts.
+
+Observation windows in Table~\ref{tab:data-scope} are expressed uniformly in UTC, but their acquisition mechanisms remain chain specific. Solana and Base use represented event dates. TRON is bounded by confirmed pagination exhaustion. BNB Chain begins at manager deployment and ends at the finalized snapshot acquired on August 12, 2026. Because some canonical BNB launch timestamps are zero or inconsistent with the snapshot, verified block coverage defines membership and records with invalid timestamps are excluded from temporal analyses.
+
+\section{Event Timing}
+\label{app:events}
+
+Event eligibility requires a named intervention, first-party or onchain activation evidence, a stable outcome definition, an admissible comparison rule, and a concurrent-shock record. The canonical event layer contains four candidates and six evidence records. Base is accepted for a first-observed module-adoption reconstruction. The Solana PumpSwap migration date is retained as a conditional registered boundary because post-migration activity is observed but the exact activation transaction is not verified. BNB Chain and TRON candidates are rejected for the present causal analysis while remaining available for future screening.
+
+A separate Solana creator-fee analysis verifies economic activation on May 13, 2025 at 11:27:06 UTC. A May 12 transaction establishes program support but records zero creator-vault transfer. The next-block transfer after the May 13 upgrade is 10{,}732 lamports. That analysis does not enter the four-candidate registry as an accepted comparison design: concurrent product changes and displacement leave no admissible platform control. All clean-window definitions use the verified activation timestamp.
+
+\section{Stakeholder Metrics}
+\label{app:metrics}
+
+Creator metrics include launch participation, graduation, time to graduation, and gross creator receipts. Trader metrics include active-trader breadth, transaction persistence, holder concentration, decoded volume, execution quality when available, and source-coded risk. Platform metrics include fee revenue and sustained venue activity. Community metrics include social-metadata presence and offchain attention where collected. Host-ecosystem metrics include onchain activity and spillovers. Every metric is paired with its unit, horizon, source boundary, coverage state, and interpretation. Mechanical incidence, behavioral response, and welfare incidence remain distinct claim types. Figure~\ref{fig:application-stakeholder} reports selected descriptive measurements from the Solana cohort.
+
+\section{Empirical Designs}
+\label{app:empirical-designs}
+
+\subsection{PumpSwap}
+
+The market panel contains Pump ecosystem, Raydium, Orca, and Meteora daily volume over a $\pm90$-day window around March 20, 2025. The outcome is $\log(1+x_{it})$, where $x_{it}$ is daily protocol volume. L0 compares the Pump ecosystem mean before and after the event. The controlled specification is
+\[
+  y_{it}=\alpha_i+\lambda_t+\beta(\mathrm{Pump}_i\times\mathrm{Post}_t)+\varepsilon_{it},
+\]
+where $\alpha_i$ and $\lambda_t$ are protocol and date fixed effects. The dynamic analogue replaces the post indicator with event-time indicators. Pre-event coefficients diagnose instability. With four protocol clusters, inference reports conventional references for comparison and exact Rademacher sign enumeration to expose attainable resolution; it does not claim a wild confidence interval that was not constructed.
+
+The 2026 Solana token cohort is not used to estimate the 2025 migration effect. It validates the later venue mechanism. Remote procedure call (RPC) windows count observed pool transactions for graduated tokens at fixed horizons. Moralis records decoded swaps and United States dollar volume for a selected, page-capped subset. We report full-cohort lower bounds separately from complete-window summaries and never treat the decoded subset as representative without qualification.
+
+Figures~\ref{fig:application-boundaries} and~\ref{fig:appendix-application-diagnostics} summarize the claim-boundary diagnostics reported in the main text.
+
+\subsection{Social Metadata}
+
+The analysis uses all 832,941 terminal Solana outcomes. The primary outcome is graduation and the exposure is observed Telegram metadata. A linear probability model includes launch-day fixed effects and available token covariates. The matched design forms supported cells from launch day, Twitter presence, website presence, initial-market-capitalization decile, and description length. It retains 20,227 of 20,270 Telegram-present tokens and 586,581 supported controls. The reported average treatment effect on the treated is a matched association because exposure is not assigned.
+
+Uncertainty uses 500 launch-day clustered bootstrap replications. The E-value summarizes the minimum risk-ratio association that an unmeasured confounder would need with both exposure and outcome to explain the observed association under its assumptions. Two falsification exercises constrain interpretation. Outcomes within five minutes test whether the difference predates plausible accumulated Telegram attention, while outcomes after 60 minutes test persistence beyond the immediate launch state. A separate screen evaluates six candidate public shocks for exogenous in-window variation. None passes the event gate.
+
+\subsection{Fee Incidence and Base}
+
+The creator-fee panel contains 156 platform-day rows. Gross outcomes use 21 clean launch days before and after activation. The anticipation interval begins on May 8, the partial activation day is excluded, and seven-day and 30-day cohort outcomes require complete follow-up. The Pump-only specification is a treated before-and-after contrast. Moonshot enters only as a descriptive relative series because concurrent product changes and displacement violate the causal comparison rule. Weekday-adjusted models use Newey-West standard errors with seven lags. Robustness includes a seven-day pretrend and an in-time falsification over eight pseudo-dates.
+
+The Base extension identifies the first observed Clanker v4.1 launch with the represented module at block 34,725,785 on August 26, 2025. Six treated launches are matched to six v4.0 controls, and outcomes are reconstructed at three horizons, producing 36 token-horizon rows. This sample tests event, pool, swap, transfer, and holder reconstruction. It is not powered or sampled to estimate a platform-wide treatment effect.
+
+\section{Monte Carlo Designs}
+\label{app:simulation-designs}
+
+All five experiments combine a real-data calibration layer with synthetic assignment or effects. Methods are evaluated against the same generated panel and target estimand within each experiment. Monte Carlo standard errors accompany rejection, coverage, and bias summaries in the released artifacts.
+
+\paragraph{S1, staggered heterogeneity.}
+Eight Clanker-calibrated adoption cohorts determine timing and target weights. Cohort-specific effects receive symmetric modifiers. The experiment compares static two-way fixed effects with a group-time average treatment effect estimator under zero and positive effects. The design is a boundary test of whether heterogeneous timing necessarily creates aggregate bias.
+
+\paragraph{S2, announcement and activation.}
+The observed five-day gap calibrates treatment miscoding. The synthetic effect is 0.15 log points. Arms vary the coded event time and whether anticipation is present. Estimation compares announcement and verified-activation timing, while the prescribed lag-seven heteroskedasticity-and-autocorrelation-consistent gate classifies anticipation. Bias, coverage, false activation, and true-positive behavior are reported separately.
+
+\paragraph{S3, four-cluster inference.}
+The four Solana protocol backbones calibrate residual dependence and relative scale. Ten thousand replications per arm compare cluster-robust variance with a normal reference, the same variance with a $t(3)$ reference, exact sign enumeration, and four-assignment randomization inference. The design reports the minimum attainable two-sided $p$ value for each exact procedure, making discreteness part of the estimand-to-decision map.
+
+\paragraph{S4, endogenous adoption.}
+Clanker creator growth calibrates latent adoption selection. Zero and positive effects are crossed with independent, moderate, and strong selection. Static two-way fixed effects, an event-time-zero group-time estimator, and sensitivity intervals are compared using bias, coverage, interval width, and decision classification. Sensitivity conclusions are indexed by the registered deviation bound $\overline{M}$.
+
+\paragraph{S5, temporal aggregation.}
+The March 20 PumpSwap date fixes Thursday event geometry. Synthetic transient and persistent effects are placed across alternative event weekdays. Daily, event-aligned weekly, naive calendar-week, and exposure-weighted estimators target the same seven-day effect where possible. The experiment distinguishes point-estimate disagreement from a statistical decision flip.
+
+\section{Agentic Evaluation}
+\label{app:agent}
+\enlargethispage{0.5\baselineskip}
+
+The DeepSeek request alias \texttt{deepseek-chat} executes the same question ten times per rung at temperature zero with rung-specific disclosures; every archived API response reports the returned model \texttt{deepseek-v4-flash}. The archived evaluation objects include 80 raw responses, the run table with scored prompt hashes, current prompt templates, the scored summary, and the response schema. The scored runs are dated 30 July 2026. The current templates do not reconstruct the scored runtime payload hashes, and the exact runtime payload was not archived. The raw outputs and scoring results are auditable, but the original requests are not independently repeatable. This bounded evaluation tests evidence following under one pretrained model and one scaffold. It is not architecture retraining, independent replication, or evidence that a language model can identify causal effects from raw data.
+
+\section{Reproducibility}
+\label{app:reproducibility}
+
+Empirical table cells and empirical chart values are generated from archived summaries. The anonymous code artifact exposes \texttt{make reproduce}, \texttt{make figures}, \texttt{make tables}, \texttt{make paper}, \texttt{make verify}, and \texttt{make all}. \texttt{make reproduce} rebuilds the manuscript tables and figures from those summaries, checks sample counts and SHA-256 digests, and traces reported estimates and 80 archived model responses. It does not re-query chain data, re-estimate every design from raw chain observations, reconstruct the exact model request payloads, or call a model API. Conceptual tables have a source ledger, and the conceptual overview has editable SVG and scripted exports. The review dataset and repository URLs are withheld from this anonymized manuscript.
+
+\end{document}

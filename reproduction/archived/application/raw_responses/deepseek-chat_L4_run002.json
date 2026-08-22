@@ -1,0 +1,38 @@
+{
+  "status": "ok",
+  "error": "",
+  "model": "deepseek-chat",
+  "rung": "L4",
+  "run_id": 2,
+  "temperature": 0.0,
+  "prompt_hash": "8c7b03cbb6f2d09deee24d3f2c161548d5479a2e03fbb18474c207d470bb2adb",
+  "content": "{\n  \"headline_estimate\": 0.836,\n  \"ci95_low\": 0.472,\n  \"ci95_high\": 1.200,\n  \"worked_decision\": \"pretrend_flagged\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"PumpSwap migration is associated with a large increase in log volume, but pre-trend violations prevent a clean causal interpretation.\"\n}",
+  "api_response": {
+    "id": "af750207-2198-47d5-b130-644852d01ced",
+    "object": "chat.completion",
+    "created": 1785434227,
+    "model": "deepseek-v4-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\n  \"headline_estimate\": 0.836,\n  \"ci95_low\": 0.472,\n  \"ci95_high\": 1.200,\n  \"worked_decision\": \"pretrend_flagged\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"PumpSwap migration is associated with a large increase in log volume, but pre-trend violations prevent a clean causal interpretation.\"\n}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1286,
+      "completion_tokens": 93,
+      "total_tokens": 1379,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "prompt_cache_hit_tokens": 1280,
+      "prompt_cache_miss_tokens": 6
+    },
+    "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402"
+  }
+}

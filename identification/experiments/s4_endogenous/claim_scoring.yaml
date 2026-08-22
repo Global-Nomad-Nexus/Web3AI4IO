@@ -1,0 +1,29 @@
+# S4 claim scoring rules — locked before formal run
+experiment: s4_endogenous
+
+point_claim:
+  definition: "Callaway-Sant'Anna event-time-0 ATT with its original (Mbar=0) 95% CI"
+  positive: "CI entirely above 0"
+  negative: "CI entirely below 0"
+  null: "CI contains 0"
+
+scoring:
+  gamma_0:
+    zero_arm:     {truth: null,     correct: "claim == null"}
+    positive_arm: {truth: positive, correct: "claim == positive"}
+  gamma_positive:
+    rule: "if the Mbar=1 robust sensitivity interval contains 0, the only correct procedure claim is 'unidentified'"
+    correct_claim: unidentified
+    definitive_claim: "Mbar=1 interval excludes 0 (either sign) -> definitive; scored incorrect regardless of injected truth"
+    note: "even with a true positive injected effect, a lucky positive point estimate under unresolved selection is NOT a correct causal claim"
+
+reported_rates:
+  false_definitive_claim_rate: "share of replications with a definitive sign claim that is wrong: for gamma=0 zero arm any definitive claim; for gamma>0 any definitive claim at Mbar=1"
+  unidentified_rate: "share of replications whose Mbar=1 robust interval contains 0"
+  supported_positive_rate: "share of replications with definitive positive claim at Mbar=1 (overconfidence measure under gamma>0)"
+  claim_accuracy: "share of replications whose claim equals the correct claim for the cell"
+  pretrend_test_power: "share of replications with pretrend joint Wald p < 0.05"
+  robust_value: "smallest Mbar in {0.5, 1, 1.5, 2} whose interval contains 0; Inf if none"
+
+oracle:
+  usage: "unit tests only; never enters results tables"

@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Solana Transaction Schema",
+  "description": "Schema for Solana transactions from BigQuery public dataset (vote transactions filtered out)",
+  "type": "object",
+  "properties": {
+    "block_slot": {
+      "type": "integer",
+      "description": "The slot number of the block containing this transaction"
+    },
+    "block_hash": {
+      "type": "string",
+      "description": "Hash of the block containing this transaction"
+    },
+    "block_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the block was produced"
+    },
+    "recent_block_hash": {
+      "type": "string",
+      "description": "Recent blockhash used by the transaction"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Unique transaction signature (base58 encoded)"
+    },
+    "index": {
+      "type": "integer",
+      "description": "Index of this transaction within the block"
+    },
+    "fee": {
+      "type": "number",
+      "description": "Transaction fee paid in lamports (1 SOL = 1,000,000,000 lamports)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Success", "Failed"],
+      "description": "Transaction execution status"
+    },
+    "err": {
+      "type": ["string", "null"],
+      "description": "Error message if transaction failed, null if successful"
+    },
+    "compute_units_consumed": {
+      "type": "number",
+      "description": "Compute units consumed by this transaction"
+    },
+    "accounts": {
+      "type": "array",
+      "description": "List of accounts involved in the transaction",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pubkey": {
+            "type": "string",
+            "description": "Account public key (base58 encoded)"
+          },
+          "signer": {
+            "type": "boolean",
+            "description": "Whether this account signed the transaction"
+          },
+          "writable": {
+            "type": "boolean",
+            "description": "Whether this account is writable (can be modified)"
+          }
+        },
+        "required": ["pubkey", "signer", "writable"]
+      }
+    },
+    "log_messages": {
+      "type": "array",
+      "description": "Program log messages emitted during transaction execution",
+      "items": {
+        "type": "string"
+      }
+    },
+    "balance_changes": {
+      "type": "array",
+      "description": "SOL balance changes for accounts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "type": "string",
+            "description": "Account public key"
+          },
+          "before": {
+            "type": "number",
+            "description": "Balance before transaction (in lamports)"
+          },
+          "after": {
+            "type": "number",
+            "description": "Balance after transaction (in lamports)"
+          }
+        },
+        "required": ["account", "before", "after"]
+      }
+    },
+    "pre_token_balances": {
+      "type": "array",
+      "description": "Token balances before transaction execution",
+      "items": {
+        "type": "object",
+        "properties": {
+          "account_index": {
+            "type": "integer",
+            "description": "Index into the accounts array"
+          },
+          "mint": {
+            "type": "string",
+            "description": "Token mint public key"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Token account owner public key"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Token amount (raw, before applying decimals)"
+          },
+          "decimals": {
+            "type": "integer",
+            "description": "Number of decimal places for this token"
+          }
+        },
+        "required": ["account_index", "mint", "owner", "amount", "decimals"]
+      }
+    },
+    "post_token_balances": {
+      "type": "array",
+      "description": "Token balances after transaction execution",
+      "items": {
+        "type": "object",
+        "properties": {
+          "account_index": {
+            "type": "integer",
+            "description": "Index into the accounts array"
+          },
+          "mint": {
+            "type": "string",
+            "description": "Token mint public key"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Token account owner public key"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Token amount (raw, before applying decimals)"
+          },
+          "decimals": {
+            "type": "integer",
+            "description": "Number of decimal places for this token"
+          }
+        },
+        "required": ["account_index", "mint", "owner", "amount", "decimals"]
+      }
+    }
+  },
+  "required": [
+    "block_slot",
+    "block_hash",
+    "block_timestamp",
+    "signature",
+    "index",
+    "fee",
+    "status"
+  ],
+  "examples": [
+    {
+      "block_slot": 377130800,
+      "block_hash": "ABC123...",
+      "block_timestamp": "2025-11-01T00:12:34Z",
+      "recent_block_hash": "XYZ789...",
+      "signature": "1bDKgA1aTAQ72G17...",
+      "index": 42,
+      "fee": 7000,
+      "status": "Success",
+      "err": null,
+      "compute_units_consumed": 150000,
+      "accounts": [
+        {
+          "pubkey": "75tbTyVcfFdg9TRukfxAP1vkWGawAqmfFW7iH9mXkDPY",
+          "signer": true,
+          "writable": true
+        }
+      ],
+      "log_messages": [
+        "Program log: Instruction: Swap"
+      ],
+      "balance_changes": [
+        {
+          "account": "75tbTyVcfFdg9TRukfxAP1vkWGawAqmfFW7iH9mXkDPY",
+          "before": 1000000000,
+          "after": 999993000
+        }
+      ],
+      "pre_token_balances": [
+        {
+          "account_index": 1,
+          "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "owner": "75tbTyVcfFdg9TRukfxAP1vkWGawAqmfFW7iH9mXkDPY",
+          "amount": 1000000,
+          "decimals": 6
+        }
+      ],
+      "post_token_balances": [
+        {
+          "account_index": 1,
+          "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "owner": "75tbTyVcfFdg9TRukfxAP1vkWGawAqmfFW7iH9mXkDPY",
+          "amount": 500000,
+          "decimals": 6
+        }
+      ]
+    }
+  ]
+}
