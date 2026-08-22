@@ -1,0 +1,13 @@
+{
+  "candidate_shocks": 6,
+  "claim_boundary": "No causal Telegram effect should be claimed unless at least one public shock overlaps the RED-PUMP launch window with enough Telegram and non-Telegram tokens for an exposure design.",
+  "design_id": "TELEGRAM_EXOGENOUS_EXPOSURE_DESIGN_V1",
+  "design_rows": 0,
+  "event_id": "PUMP_PUMPSWAP_MIGRATION_20250320",
+  "red_pump_max_created_at": "2026-06-10 17:41:33+00:00",
+  "red_pump_min_created_at": "2026-05-08 17:14:38+00:00",
+  "red_pump_source_artifact": "01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/data/processed/red_pump_token_outcomes.csv",
+  "shock_source_artifact": "Shilin/artifacts/external_validation/telegram_shock_candidates.csv",
+  "status": "no_in_window_exogenous_shock_yet",
+  "supported_shocks": 0
+}

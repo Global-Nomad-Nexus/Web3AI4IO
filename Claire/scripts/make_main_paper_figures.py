@@ -1,3 +1,5 @@
+"""Legacy entry point. Canonical figure generation is reproduction/generate_figures.py."""
+
 from __future__ import annotations
 
 from pathlib import Path

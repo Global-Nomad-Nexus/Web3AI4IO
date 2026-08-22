@@ -1,0 +1,128 @@
+{
+  "dataset_version": "v1",
+  "sources": [
+    {
+      "source_id": "shilin_pumpswap_case_config",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "registered PumpSwap analysis event boundary",
+      "dataset_role": "event_registry_evidence",
+      "granularity": "one analysis configuration",
+      "coverage": "registered event date 2025-03-20 UTC",
+      "limitation": "The configuration does not identify an exact activation transaction or next-block verification.",
+      "path_glob": "Shilin/configs/pumpswap_case.json"
+    },
+    {
+      "source_id": "shilin_clanker_event_validation_summary",
+      "chain_id": "eip155:8453",
+      "role": "Clanker v4.1 first-observed module-adoption event evidence",
+      "dataset_role": "event_registry_evidence",
+      "granularity": "one validation summary with activation transaction, block, timestamp, and bounded matched cohort",
+      "coverage": "declared Base search window around block 34,725,785",
+      "limitation": "Supports a first-observed adoption boundary and bounded sample, not platform-wide causal replication or an independently verified announcement date.",
+      "path_glob": "Shilin/artifacts/tables/clanker_base_event_validation_summary.json"
+    },
+    {
+      "source_id": "shilin_red_pump_launches_2026_v1",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "launch baseline",
+      "granularity": "one observed launch record per message before deduplication",
+      "coverage": "2026-05-08 to 2026-06-10",
+      "path_glob": "data/external/shilin/20260810/bundle/**/red_pump_2026_v1_launches.jsonl.gz"
+    },
+    {
+      "source_id": "shilin_red_pump_outcomes_2026_v1",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "terminal lifecycle outcomes",
+      "granularity": "one terminal observation per raw record before cleaning",
+      "coverage": "2026-05-08 to 2026-06-10",
+      "path_glob": "data/external/shilin/20260810/bundle/**/red_pump_2026_v1_outcomes.csv.gz"
+    },
+    {
+      "source_id": "shilin_pumpfun_coin_metadata",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "graduated token and pool metadata",
+      "granularity": "one row per graduated token",
+      "coverage": "1,651 RED PUMP graduated tokens",
+      "path_glob": "data/external/shilin/20260810/bundle/**/pumpfun_coin_metadata.csv"
+    },
+    {
+      "source_id": "shilin_solana_rpc_pool_windows",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "pool transaction proxy windows",
+      "granularity": "token by 1, 7, and 30 day horizon",
+      "coverage": "1,651 graduated tokens; bounded RPC scan",
+      "limitation": "swap_count is a pool transaction proxy and is not decoded swap count",
+      "path_glob": "data/external/shilin/20260810/bundle/**/solana_post_migration_pool_windows.csv"
+    },
+    {
+      "source_id": "shilin_moralis_decoded_swaps",
+      "chain_id": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "role": "decoded post migration swaps",
+      "dataset_role": "validation_only",
+      "granularity": "decoded swap record plus token horizon aggregate",
+      "coverage": "294 of 1,651 graduated tokens",
+      "limitation": "876 of 882 token horizons are page_limit_reached_lower_bound and are not complete windows; no further decoded swap collection is planned",
+      "path_glob": "data/external/shilin/20260810/bundle/**/moralis_token_swaps.csv"
+    },
+    {
+      "source_id": "base_public_rpc_clanker_token_created",
+      "chain_id": "eip155:8453",
+      "role": "Clanker launch core",
+      "dataset_role": "authoritative_declared_window",
+      "granularity": "one decoded TokenCreated event per Clanker token",
+      "coverage": "2025-08-18 through 2025-10-01 UTC",
+      "limitation": "This is complete for the declared scan window, not all historical Clanker launches. No decoded swaps are collected.",
+      "path_glob": "data/external/base/20260811/onchain/clanker_base_token_created.csv"
+    },
+    {
+      "source_id": "base_pool_manager_launch_core_events",
+      "chain_id": "eip155:8453",
+      "role": "Clanker pool mapping, pool initialization, and initial liquidity positions",
+      "dataset_role": "canonical_core",
+      "granularity": "one PoolManager Initialize or launch transaction ModifyLiquidity event",
+      "coverage": "all 62,618 fixed Clanker launches",
+      "limitation": "Queries only the fixed launch pools and launch transactions. Swap, Transfer, holder, and trading data are excluded by policy.",
+      "path_glob": "data/external/base/20260811/snapshot/pool_core_events.jsonl"
+    },
+    {
+      "source_id": "fourmeme_bsc_archive_rpc_contract_events",
+      "chain_id": "eip155:56",
+      "role": "Four.meme launch universe and directly observed lifecycle events",
+      "dataset_role": "canonical_core_source",
+      "granularity": "one decoded TokenCreate, TradeStop, or LiquidityAdded contract event",
+      "coverage": "1,593,679 unique TokenCreate events through block 115,357,949: V1 5,570 and V2 1,588,109; 106 TradeStop and 15,403 LiquidityAdded events",
+      "limitation": "Receipt enrichment and the canonical Phase 4 build are complete for declared core events. TokenPurchase, TokenSale, Transfer, decoded trading, swaps, and holder data are excluded.",
+      "path_glob": "data/external/fourmeme/20260811/onchain/*.jsonl"
+    },
+    {
+      "source_id": "fourmeme_official_public_token_search",
+      "chain_id": "eip155:56",
+      "role": "Four.meme metadata enrichment",
+      "dataset_role": "metadata_enrichment_only",
+      "granularity": "one current API record per token address",
+      "coverage": "1,000 unique token addresses collected 2026-08-11 as a subset of the onchain launch universe",
+      "limitation": "The official list API stops at 1,000 rows. It is used only to enrich metadata and never defines the launch universe or a chain level denominator.",
+      "path_glob": "data/external/fourmeme/20260811/snapshot/tokens.jsonl"
+    },
+    {
+      "source_id": "sunpump_trongrid_contract_events",
+      "chain_id": "tron:mainnet",
+      "role": "SunPump launch universe, lifecycle events, and implementation history",
+      "dataset_role": "canonical_core_source",
+      "granularity": "one TronGrid contract event returned through fingerprint pagination",
+      "coverage": "104,548 TokenCreate events, 1,831 TokenLaunched events, and 1 NewImplementation event",
+      "limitation": "Receipt enrichment and the canonical Phase 4 build are complete for declared core events. TokenPurchased, TokenSold, Transfer, decoded trading, swaps, and holder data are excluded.",
+      "path_glob": "data/external/sunpump/20260811/snapshot/*.jsonl"
+    },
+    {
+      "source_id": "sunpump_official_public_token_list",
+      "chain_id": "tron:mainnet",
+      "role": "SunPump metadata enrichment",
+      "dataset_role": "metadata_enrichment_only",
+      "granularity": "one current API record per token contract address",
+      "coverage": "1,000 unique token addresses collected 2026-08-11 as a subset of the onchain launch universe",
+      "limitation": "The official list API stops at 1,000 rows. It is used only to enrich metadata and never defines the launch universe or a chain level denominator.",
+      "path_glob": "data/external/sunpump/20260811/snapshot/tokens.jsonl"
+    }
+  ]
+}

@@ -1,21 +1,40 @@
 # Web3AI4IO
 
-Code and schemas for the Web3AI4IO multi-chain launchpad dataset and the paper's evaluation workflows.
+Code, schemas, and the review reproducibility package for the Web3AI4IO launchpad study.
 
-The public data release is the Hugging Face dataset [kl41r3/web3ai4io-multichain-launchpad](https://huggingface.co/datasets/kl41r3/web3ai4io-multichain-launchpad). This GitHub repository does not host bulk tables, source JSONL files, or experiment artifacts.
+Bulk tables are not stored in this GitHub tree. During anonymous review the dataset is a withheld artifact. After de-anonymization the public copy is the Hugging Face dataset named in the camera-ready paper.
+
+## Five-minute quick start
+
+```text
+python3 -m pip install -r reproduction/requirements.txt
+make reproduce
+```
+
+This regenerates empirical tables and figures from archived summaries, writes the artifact manifest and checksums, and checks manuscript numbers. It does not re-query chain data or call a model API. See `REPRODUCIBILITY.md` and `DATA_CARD.md`.
+
+| Command | Output |
+|---|---|
+| `make reproduce` | archived summaries, tables, figures, checksums, tests |
+| `make figures` | empirical charts in `../paper/figs` |
+| `make tables` | `paper/tabs/tab_data_scope.tex` and `tab_claim_evidence.tex` |
+| `make paper` | compile the anonymous manuscript |
+| `make verify` | files, checksums, sample counts, identity scan |
+| `make all` | reproduce then compile |
 
 ## Layout
 
-* `data_pipeline/` builds and validates the unified four-chain release, including the project-level event layer.
-* `Claire/` contains Claire's analysis code, data-expansion provenance scripts, and S1 through S5 stress-test source.
-* `Shilin/` contains Shilin's application-arm code, prompts, and tests.
-* `data/` holds local immutable inputs and generated canonical tables. Those files are gitignored and published on Hugging Face.
+* `reproduction/` Role B control plane: shared theme, archived summaries, generated tables, manifest, tests
+* `data_pipeline/` builders, schemas, event layer, and release manifests
+* `Claire/` identification-arm analysis and S1 through S5 source
+* `Shilin/` application-arm analysis, prompts, and tests
+* `data/` local immutable inputs and generated canonical tables (gitignored)
 
-Paper source lives outside this repository.
+Paper source lives at `../paper/`.
 
-## Build and test the data pipeline
+## Data pipeline
 
-From the repository root:
+From the repository root, with local source bundles present:
 
 ```text
 data_pipeline/.venv/bin/python data_pipeline/scripts/build_solana_core.py
@@ -24,4 +43,4 @@ data_pipeline/.venv/bin/python data_pipeline/scripts/build_events.py
 PYTHONPATH=data_pipeline/src data_pipeline/.venv/bin/python -m pytest data_pipeline/tests
 ```
 
-Canonical Parquet output is written under `data/canonical/`. See `data_pipeline/README.md` for coverage semantics and `data_pipeline/SHILIN_LIMITATION.md` for the decoded-swap boundary.
+Canonical Parquet output is written under `data/canonical/`. See `data_pipeline/README.md` for coverage semantics.
