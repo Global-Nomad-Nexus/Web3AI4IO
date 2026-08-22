@@ -83,6 +83,7 @@ def generate_claim_evidence() -> str:
     h1 = load_json("application/h1_rpc_mechanism_summary.json")
     h0 = load_json("identification/h0_summary.json")
     h3 = load_json("identification/h3_incidence.json")
+    agent = load_json("application/agent_provenance.json")
 
     l2 = ladder["L2"]
     twfe = float(l2["estimate"])
@@ -125,8 +126,11 @@ def generate_claim_evidence() -> str:
         f"${r3(fee_est['estimate'])}$, CI $[{r3(fee_est['ci_low'])},{r3(fee_est['ci_high'])}]$; no accepted control. "
         r"\newline\textbf{\textcolor{partialamber}{Mechanical incidence supported; welfare not identified}}."
     )
+    requested_model = agent["requested_model_aliases"][0]
+    returned_model = agent["returned_models"][0]
     ai = (
-        r"DeepSeek \texttt{deepseek-chat}, ten runs per rung, temperature zero, archived prompts/responses. "
+        f"DeepSeek alias \\texttt{{{requested_model}}}, returned \\texttt{{{returned_model}}}; "
+        r"ten runs per rung, temperature zero, archived raw responses. Exact runtime prompt payload not archived. "
         r"\newline\textbf{\textcolor{partialamber}{Bounded demonstration}}."
     )
 

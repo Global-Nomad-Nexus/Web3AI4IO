@@ -77,6 +77,7 @@ def apply_style() -> None:
             "axes.linewidth": 0.8,
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
+            "svg.fonttype": "none",
             "savefig.bbox": "tight",
             "savefig.pad_inches": 0.04,
         }

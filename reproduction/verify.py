@@ -5,11 +5,12 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from paths import ARCHIVED, CHECKSUMS, PAPER, REPRO
+from paths import ARCHIVED, CHECKSUMS, MANIFEST, PAPER, REPRO
 
 EXPECTED = {
     "solana_outcomes": 832941,
@@ -149,12 +150,84 @@ def check_prompt_hash_note(errors: list[str]) -> None:
         )
 
 
+def check_agent_outputs(errors: list[str]) -> None:
+    runs_path = ARCHIVED / "application" / "agent_runs.csv"
+    raw_dir = ARCHIVED / "application" / "raw_responses"
+    if not runs_path.exists():
+        fail("agent run table missing", errors)
+        return
+    with runs_path.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    if len(rows) != 80:
+        fail(f"expected 80 agent runs, found {len(rows)}", errors)
+    returned_models: set[str] = set()
+    for row in rows:
+        filename = Path(row["raw_response_path"]).name
+        raw_path = raw_dir / filename
+        if not raw_path.exists():
+            fail(f"raw agent response missing: {filename}", errors)
+            continue
+        payload = json.loads(raw_path.read_text(encoding="utf-8"))
+        if payload.get("status") != "ok":
+            fail(f"agent response is not successful: {filename}", errors)
+        if payload.get("prompt_hash") != row["prompt_hash"]:
+            fail(f"agent prompt hash mismatch: {filename}", errors)
+        if payload.get("model") != row["model"]:
+            fail(f"requested model mismatch: {filename}", errors)
+        returned = payload.get("api_response", {}).get("model")
+        if returned:
+            returned_models.add(str(returned))
+    if returned_models != {"deepseek-v4-flash"}:
+        fail(f"unexpected returned model versions: {sorted(returned_models)}", errors)
+    provenance_path = ARCHIVED / "application" / "agent_provenance.json"
+    if not provenance_path.exists():
+        fail("agent provenance audit missing", errors)
+        return
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    if provenance.get("run_records") != 80 or provenance.get("raw_responses") != 80:
+        fail("agent provenance counts are incomplete", errors)
+    if provenance.get("hash_sets_overlap") is not False:
+        fail("prompt provenance boundary changed; review exact runtime payload status", errors)
+
+
+def check_artifact_manifest(errors: list[str]) -> None:
+    if not MANIFEST.exists():
+        fail("artifact manifest missing", errors)
+        return
+    with MANIFEST.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    outputs = {
+        item.strip()
+        for row in rows
+        for item in row["output"].split(";")
+        if item.strip()
+    }
+    tex = (PAPER / "neurips_2026.tex").read_text(encoding="utf-8")
+    appendix = PAPER / "figs" / "fig_shilin_application_appendix.tex"
+    if appendix.exists():
+        tex += "\n" + appendix.read_text(encoding="utf-8")
+    included_figures = {
+        f"paper/{match}" for match in re.findall(r"\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}", tex)
+    }
+    missing_figures = sorted(included_figures - outputs)
+    if missing_figures:
+        fail(f"manifest missing included figures: {missing_figures}", errors)
+    numerical_rows = [row for row in rows if row["object_type"].startswith("number")]
+    if len(numerical_rows) < 17:
+        fail(f"numerical claim ledger is incomplete: {len(numerical_rows)} rows", errors)
+    svg = PAPER / "figs" / "teaser_figure.svg"
+    if not svg.exists() or "<text" not in svg.read_text(encoding="utf-8", errors="ignore"):
+        fail("editable teaser SVG with live text is missing", errors)
+
+
 def main() -> int:
     errors: list[str] = []
     check_release_counts(errors)
     check_estimates(errors)
     check_manuscript(errors)
     check_checksums(errors)
+    check_agent_outputs(errors)
+    check_artifact_manifest(errors)
     check_prompt_hash_note(errors)
     if errors:
         print("VERIFY FAILED")

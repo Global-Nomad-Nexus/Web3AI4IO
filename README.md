@@ -7,11 +7,11 @@ Bulk tables are not stored in this GitHub tree. During anonymous review the data
 ## Five-minute quick start
 
 ```text
-python3 -m pip install -r reproduction/requirements.txt
+uv sync --frozen
 make reproduce
 ```
 
-This regenerates empirical tables and figures from archived summaries, writes the artifact manifest and checksums, and checks manuscript numbers. It does not re-query chain data or call a model API. See `REPRODUCIBILITY.md` and `DATA_CARD.md`.
+This installs the locked reviewer environment, regenerates empirical tables and figures from archived summaries, writes the artifact manifest and checksums, and checks manuscript numbers and archived model outputs. It does not re-query chain data or call a model API. See `REPRODUCIBILITY.md` and `DATA_CARD.md`.
 
 | Command | Output |
 |---|---|

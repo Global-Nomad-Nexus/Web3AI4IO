@@ -1,0 +1,38 @@
+{
+  "status": "ok",
+  "error": "",
+  "model": "deepseek-chat",
+  "rung": "L2",
+  "run_id": 1,
+  "temperature": 0.0,
+  "prompt_hash": "6ae25e63beafd12c2ccfdb1cc1358a5683c0f9e195150b9cd22f2879a10ce80f",
+  "content": "{\n  \"headline_estimate\": 0.4116991342309882,\n  \"ci95_low\": -0.128018475866481,\n  \"ci95_high\": 0.9514167443284576,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration did not produce a statistically significant change in daily volume at the market level with unit/date fixed effects; the estimate is positive but the confidence interval includes zero.\"\n}",
+  "api_response": {
+    "id": "d1d911b2-219a-42a4-9413-261f3ef390c9",
+    "object": "chat.completion",
+    "created": 1785434170,
+    "model": "deepseek-v4-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\n  \"headline_estimate\": 0.4116991342309882,\n  \"ci95_low\": -0.128018475866481,\n  \"ci95_high\": 0.9514167443284576,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration did not produce a statistically significant change in daily volume at the market level with unit/date fixed effects; the estimate is positive but the confidence interval includes zero.\"\n}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 678,
+      "completion_tokens": 119,
+      "total_tokens": 797,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "prompt_cache_hit_tokens": 640,
+      "prompt_cache_miss_tokens": 38
+    },
+    "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402"
+  }
+}

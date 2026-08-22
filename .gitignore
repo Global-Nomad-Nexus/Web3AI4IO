@@ -233,6 +233,7 @@ Shilin/benchmark_release/data/
 
 # Ruff stuff:
 .ruff_cache/
+reproduction/.mplconfig/
 
 # PyPI configuration file
 .pypirc

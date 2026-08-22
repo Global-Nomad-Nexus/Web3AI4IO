@@ -23,7 +23,7 @@ FORBIDDEN = [
     re.compile(r"hf_[A-Za-z0-9]{10,}"),
 ]
 
-SKIP_DIR_NAMES = {".git", ".venv", "__pycache__", "R", "library", "node_modules"}
+SKIP_DIR_NAMES = {".git", ".venv", ".mplconfig", "__pycache__", "R", "library", "node_modules"}
 SKIP_SUFFIXES = {
     ".png",
     ".pdf",
@@ -40,7 +40,7 @@ SKIP_SUFFIXES = {
     ".blg",
     ".synctex.gz",
 }
-SKIP_NAMES = {"identity_audit.py"}
+SKIP_NAMES = {"build_anonymous_package.py", "identity_audit.py"}
 REVIEW_ROOTS = [PAPER, ARCHIVED, GENERATED, REPO / "reproduction"]
 
 
@@ -78,7 +78,8 @@ def main() -> int:
             print(f"  - {hit}")
         return 1
     print("IDENTITY AUDIT PASSED for paper/, reproduction/archived/, and generated tables.")
-    print("Working-tree directory names Claire/ and Shilin/ remain in the private repository and must be renamed in the anonymous mirror.")
+    if (REPO / "Claire").exists() or (REPO / "Shilin").exists():
+        print("Working-tree contributor directory names remain private and must not enter the anonymous mirror.")
     return 0
 
 

@@ -12,11 +12,11 @@ This package reproduces the empirical tables, charts, checksums, and manuscript 
 ## Five-minute path
 
 ```text
-python3 -m pip install -r reproduction/requirements.txt
+uv sync --frozen
 make reproduce
 ```
 
-`make reproduce` archives identity-stripped summaries, regenerates empirical LaTeX tables, regenerates empirical figures into `../paper/figs`, writes `reproduction/artifact_manifest.csv` and `reproduction/checksums.sha256`, traces manuscript numbers, and runs the statistic tests.
+`make reproduce` archives identity-stripped summaries and 80 raw model responses, regenerates empirical LaTeX tables, regenerates empirical figures into `paper/figs` in the review mirror or `../paper/figs` in the private workspace, writes `reproduction/artifact_manifest.csv` and `reproduction/checksums.sha256`, traces manuscript numbers, and runs the statistic tests.
 
 ## Commands
 
@@ -26,7 +26,7 @@ make reproduce
 | `make tables` | Generate `tab_data_scope.tex` and `tab_claim_evidence.tex` from archived files |
 | `make figures` | Regenerate empirical PDF/PNG figures with the shared theme |
 | `make verify` | Checksums, sample counts, manuscript tokens, identity scan, unit tests |
-| `make paper` | Compile `../paper/neurips_2026.tex` |
+| `make paper` | Compile `paper/neurips_2026.tex` in the mirror or the adjacent private paper tree |
 | `make all` | `reproduce` then `paper` |
 
 ## Data
@@ -43,8 +43,10 @@ Archived objects:
 - `reproduction/archived/application/agent_runs.csv`
 - `reproduction/archived/application/agentic_arm_scores.csv`
 - `reproduction/archived/application/agentic_prompt_manifest.csv`
+- `reproduction/archived/application/raw_responses/` with 80 verbatim API response objects
+- `reproduction/archived/application/agent_provenance.json`
 
-The scored runs used `deepseek-chat`, temperature 0, ten runs per rung. Prompt-file hashes in the current prompt directory need not match the hashes stored on the run records. The run records are the evaluation object. Core scores can be inspected without API credentials.
+The requests used the `deepseek-chat` alias, temperature 0, and ten runs per rung. Every archived API response identifies the returned model as `deepseek-v4-flash`. The current prompt templates do not reconstruct the scored runtime payload hashes, and the exact runtime payload was not archived. Raw outputs and scores can be audited without API credentials, but the original request payloads cannot be independently repeated.
 
 ## Known-truth experiments
 

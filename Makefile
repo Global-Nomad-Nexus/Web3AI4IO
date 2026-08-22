@@ -1,7 +1,8 @@
-PYTHON ?= $(firstword $(wildcard Claire/experiments/s2_timing/.venv/bin/python) python3)
+PYTHON ?= $(firstword $(wildcard .venv/bin/python) python3)
 REPO := $(abspath .)
-PAPER := $(abspath ../paper)
+PAPER := $(if $(wildcard paper/neurips_2026.tex),$(abspath paper),$(abspath ../paper))
 export PYTHONPATH := $(REPO)/reproduction:$(PYTHONPATH)
+export MPLCONFIGDIR := $(REPO)/reproduction/.mplconfig
 
 .PHONY: archive tables figures manifest verify identity tests reproduce paper all
 

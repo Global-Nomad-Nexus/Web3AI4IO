@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import TwoSlopeNorm
-from matplotlib.patches import FancyBboxPatch, Rectangle
+from matplotlib.patches import Circle, FancyBboxPatch, Rectangle
 
 from paths import ARCHIVED, PAPER, REPRO
 from theme import (
@@ -33,10 +33,12 @@ OUT = PAPER / "figs"
 SCOPE = json.loads((REPRO / "scope.json").read_text(encoding="utf-8"))
 
 
-def save(fig, stem: str) -> None:
+def save(fig, stem: str, *, svg: bool = False) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT / f"{stem}.pdf")
     fig.savefig(OUT / f"{stem}.png", dpi=300)
+    if svg:
+        fig.savefig(OUT / f"{stem}.svg")
     plt.close(fig)
     print(f"wrote {stem}")
 
@@ -54,6 +56,145 @@ def clean_axes(ax, grid_axis="y") -> None:
     ax.spines["right"].set_visible(False)
     ax.grid(axis=grid_axis, color=GRID, linewidth=0.7, alpha=0.85)
     ax.set_axisbelow(True)
+
+
+def make_teaser() -> None:
+    """Generate the conceptual overview from archived evidence objects."""
+    sol = load_json("release/solana_core.json")
+    base = load_json("release/base_core.json")
+    bnb = load_json("release/bnb_core.json")
+    tron = load_json("release/tron_core.json")
+    ladder = read_csv("application/deterministic_ladder.csv").set_index("rung")
+    h1 = load_json("application/h1_rpc_mechanism_summary.json")
+    telegram = load_json("application/telegram_mirror_design_summary.json")
+
+    fig, ax = plt.subplots(figsize=(13.5, 6.9))
+    ax.set_xlim(0, 13.5)
+    ax.set_ylim(0, 6.9)
+    ax.axis("off")
+    for x in (4.25, 9.25):
+        ax.plot([x, x], [0.15, 6.72], color=GRID, linewidth=1.0)
+
+    def heading(x: float, label: str, title: str, subtitle: str, color: str) -> None:
+        ax.text(x, 6.58, label, color=color, fontsize=8.2, fontweight="bold")
+        ax.text(x + 0.22, 6.56, title, fontsize=13.0, fontweight="bold")
+        ax.text(x, 6.30, subtitle, fontsize=7.5, color=MUTED)
+        ax.plot([x, x + 0.42], [6.16, 6.16], color=color, linewidth=2.0, solid_capstyle="round")
+
+    heading(0.12, "A", "Evidence infrastructure", "Four chain lifecycle data with explicit observation boundaries.", TEAL)
+    heading(4.55, "B", "Three pillar evaluation", "Stakeholders, data resolution, and causal identification.", "#7251B5")
+    heading(9.55, "C", "Evidence calibrated interpretation", "Inference narrows activity evidence to bounded stakeholder claims.", RED)
+
+    chain_rows = [
+        ("Solana  |  Pump.fun", sol["raw_reproduction"]["deduplicated_terminal_outcomes"], "complete terminal cohort", TEAL, "#E7F4F1"),
+        ("Base  |  Clanker", base["tables"]["launches"]["rows"], "launch and pool universe", BLUE, LIGHT_BLUE),
+        ("BNB Chain  |  Four.meme", bnb["tables"]["launches"]["rows"], "bounded launch universe", AMBER, LIGHT_AMBER),
+        ("TRON  |  SunPump", tron["tables"]["launches"]["rows"], "bounded launch universe", RED, "#FBE9EE"),
+    ]
+    for i, (name, count, note, color, face) in enumerate(chain_rows):
+        y = 5.58 - i * 0.82
+        ax.add_patch(FancyBboxPatch((0.22, y - 0.48), 3.72, 0.66, boxstyle="round,pad=0.03,rounding_size=0.10", facecolor=face, edgecolor="none"))
+        ax.add_patch(Circle((0.70, y - 0.15), 0.19, facecolor="white", edgecolor=color, linewidth=1.2))
+        ax.text(0.70, y - 0.15, name[0], ha="center", va="center", color=color, fontweight="bold", fontsize=8.0)
+        ax.text(1.02, y, name, fontsize=7.3, fontweight="bold", color=INK)
+        shown = f"{count / 1_000_000:.2f}M" if count >= 1_000_000 else f"{count:,}"
+        ax.text(1.02, y - 0.24, shown, fontsize=11.2, fontweight="bold", color=color)
+        ax.text(2.02, y - 0.22, note, fontsize=6.6, color=MUTED)
+
+    ax.text(0.22, 2.08, "Evidence layers", fontsize=9.0, fontweight="bold")
+    columns = ["Launch", "Pool", "Outcome", "Activity"]
+    for j, label in enumerate(columns):
+        ax.text(1.66 + 0.62 * j, 1.79, label, ha="center", fontsize=6.4, color=MUTED)
+    coverage = [[TEAL, AMBER, TEAL, AMBER], [TEAL, TEAL, GRID, GRID], [TEAL, AMBER, GRID, GRID], [TEAL, AMBER, GRID, GRID]]
+    for i, label in enumerate(["Solana", "Base", "BNB", "TRON"]):
+        y = 1.48 - i * 0.30
+        ax.text(0.22, y, label, va="center", fontsize=7.0, fontweight="bold")
+        for j, color in enumerate(coverage[i]):
+            ax.add_patch(Circle((1.66 + 0.62 * j, y), 0.085, facecolor=color, edgecolor="#A9BAC7", linewidth=0.5))
+    ax.add_patch(FancyBboxPatch((0.22, 0.12), 3.72, 0.33, boxstyle="round,pad=0.02,rounding_size=0.05", facecolor="#EEF5F8", edgecolor="#B9CDD8", linewidth=0.7))
+    ax.text(2.08, 0.285, "Comparable representation does not imply a comparable causal sample", ha="center", va="center", fontsize=5.7, fontweight="bold", color="#31546B")
+
+    pillar_specs = [
+        (6.95, 5.55, "P1", "Stakeholder\nmetrics", "creator  |  trader  |  platform  |  community", "#D9F2EA", TEAL),
+        (5.55, 4.08, "P2", "Data richness\nand frequency", "source  |  unit  |  horizon  |  frequency", LIGHT_BLUE, BLUE),
+        (8.28, 4.08, "P3", "Causal\nidentification", "timing  |  comparison  |  diagnostics", LIGHT_AMBER, AMBER),
+    ]
+    for x, y, p, title, sub, face, edge in pillar_specs:
+        ax.add_patch(Circle((x, y), 0.72, facecolor=face, edgecolor=edge, linewidth=1.0))
+        ax.text(x, y + 0.34, p, ha="center", fontsize=6.8, color=edge, fontweight="bold")
+        ax.text(x, y - 0.05, title, ha="center", va="center", fontsize=6.7, fontweight="bold", linespacing=1.0)
+        ax.text(x, y - 0.39, sub, ha="center", fontsize=5.2, color=MUTED)
+    ax.plot([6.48, 5.98], [5.0, 4.61], color=GRID, linewidth=1.0)
+    ax.plot([7.42, 7.86], [5.0, 4.61], color=GRID, linewidth=1.0)
+    ax.plot([6.27, 7.56], [4.08, 4.08], color=GRID, linewidth=1.0)
+    ax.add_patch(Circle((6.95, 4.08), 0.42, facecolor="white", edgecolor="#8DA5B3", linewidth=1.0))
+    ax.text(6.95, 4.17, "Evidence", ha="center", fontsize=7.0, fontweight="bold")
+    ax.text(6.95, 3.96, "contract", ha="center", fontsize=7.0, fontweight="bold")
+
+    ax.text(4.55, 2.95, "Sequential evidence disclosure", fontsize=9.0, fontweight="bold")
+    rung_colors = [TEAL, "#CFE5F3", "#CFE5F3", "#FFE5A6", "#F5CBD6", "#E4D8F4", "#CFE5F3", "#7251B5"]
+    for i in range(8):
+        x = 4.75 + i * 0.56
+        if i < 7:
+            ax.plot([x + 0.14, x + 0.42], [2.50, 2.50], color=GRID, linewidth=2.2)
+        ax.add_patch(Circle((x, 2.50), 0.18, facecolor=rung_colors[i], edgecolor="none"))
+        ax.text(x, 2.52, f"L{i}", ha="center", va="center", fontsize=6.2, color="white" if i in (0, 7) else INK, fontweight="bold")
+
+    ax.text(4.55, 1.98, "Known truth stress tests", fontsize=9.0, fontweight="bold")
+    tests = [("Staggered", TEAL), ("Timing", RED), ("Four clusters", AMBER), ("Selection", "#C85C88"), ("Aggregation", "#7251B5")]
+    for i, (label, color) in enumerate(tests):
+        x = 4.85 + i * 0.88
+        ax.add_patch(Circle((x, 1.52), 0.14, facecolor="white", edgecolor=color, linewidth=1.2))
+        ax.add_patch(Circle((x, 1.52), 0.035, facecolor=color, edgecolor="none"))
+        ax.text(x, 1.25, label, ha="center", fontsize=6.1, color=MUTED)
+    ax.add_patch(FancyBboxPatch((4.55, 0.22), 4.30, 0.56, boxstyle="round,pad=0.03,rounding_size=0.06", facecolor="#F2ECFA", edgecolor="#D5C6EA", linewidth=0.8))
+    ax.text(4.83, 0.50, "AI", ha="center", va="center", fontsize=7.0, color="white", fontweight="bold", bbox={"boxstyle": "round,pad=0.35", "facecolor": "#7251B5", "edgecolor": "none"})
+    ax.text(5.22, 0.56, "Structured evidence improves evidence following", fontsize=7.2, fontweight="bold", color="#57417D")
+    ax.text(5.22, 0.34, "one model evaluation; method omissions remain", fontsize=6.2, color=MUTED)
+
+    ax.text(9.55, 5.86, "Market level estimate", fontsize=9.2, fontweight="bold")
+    l0 = float(ladder.loc["L0", "estimate"])
+    l2 = float(ladder.loc["L2", "estimate"])
+    l2_lo = float(ladder.loc["L2", "ci95_low"])
+    l2_hi = float(ladder.loc["L2", "ci95_high"])
+    exact_p = float(ladder.loc["L6", "p_value"])
+    y0 = 4.55
+    ax.plot([9.88, 12.98], [y0, y0], color="#8DA5B3", linewidth=1.1)
+    ax.scatter([10.42, 11.72], [5.18, 4.70], s=95, color=[TEAL, RED], zorder=3)
+    ax.plot([10.42, 10.42], [y0, 5.42], color=TEAL, linewidth=1.6)
+    ax.errorbar([11.72], [4.70], yerr=[[0.32], [0.35]], color=RED, capsize=5, linewidth=1.5)
+    ax.annotate("", xy=(11.57, 4.78), xytext=(10.60, 5.17), arrowprops={"arrowstyle": "->", "color": "#8DA5B3", "lw": 1.0, "connectionstyle": "arc3,rad=0.15"})
+    ax.text(10.42, 5.48, "before and after", ha="center", fontsize=6.3, color=MUTED)
+    ax.text(10.42, 4.88, f"+{l0:.3f}", ha="center", fontsize=11.0, color=TEAL, fontweight="bold")
+    ax.text(11.72, 5.48, "controls and two way FE", ha="center", fontsize=6.3, color=MUTED)
+    ax.text(11.72, 5.22, f"+{l2:.3f}", ha="center", fontsize=11.0, color=RED, fontweight="bold")
+    ax.text(11.72, 5.02, f"95% CI [{l2_lo:.3f}, {l2_hi:.3f}]", ha="center", fontsize=5.7, color=MUTED)
+    ax.add_patch(FancyBboxPatch((9.70, 3.78), 3.24, 0.48, boxstyle="round,pad=0.03,rounding_size=0.06", facecolor="#FFF3F5", edgecolor="#E79AAF", linewidth=0.9))
+    ax.text(11.32, 4.08, "CAUSAL EFFECT NOT IDENTIFIED", ha="center", fontsize=8.0, color="#92506A", fontweight="bold")
+    ax.text(11.32, 3.88, f"unstable preperiod  |  four clusters  |  exact p = {exact_p:g}", ha="center", fontsize=5.8, color=MUTED)
+
+    ax.text(9.55, 3.28, "Evidence that remains informative", fontsize=9.2, fontweight="bold")
+    active = int(h1["full_30d_observed_active_tokens"])
+    total = int(h1["post_30d_tokens"])
+    att = 100 * float(telegram["matched_att"])
+    remaining = [
+        (2.63, LIGHT_BLUE, BLUE, "Operational mechanism", f"{active:,} / {total:,}", "observed 30 day transaction proxy activity"),
+        (1.73, LIGHT_AMBER, AMBER, "Predictive marker", f"+{att:.3f} pp", "predictive association; causal exposure not established"),
+    ]
+    for y, face, edge, title, value, note in remaining:
+        ax.add_patch(FancyBboxPatch((9.70, y - 0.40), 3.24, 0.67, boxstyle="round,pad=0.03,rounding_size=0.06", facecolor=face, edgecolor=edge, linewidth=0.8))
+        ax.text(10.35, y + 0.08, title, fontsize=6.8, fontweight="bold", color="#31546B")
+        ax.text(10.35, y - 0.17, value, fontsize=10.2, fontweight="bold", color="#31546B")
+        ax.text(10.35, y - 0.31, note, fontsize=5.0, color=MUTED)
+    ax.text(9.55, 0.92, "Stakeholder interpretation vector", fontsize=9.2, fontweight="bold")
+    stakeholder = [("Creator", "mechanical", "#D9F2EA", TEAL), ("Trader", "unresolved", "#FBE0E7", RED), ("Platform", "venue active", LIGHT_BLUE, BLUE), ("Community", "predictive", "#E9E1F6", "#7251B5")]
+    for i, (label, state, face, edge) in enumerate(stakeholder):
+        x = 9.70 + i * 0.84
+        ax.add_patch(FancyBboxPatch((x, 0.18), 0.70, 0.48, boxstyle="round,pad=0.02,rounding_size=0.04", facecolor=face, edgecolor=edge, linewidth=0.6))
+        ax.text(x + 0.35, 0.47, label, ha="center", fontsize=6.4, fontweight="bold")
+        ax.text(x + 0.35, 0.28, state, ha="center", fontsize=5.4, color=MUTED)
+
+    save(fig, "teaser_figure", svg=True)
 
 
 def make_coverage_map() -> None:
@@ -451,6 +592,7 @@ def make_agentic() -> None:
 
 def main() -> None:
     apply_style()
+    make_teaser()
     make_coverage_map()
     make_stress_atlas()
     make_event_study()
