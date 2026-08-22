@@ -290,7 +290,7 @@ def main() -> None:
     fieldnames = ["paper_object", "object_type", "claim", "input", "script", "output"]
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     with MANIFEST.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(ROWS)
     checksums = []
