@@ -47,8 +47,8 @@ ROWS = [
         "paper_object": "fig:evidence-contract-overview",
         "object_type": "conceptual_figure",
         "claim": "Evidence infrastructure, evaluation pillars, and bounded stakeholder interpretation",
-        "input": "reproduction/figures/teaser_pipeline.yaml",
-        "script": "reproduction/generate_figures.py",
+        "input": "reproduction/scope.json; reproduction/source_ledger.md; reproduction/figures/teaser_evidence_ledger.md",
+        "script": "reproduction/build_teaser.py; reproduction/figures/teaser_figure.tex",
         "output": "paper/figs/teaser_figure.pdf; paper/figs/teaser_figure.svg; paper/figs/teaser_figure.png",
     },
     {

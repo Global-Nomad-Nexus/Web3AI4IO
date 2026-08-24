@@ -25,7 +25,7 @@ The L0 to L7 contract is definitional. It is not estimated from a factorial expe
 
 ## Teaser figure (`paper/figs/teaser_figure.pdf`)
 
-The conceptual overview is a pipeline diagram rendered by `reproduction/generate_figures.py` from `reproduction/figures/teaser_pipeline.yaml` and the Draw.io master `reproduction/figures/teaser_figure.drawio`. It is not a dashboard of live empirical numbers. `make figures` exports vector PDF (canonical), SVG with native text, and PNG at 300 dpi.
+The conceptual overview is a three-panel LaTeX/TikZ diagram whose canonical editable source is `reproduction/figures/teaser_figure.tex`. The left-panel counts are generated from `reproduction/scope.json` into `reproduction/generated/teaser_counts.tex`; all other labels are traced in `reproduction/figures/teaser_evidence_ledger.md`. `python reproduction/build_teaser.py` exports vector PDF, SVG, and a 300 dpi PNG preview. The figure uses no external icons or raster assets.
 
 ## Event-design labels in Figure 2
 

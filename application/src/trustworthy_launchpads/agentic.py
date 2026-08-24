@@ -196,6 +196,10 @@ def score_agent_runs(config: CaseConfig, deterministic: pd.DataFrame) -> pd.Data
                 "agent_mean_decision": "not_run",
                 "sign_stability": np.nan,
                 "calibration_gap": np.nan,
+                "decision_agreement_rate": np.nan,
+                "mean_self_reported_confidence": np.nan,
+                "brier_score": np.nan,
+                "estimate_in_reference_interval_rate": np.nan,
                 "run_to_run_dispersion": np.nan,
                 "method_omission_rate": np.nan,
                 "status": "registered_prompts_only",
@@ -229,7 +233,30 @@ def score_agent_runs(config: CaseConfig, deterministic: pd.DataFrame) -> pd.Data
             ref_low = float(deterministic_row.iloc[0]["ci95_low"])
             ref_high = float(deterministic_row.iloc[0]["ci95_high"])
             coverage_proxy = float(((estimates >= ref_low) & (estimates <= ref_high)).mean())
-        calibration_gap = float(confidence.mean() - coverage_proxy) if not pd.isna(coverage_proxy) else np.nan
+        reference_decision = (
+            str(deterministic_row.iloc[0]["worked_decision"])
+            if len(deterministic_row)
+            else None
+        )
+        decision_agreement = (
+            decisions.eq(reference_decision).astype(float)
+            if reference_decision is not None
+            else pd.Series(dtype=float)
+        )
+        decision_agreement_rate = (
+            float(decision_agreement.mean()) if len(decision_agreement) else np.nan
+        )
+        mean_confidence = float(confidence.mean()) if confidence.notna().any() else np.nan
+        calibration_gap = (
+            mean_confidence - decision_agreement_rate
+            if not pd.isna(mean_confidence) and not pd.isna(decision_agreement_rate)
+            else np.nan
+        )
+        brier_score = (
+            float(((confidence - decision_agreement) ** 2).mean())
+            if len(decision_agreement) and confidence.notna().any()
+            else np.nan
+        )
         score_rows.append(
             {
                 "rung": rung,
@@ -237,10 +264,18 @@ def score_agent_runs(config: CaseConfig, deterministic: pd.DataFrame) -> pd.Data
                 "agent_mean_decision": modal,
                 "sign_stability": sign_stability,
                 "calibration_gap": calibration_gap,
+                "decision_agreement_rate": decision_agreement_rate,
+                "mean_self_reported_confidence": mean_confidence,
+                "brier_score": brier_score,
+                "estimate_in_reference_interval_rate": coverage_proxy,
                 "run_to_run_dispersion": dispersion,
                 "method_omission_rate": float(omissions.mean()),
                 "status": "scored",
-                "notes": "Scored against deterministic rung output where compatible.",
+                "notes": (
+                    "Calibration compares self-reported confidence with exact categorical "
+                    "agreement to the deterministic rung decision. Estimate containment is "
+                    "reported separately and is not treated as correctness."
+                ),
             }
         )
     out = pd.DataFrame(score_rows).sort_values("rung")

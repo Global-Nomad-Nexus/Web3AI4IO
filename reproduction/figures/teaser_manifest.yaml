@@ -1,0 +1,18 @@
+figure_id: fig:evidence-contract-overview
+title: Evidence infrastructure to evidence-calibrated interpretation
+theme: project status colors with Latin Modern Sans
+canonical_source: reproduction/figures/teaser_figure.tex
+generated_input: reproduction/generated/teaser_counts.tex
+source_data:
+  - reproduction/scope.json
+  - reproduction/source_ledger.md
+generation_command: python reproduction/build_teaser.py
+outputs:
+  - paper/figs/teaser_figure.pdf
+  - paper/figs/teaser_figure.svg
+  - paper/figs/teaser_figure.png
+manuscript_locator: paper/neurips_2026.tex#fig:evidence-contract-overview
+external_assets: []
+license_dependencies:
+  - TeX Live packages under their distributed licenses
+acceptance_status: visual_ready

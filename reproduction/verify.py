@@ -216,8 +216,14 @@ def check_artifact_manifest(errors: list[str]) -> None:
     if len(numerical_rows) < 17:
         fail(f"numerical claim ledger is incomplete: {len(numerical_rows)} rows", errors)
     svg = PAPER / "figs" / "teaser_figure.svg"
-    if not svg.exists() or "<text" not in svg.read_text(encoding="utf-8", errors="ignore"):
-        fail("editable teaser SVG with live text is missing", errors)
+    teaser_source = REPRO / "figures" / "teaser_figure.tex"
+    teaser_counts = REPRO / "generated" / "teaser_counts.tex"
+    if not svg.exists():
+        fail("teaser SVG export is missing", errors)
+    if not teaser_source.exists() or "\\begin{tikzpicture}" not in teaser_source.read_text(encoding="utf-8"):
+        fail("editable LaTeX/TikZ teaser source is missing", errors)
+    if not teaser_counts.exists():
+        fail("generated teaser count macros are missing", errors)
 
 
 def main() -> int:
