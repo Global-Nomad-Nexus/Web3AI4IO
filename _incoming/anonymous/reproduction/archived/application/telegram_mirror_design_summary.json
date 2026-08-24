@@ -1,0 +1,86 @@
+{
+  "bootstrap": {
+    "cluster": "launch_day",
+    "reps": 500,
+    "seed": 20260729
+  },
+  "cell_columns": [
+    "launch_day",
+    "has_twitter",
+    "has_website",
+    "market_cap_decile",
+    "description_bin"
+  ],
+  "claim_boundary": "Use as a credible matched Telegram mirror design and mechanism-supported predictive signal. Event-time diagnostics are included, but do not claim a causal Telegram effect without an exogenous attention shock or stronger event-time exposure design.",
+  "cluster_bootstrap_ci95": [
+    0.00731777876508777,
+    0.011633575634213326
+  ],
+  "cluster_bootstrap_se": 0.0011574862879867901,
+  "control_definition": "has_telegram == 0 in the same launch-day/coarse metadata cell",
+  "design_id": "TELEGRAM_MIRROR_MATCHED_DESIGN_V1",
+  "e_value": 5.020807874760289,
+  "event_id": "PUMP_PUMPSWAP_MIGRATION_20250320",
+  "event_time_diagnostics": {
+    "causal_timing_interpretation": "immediate_association_present_keep_causal_boundary_strict",
+    "detection_lag_min": {
+      "ci95": [
+        -0.004497568837108937,
+        0.01396758136808654
+      ],
+      "effect": 0.004519679669811483,
+      "n_treated": 19107
+    },
+    "graduated_after_60m": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "effect": 0.0,
+      "n_treated": 20227
+    },
+    "graduated_within_15m": {
+      "ci95": [
+        0.00731777876508777,
+        0.011633575634213326
+      ],
+      "effect": 0.009448529581818533,
+      "n_treated": 20227
+    },
+    "graduated_within_5m": {
+      "ci95": [
+        0.00731777876508777,
+        0.011633575634213326
+      ],
+      "effect": 0.009448529581818533,
+      "n_treated": 20227
+    },
+    "graduated_within_60m": {
+      "ci95": [
+        0.00731777876508777,
+        0.011633575634213326
+      ],
+      "effect": 0.009448529581818533,
+      "n_treated": 20227
+    }
+  },
+  "matched_att": 0.009448529581818533,
+  "matched_control_rate": 0.0052842533321083955,
+  "matched_risk_ratio": 2.788053862672895,
+  "matched_treated_rate": 0.014732782913926929,
+  "missing_controls": [
+    "creator history is not available for the full RED-PUMP launch cohort in this table",
+    "initial liquidity is proxied by initial_market_cap_sol",
+    "risk labels are not joined for the full cohort"
+  ],
+  "n_control_full": 812671,
+  "n_control_matched_pool": 586581,
+  "n_total": 832941,
+  "n_treated_full": 20270,
+  "n_treated_matched_supported": 20227,
+  "source_artifact": "01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/data/processed/red_pump_token_outcomes.csv",
+  "status": "credible_matched_design_not_causal",
+  "token_horizon_validation_rows": 18,
+  "treated_support_share": 0.9978786383818451,
+  "treatment_definition": "has_telegram == 1 in RED-PUMP launch-time metadata"
+}

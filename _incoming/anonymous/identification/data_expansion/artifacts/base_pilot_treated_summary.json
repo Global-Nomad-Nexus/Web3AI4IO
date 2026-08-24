@@ -1,0 +1,27 @@
+{
+  "claim_boundary": "Backfill summary tracks processed query units and imported rows. Full-cohort causal claims require processed swap and transfer coverage for the complete manifest plus reconstructed token horizons.",
+  "coverage_by_type": {
+    "erc20_transfers": {
+      "observed_rows": 54,
+      "processed_share_of_manifest": 0.0008645533141210375,
+      "processed_units": 6,
+      "units_with_observed_rows": 6
+    },
+    "poolmanager_swaps": {
+      "observed_rows": 20,
+      "processed_share_of_manifest": 0.0008645533141210375,
+      "processed_units": 6,
+      "units_with_observed_rows": 5
+    }
+  },
+  "generated_at_utc": "2026-08-09T15:59:52Z",
+  "manifest_rows": 6940,
+  "manifest_tokens": 6940,
+  "outputs": {
+    "coverage": "<local-home>/Web3AI4IO/identification/data_expansion/artifacts/base_pilot_treated_coverage.csv",
+    "swaps": "<local-home>/Web3AI4IO/identification/data_expansion/raw/base_pilot_treated/swaps.csv",
+    "transfers": "<local-home>/Web3AI4IO/identification/data_expansion/raw/base_pilot_treated/transfers.csv"
+  },
+  "swap_import_rows": 20,
+  "transfer_import_rows": 54
+}

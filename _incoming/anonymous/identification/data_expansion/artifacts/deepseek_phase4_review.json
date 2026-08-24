@@ -1,0 +1,37 @@
+{
+  "created_at_utc": "2026-08-12T02:15:23.216681+00:00",
+  "requested_model": "deepseek-v4-flash",
+  "returned_model": "deepseek-v4-flash",
+  "fallback_allowed": false,
+  "usage": {
+    "prompt_tokens": 5859,
+    "completion_tokens": 322,
+    "total_tokens": 6181,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5859
+  },
+  "review": {
+    "inconsistencies": [
+      "BNB manifest token_metadata rows=999 but integrity summary official_api_metadata_rows=999 and reconciliation input=1000 with 1 outside universe; consistent.",
+      "TRON manifest token_metadata rows=1000 but integrity summary official_api_metadata_rows=1000; consistent.",
+      "BNB lifecycle_events rows=1639994 matches formula; TRON lifecycle_events rows=110041 matches formula.",
+      "No row count or SHA mismatches found in integrity summary."
+    ],
+    "provenance_gaps": [
+      "Official API metadata enrichment is capped at 1,000 rows; metadata completeness not claimed.",
+      "BNB has 106 V1 TradeStop events retained literally; they do not encode pool mapping, initialization, graduation, or migration, hence not_collected.",
+      "TRON has no not_collected for pool mapping, graduation, migration; all observed or not_applicable.",
+      "Decoded swaps, holder data, and trading data are explicitly excluded and marked not_collected."
+    ],
+    "semantic_risks": [
+      "not_applicable for tokens without observed lifecycle transitions is based on current observed state; does not preclude future transitions.",
+      "Official API is metadata enrichment only and does not define universe membership or denominator.",
+      "No claim of metadata completeness; only 1,000 rows from official API.",
+      "Lifecycle events formula includes declared lifecycle rows and pool/liquidity events; verified."
+    ],
+    "acceptance": true
+  }
+}

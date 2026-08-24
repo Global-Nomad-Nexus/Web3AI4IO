@@ -1,0 +1,50 @@
+{
+  "requested_model": "k3-256k",
+  "returned_model": "k3-256k",
+  "audit": {
+    "verdict": {
+      "causal_market_thickness": "not_defensible",
+      "causal_stakeholder_welfare": "not_defensible",
+      "strongest_supported_claim": "The activation transaction at 2025-05-13T11:27:06Z mechanically created a positive creator-vault balance delta (+10,732 lamports), establishing that the creator-fee rule bundle was economically live and mechanically incident on creators. Beyond that, the evidence supports only descriptive findings: post-activation Pump gross and 7-day quality cohorts show large, statistically significant declines in launches, unique creators, graduated_7d counts, and the 7-day graduation rate relative to pre-period levels and relative to the rejected Moonshot comparison. These are before/after contrasts at a platform-wide event date with no accepted control, so they are consistent with \u2014 but do not identify \u2014 an effect of the fee bundle. No welfare claim for traders or the platform is supported at all.",
+      "summary": "One identified mechanical incidence fact (creator vault delta); all behavioral/thickness outcomes are descriptive; welfare incidence for every stakeholder is unidentified."
+    },
+    "fatal_issues": [
+      "no_valid_control: Moonshot is the only other platform and fails the control gate on two independent grounds \u2014 concurrent product changes (confounded treatment contrast) and potential displacement/interference of Pump users (SUTVA violation). The comparative_hac7 estimates are therefore not difference-in-differences treatment effects; they are descriptive cross-platform contrasts.",
+      "treatment_bundle_not_separable: The intervention simultaneously changes creator subsidy, trader fee burden, and a program upgrade. Even a valid before/after contrast could not attribute any effect to the fee mechanism versus the upgrade; the estimand is at best a reduced-form bundle effect, as the machine output itself states.",
+      "internal_contradiction_in_7d_sample: The quality_7d_21d launches outcome shows a statistically significant negative pretrend (estimate -0.014, p = 0.000126), which invalidates the parallel-trends-type assumption for that specification. The largest and most-cited negative estimates come from a sample whose own pretrend test fails.",
+      "internal_contradiction_in_30d_sample: quality_30d_21d shows significant nonzero pretrends for launches (p = 3.7e-16) and graduation_rate_30d (p = 2.7e-05), again undermining the before/after comparisons in that sample; the corresponding post estimates are mostly insignificant anyway.",
+      "timing_and_anticipation_mechanics: Although the anticipation window (May 8\u201313) is excluded, the seven-day quality cohorts ending 2025-04-30 protect only the pre side; post cohorts in quality samples are constructed from post-activation launches whose 7-day outcomes extend past the sample end and may be partially observed or selected on survival/migration, which is itself a treatment-correlated outcome.",
+      "graduation_rate_composition: The comparative graduation_rate_7d estimate (-0.0146, p = 0.0014) contrasts with the Pump-only before/after estimate (~0.0001, p = 0.79). The significant figure depends entirely on the rejected control; within-Pump there is no detectable rate change, only fewer launches. Apparent 'quality decline' is likely a level/composition artifact, not a rate effect.",
+      "welfare_unidentified_by_construction: H3 correctly reports that trader net welfare requires counterfactual execution costs, behavioral response, and liquidity/quality response \u2014 none observed \u2014 and platform welfare requires net revenue, retention, and market-share response \u2014 none observed. A positive mechanical transfer to creators is not a welfare result; incidence of a fee on traders could exceed the creator transfer.",
+      "short_window_and_power: 21 days pre/post with HAC-7 on daily aggregates is a short, heavily autocorrelated series; inference is fragile to the event-date shock structure, and the null 30d quality results may reflect power rather than absence of effect, so they cannot be used as confirming evidence either."
+    ],
+    "required_claim_boundary": {
+      "permissible": [
+        "A creator-vault balance increased by 10,732 lamports in the activation transaction at 2025-05-13T11:27:06Z; the creator-fee rule was economically activated on that date.",
+        "A May 12 program-support transaction produced zero creator-vault delta, so support preceded and was distinct from economic activation.",
+        "After activation, Pump gross and 7-day quality cohorts show large descriptive declines in launches, unique creators, and graduated_7d counts versus their own pre-period and versus Moonshot (a control that fails the gate).",
+        "Within-Pump before/after shows no detectable change in the 7-day graduation rate; the significant comparative rate decline rests on the rejected Moonshot contrast."
+      ],
+      "prohibited": [
+        "Any claim that the fee bundle caused the decline in launches, creators, or graduations.",
+        "Any claim about market thickness as a causal outcome (thickness effects are descriptive associations only).",
+        "Any welfare statement for traders, creators (net), or the platform, including 'creators benefited' \u2014 the vault delta is a gross mechanical transfer, not net welfare.",
+        "Any decomposition attributing effects to the creator subsidy versus trader fee versus program upgrade.",
+        "Any use of the comparative_hac7 coefficients as causal effect sizes."
+      ]
+    },
+    "useful_next_check": "Run in-time placebo activations within the pre-period (e.g., pseudo-events on each day of 2025-04-17 to 2025-05-07 using the same pump_before_after_hac7 specification) and report the distribution of placebo estimates relative to the actual -0.187 launches estimate. This is the strongest falsification available without new data or models: it tests whether the observed post/pre drop is unusually large relative to normal pre-period volatility and directly addresses the main surviving alternative explanation (ordinary time-series fluctuation coinciding with the event date). If the actual estimate sits well inside the placebo distribution \u2014 which the significant quality_7d pretrend already suggests is plausible \u2014 even the descriptive 'unusual break at activation' claim weakens; if it sits in the extreme tail, the descriptive break claim is strengthened while remaining non-causal."
+  },
+  "usage": {
+    "prompt_tokens": 4292,
+    "completion_tokens": 1339,
+    "total_tokens": 5631,
+    "cached_tokens": 4292,
+    "completion_tokens_details": {
+      "reasoning_tokens": 28
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 4292
+    }
+  }
+}

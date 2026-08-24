@@ -1,0 +1,1 @@
+design_id,shock_id,stage,estimand,outcome,analysis_window_hours,n_telegram_during,n_telegram_adjacent,n_no_telegram_during,n_no_telegram_adjacent,telegram_during_rate,telegram_adjacent_rate,no_telegram_during_rate,no_telegram_adjacent_rate,effect,decision,claim_boundary,source_artifact

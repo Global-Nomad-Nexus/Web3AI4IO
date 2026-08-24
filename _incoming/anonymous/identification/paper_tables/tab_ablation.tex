@@ -1,0 +1,36 @@
+\begin{table}[t]
+  \caption{PumpSwap trustworthiness ablation ladder, application application. Each
+  rung adds one evidentiary component to the same March~20, 2025 PumpSwap
+  question. \textbf{Key take-away:} the conclusion changes from a naive
+  positive market claim to uncertainty and then to stakeholder-dependent
+  evidence. Table~\ref{tab:identification_ladder} reports the companion rule-event panel.}
+  \label{tab:ablation}
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X c c >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Rung} & \textbf{Component added} & \textbf{Estimate} &
+    \textbf{CI / diagnostic} & \textbf{Decision} \\
+    \midrule
+    L0 & Before--after, no controls, $t$-test
+      & 0.669 & [0.546, 0.792] & Yes, but naive treated-only evidence. \\
+    L1 & + control group (naive DiD)
+      & 0.412 & [$-0.029$, 0.852] & No/uncertain. \\
+    L2 & + TWFE fixed effects, pooled
+      & 0.412 & [$-0.128$, 0.951] & No/uncertain. \\
+    L3 & + single-event dynamic analogue
+      & 0.836 & [0.472, 1.200] & Yes in event-study analogue. \\
+    L4 & + event study, pre-trend diagnostics
+      & 0.836 & pre-trend flagged & Diagnostic, not clean causal evidence. \\
+    L5 & + token heterogeneity
+      & +52.4 pp & [48.6, 56.2] pp & Retail risk higher. \\
+    L6 & + honest inference (wild bootstrap)
+      & 0.412 & wild CI [$-1.342$, 1.342]; $p=0.688$ & No/uncertain. \\
+    \rowcolor{okgreen!8}
+    L7 & + data richness \& stakeholder battery
+      & vector & market CI as L6; stakeholder metrics separate &
+      Depends on stakeholder. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "v1",
+  "tables": {
+    "event_registry": ["dataset_version", "event_id", "event_aliases", "event_type", "platform_id", "chain_id", "rule_family", "rule_change", "announcement_at", "activation_at", "anticipation_start_at", "concurrent_shocks", "comparison_unit_status", "eligibility_status", "rejection_reason", "hypothesis_tags", "claim_boundary", "evidence_status"],
+    "event_evidence": ["dataset_version", "evidence_id", "event_id", "evidence_type", "evidence_role", "observed_at", "block_number", "transaction_hash", "next_block_verification", "verification_status", "supports_eligibility", "source_id", "source_path", "source_sha256", "evidence_detail", "claim_boundary"]
+  },
+  "eligibility_status": ["accepted", "conditional", "rejected"],
+  "invariants": [
+    "event_id and evidence_id are unique",
+    "every evidence event_id references event_registry",
+    "accepted events have activation_at and accepted activation evidence",
+    "rejected events have rejection_reason",
+    "every evidence row references an existing file and records its SHA256",
+    "chain coverage alone is not sufficient for event eligibility"
+  ]
+}

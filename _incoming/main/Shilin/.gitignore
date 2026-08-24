@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/external/*.csv
+data/external/*.parquet
+artifacts/agent_runs/raw_responses/
+artifacts/agent_runs/raw/
+artifacts/download_failures/
+artifacts/external_validation/raw_coin_metadata/
+artifacts/external_validation/moralis_token_swaps.csv
+*.part
+*.bad_incomplete
+
+# Raw public-data mirrors and bulky upstream snapshots are kept out of the GitHub tree.
+data_sources/free_public/huggingface/*.csv
+data_sources/free_public/solarchive/tokens/*.parquet
+data_sources/free_public/red_cohort/*.zip
+data_sources/free_public/red_cohort/extracted/*.jsonl
+data_sources/free_public/red_cohort/extracted/*.jsonl.gz
+data_sources/free_public/red_cohort/extracted/analyze_sniper_cohorts.py
+data_sources/free_public/red_cohort/extracted/gen_p7_artifacts.py
+
+# Manuscript sources stay local and are not part of this GitHub package.
+*.tex
+*.sty
+*.bib
+artifacts/overleaf/

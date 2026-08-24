@@ -1,0 +1,17 @@
+APPENDIX B.3 TIER STRATIFICATION
+========================================
+STANDARD tier:
+  n_treated: 3747
+  buyer lift: +122.8%
+  SOL lift: +136.0%
+
+HIGH tier:
+  n_treated: 1688
+  buyer lift: +131.4%
+  SOL lift: +125.6%
+
+PREMIUM tier:
+  n_treated: 540
+  buyer lift: +79.5%
+  SOL lift: +84.5%
+

@@ -1,0 +1,22 @@
+{
+  "control_set_rows": 7,
+  "event_date_positive_share": 1.0,
+  "event_date_sensitivity_rows": 15,
+  "event_date_yes_share": 1.0,
+  "generated_at_utc": "2026-08-03T03:12:26.161427+00:00",
+  "leave_one_control_positive_share": 0.75,
+  "market_identification_grade": "diagnostic_only",
+  "moralis_sample_max_abs_smd": 1.3137388887135455,
+  "placebo_positive_significant_count": 1,
+  "placebo_rows": 4,
+  "submission_claim_recommendation": "Use the market DiD only as the benchmark's conclusion-flip diagnostic. Anchor H1 on mechanism-level RPC coverage and covered-token Moralis decoded outcomes; state that welfare and H4 same-cohort causal effects remain gaps.",
+  "synthetic_control_abs_rank": 2,
+  "synthetic_control_gap_change": 1.4010101501174201,
+  "synthetic_control_placebo_p_value": 0.5,
+  "synthetic_control_pre_centered_rmse": 0.4527668777488847,
+  "twfe_window_positive_share": 1.0,
+  "twfe_window_rows": 5,
+  "twfe_window_yes_share": 0.8,
+  "unit_permutation_abs_rank": 4,
+  "unit_permutation_p_value": 1.0
+}

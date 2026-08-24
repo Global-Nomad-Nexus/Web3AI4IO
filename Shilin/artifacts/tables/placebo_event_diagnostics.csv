@@ -1,0 +1,5 @@
+placebo_event_date,offset_days_from_true_event,window_days,estimate,std_error,ci95_low,ci95_high,p_value,worked_decision,n_rows,n_units,n_dates,placebo_positive_significant,stress_test,interpretation
+2025-01-09,-70,14,-1.1215975628933366,1.114847132336013,-3.3066979422719216,1.0635028164852487,0.31438910026453515,no_or_uncertain,116,4,29,0,pre_event_placebo,No positive significant placebo effect under this pre-event pseudo-date.
+2025-01-23,-56,14,-1.3012601000709643,0.9386139455809691,-3.1409434334096638,0.5384232332677352,0.16563594068787735,no_or_uncertain,116,4,29,0,pre_event_placebo,No positive significant placebo effect under this pre-event pseudo-date.
+2025-02-06,-42,14,0.20795411732996905,0.10567373833703826,0.0008335901893740671,0.415074644470564,0.04908088690285038,yes,116,4,29,1,pre_event_placebo,Placebo produces a positive significant estimate; this is a warning about latent pre-event dynamics.
+2025-02-20,-28,14,-0.29344696188588526,0.11332281459202886,-0.5155596784862618,-0.07133424528550869,0.00961214990564548,no_or_uncertain,116,4,29,0,pre_event_placebo,No positive significant placebo effect under this pre-event pseudo-date.

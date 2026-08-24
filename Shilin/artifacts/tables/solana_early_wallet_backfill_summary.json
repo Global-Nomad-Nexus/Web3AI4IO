@@ -1,0 +1,13 @@
+{
+  "claim_boundary": "Early-wallet rows are fee-payer and token-balance proxy classifications from Solana JSON-RPC; same-cohort causal H4 still requires complete decoded indexer buyer/holder coverage.",
+  "classified_early_transactions": 101,
+  "decoded_buyer_proxy_wallets": 53,
+  "decoded_holder_proxy_wallets": 60,
+  "early_wallet_rows": 10,
+  "early_wallet_tokens": 10,
+  "parsed_early_transactions": 298,
+  "rpc_provider": "public_solana_rpc",
+  "sample_strategy": "first",
+  "stop_reason": "summary_only",
+  "tokens_requested": 10
+}

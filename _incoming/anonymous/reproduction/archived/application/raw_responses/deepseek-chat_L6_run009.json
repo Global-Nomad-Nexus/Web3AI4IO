@@ -1,0 +1,38 @@
+{
+  "status": "ok",
+  "error": "",
+  "model": "deepseek-chat",
+  "rung": "L6",
+  "run_id": 9,
+  "temperature": 0.0,
+  "prompt_hash": "e64b0c232a7e99483d206002b556ed2f75f9e46b3feeb029eb59ef73903cd03e",
+  "content": "{\n  \"headline_estimate\": 0.41169913423098825,\n  \"ci95_low\": -1.3423157539382797,\n  \"ci95_high\": 1.3423157539377872,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap regime shows a positive but statistically insignificant effect on log daily volume (0.41, 95% CI [-1.34, 1.34], p=0.75) after controlling for Solana DEX activity and using few-cluster robust inference. Pre-trend risk and aggregate volume estimand prevent a clean causal welfare claim.\"\n}",
+  "api_response": {
+    "id": "4203e160-e24a-4179-8f47-0c4d374e6dde",
+    "object": "chat.completion",
+    "created": 1785434304,
+    "model": "deepseek-v4-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\n  \"headline_estimate\": 0.41169913423098825,\n  \"ci95_low\": -1.3423157539382797,\n  \"ci95_high\": 1.3423157539377872,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap regime shows a positive but statistically insignificant effect on log daily volume (0.41, 95% CI [-1.34, 1.34], p=0.75) after controlling for Solana DEX activity and using few-cluster robust inference. Pre-trend risk and aggregate volume estimand prevent a clean causal welfare claim.\"\n}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1492,
+      "completion_tokens": 156,
+      "total_tokens": 1648,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "prompt_cache_hit_tokens": 1408,
+      "prompt_cache_miss_tokens": 84
+    },
+    "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402"
+  }
+}

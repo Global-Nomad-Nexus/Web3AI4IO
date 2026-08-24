@@ -1,0 +1,23 @@
+{
+  "release": "v1",
+  "events": {
+    "rows": 4,
+    "eligibility_counts": {
+      "accepted": 1,
+      "conditional": 1,
+      "rejected": 2
+    },
+    "sha256": "61af230839045a037d2a4f765d7574f3803cfd58beb33a889f7a914e35ba5cd3"
+  },
+  "event_evidence": {
+    "rows": 6,
+    "sha256": "82aefd8b293d155a82c700108a80b725f57934c159370c77af2346d978297b32"
+  },
+  "public_events_csv": {
+    "rows": 4,
+    "sha256": "934a2c3221f902c0a5b0c54cf8528d0b90a1d1a4f02bc699cd8ede70565ebf11"
+  },
+  "source_registry_sha256": "e471a783c47cac2f4296ee117f94263737c917c5a9d958a511f0be16d368c822",
+  "source_evidence_sha256": "0cae501616736c8dfb4732e1d95234f04b99f8bade2d94bde2bf19538ee81d79",
+  "claim_boundary": "This release registers event eligibility and evidence. It does not itself produce event-aligned metrics or causal estimates."
+}

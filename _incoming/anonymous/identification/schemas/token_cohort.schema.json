@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "web3IO identification token creation cohort",
+  "type": "object",
+  "required": [
+    "platform",
+    "chain",
+    "token_id",
+    "creator_id",
+    "created_at_utc",
+    "cohort_date_utc",
+    "graduated_7d",
+    "graduated_30d",
+    "active_7d",
+    "active_30d"
+  ],
+  "properties": {
+    "platform": {"type": "string", "minLength": 1},
+    "chain": {"type": "string", "minLength": 1},
+    "token_id": {"type": "string", "minLength": 1},
+    "creator_id": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "cohort_date_utc": {"type": "string", "format": "date"},
+    "graduated_7d": {"type": ["boolean", "null"]},
+    "graduated_30d": {"type": ["boolean", "null"]},
+    "active_7d": {"type": ["boolean", "null"]},
+    "active_30d": {"type": ["boolean", "null"]},
+    "liquidity_7d_usd": {"type": ["number", "null"], "minimum": 0},
+    "liquidity_30d_usd": {"type": ["number", "null"], "minimum": 0}
+  },
+  "additionalProperties": true
+}
