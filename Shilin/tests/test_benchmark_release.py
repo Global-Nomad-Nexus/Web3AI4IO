@@ -93,6 +93,18 @@ class BenchmarkReleaseTest(unittest.TestCase):
         self.assertGreater(float(d1["n_treated"]), 1000)
         self.assertGreater(float(d1["effect"]), 0)
 
+    def test_paired_case_ladder_links_case_a_and_case_b(self) -> None:
+        paired = pd.read_csv(DATA / "paired_case_ladder.csv")
+        self.assertEqual(len(paired), 7)
+        self.assertEqual(paired["paired_stage"].tolist(), [f"S{i}" for i in range(7)])
+        self.assertEqual(set(paired["case_a_id"]), {"CASE_A_PUMPSWAP_MARKET"})
+        self.assertEqual(set(paired["case_b_id"]), {"CASE_B_TELEGRAM_SOCIAL_METADATA_PRELIMINARY"})
+        self.assertIn("L0", set(paired["case_a_rung"]))
+        self.assertIn("B0", set(paired["case_b_rung"]))
+        final = paired.loc[paired["paired_stage"].eq("S6")].iloc[0]
+        self.assertIn("opposite revisions", final["paired_interpretation"])
+        self.assertIn("not as a completed causal", " ".join(paired["case_b_claim_boundary"].astype(str)))
+
     def test_cross_chain_clanker_base_is_accepted_but_bounded(self) -> None:
         events = pd.read_csv(DATA / "events.csv")
         event = events.loc[events["event_id"].eq("CLANKER_SNIPER_DECAY_V41_BASE_20250826")].iloc[0]
@@ -161,6 +173,26 @@ class BenchmarkReleaseTest(unittest.TestCase):
         boundary = " ".join(diagnostics["claim_boundary"].astype(str).unique())
         self.assertIn("platform-wide", boundary)
 
+    def test_full_cohort_coverage_audit_keeps_base_gap_open(self) -> None:
+        audit = pd.read_csv(DATA / "full_cohort_coverage_audit.csv")
+        self.assertTrue({"poolmanager_swaps", "erc20_transfers"}.issubset(set(audit["coverage_type"])))
+        shares = pd.to_numeric(audit["processed_share_of_manifest"], errors="coerce").dropna()
+        self.assertTrue((shares < 1).any())
+        boundary = " ".join(audit["claim_boundary"].astype(str))
+        self.assertIn("Full-cohort Base causal replication remains blocked", boundary)
+
+    def test_agentic_ablation_release_is_real_but_bounded(self) -> None:
+        manifest = pd.read_csv(DATA / "agentic_multimodel_ablation_manifest.csv")
+        scores = pd.read_csv(DATA / "agentic_multimodel_ablation_scores.csv")
+        self.assertGreaterEqual(len(manifest), 40)
+        scored = scores.loc[scores["status"].astype(str).eq("scored")]
+        self.assertGreaterEqual(len(scored), 40)
+        self.assertIn("DeepSeek", set(scored["provider"].astype(str)))
+        self.assertIn("Ollama", set(scored["provider"].astype(str)))
+        self.assertGreaterEqual(len(scored[["provider", "model"]].drop_duplicates()), 2)
+        boundary = " ".join(scores["claim_boundary"].astype(str))
+        self.assertIn("not causal treatment effects", boundary)
+
     def test_teacher_requirements_alignment_covers_revision_email(self) -> None:
         alignment = pd.read_csv(DATA / "teacher_requirements_alignment_shilin.csv")
         required_items = {
@@ -179,6 +211,31 @@ class BenchmarkReleaseTest(unittest.TestCase):
         self.assertIn("13,880", base["evidence_or_gap"])
         mirror = alignment.loc[alignment["ownership_item"].eq("Mirror empirical Case B")].iloc[0]
         self.assertIn("not_causal", mirror["status"])
+
+    def test_closure_and_zenodo_metadata_are_release_ready_not_overclaimed(self) -> None:
+        closure = pd.read_csv(DATA / "requirement_closure_audit.csv")
+        self.assertIn("R8_paired_case_figure", set(closure["requirement_id"]))
+        paired = closure.loc[closure["requirement_id"].eq("R8_paired_case_figure")].iloc[0]
+        self.assertEqual(paired["current_status"], "pass")
+        base = closure.loc[closure["requirement_id"].eq("R5_cross_chain_case")].iloc[0]
+        self.assertIn("Bounded Base case accepted", base["top_conference_status"])
+
+        gaps = pd.read_csv(DATA / "top_conference_gap_ledger.csv")
+        self.assertTrue(
+            {
+                "zenodo_doi_minting",
+                "base_full_cohort_archive_indexer",
+                "telegram_exogenous_attention_shock",
+                "agentic_multimodel_scaffold_ablations",
+            }.issubset(set(gaps["gap_id"]))
+        )
+        agent_gap = gaps.loc[gaps["gap_id"].eq("agentic_multimodel_scaffold_ablations")].iloc[0]
+        self.assertIn("scored_cells", agent_gap["current_status"])
+
+        zenodo = json.loads((DATA.parent / "zenodo_metadata.json").read_text(encoding="utf-8"))
+        self.assertEqual(zenodo["upload_type"], "dataset")
+        self.assertEqual(zenodo["license"], "cc-by-4.0")
+        self.assertNotIn("doi", {key.lower() for key in zenodo})
 
 
 if __name__ == "__main__":

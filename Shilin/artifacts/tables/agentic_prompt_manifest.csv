@@ -1,9 +1,0 @@
-rung,system_prompt_path,user_prompt_path,prompt_hash,data_access,scaffold
-L0,prompts/L0_system.md,prompts/L0_user.md,7b359a311bfb3cc62ae441a69d946d2e9d1c18f5bced673476cbea2a721ec3b5,market_daily_panel only,No control-group instruction; ask for before-after conclusion.
-L1,prompts/L1_system.md,prompts/L1_user.md,307cdac7ddeddbcc8072d062c4970f7f4872a95ec800d24b4adc784358f0a9fc,market_daily_panel with control units,Control group is disclosed; ask for naive DiD.
-L2,prompts/L2_system.md,prompts/L2_user.md,5a7a21ea21fb15b8c30047e80dfd3fffbd19cc6b79529e21d1b183a52cb2378a,market_daily_panel,Unit/date fixed effects are required.
-L3,prompts/L3_system.md,prompts/L3_user.md,b9ae53e87556f5a5667a07eab08792fafff3489cec364143c963945b81425e7f,market_daily_panel plus estimator note,Modern DiD/event-study package documentation is disclosed where compatible.
-L4,prompts/L4_system.md,prompts/L4_user.md,346dc48c98e86836e1c89b2a0b023008e35dc5174d906c795e9b59751c966492,market_daily_panel,Pre-trend/event-study diagnostic instruction is mandatory.
-L5,prompts/L5_system.md,prompts/L5_user.md,1bd5a127e81c632e3f57b3b2ba83eafdbf45dccea25d5e1fee25a7e1abd73d37,market panel plus RED-PUMP token outcomes and HF Pump.fun risk snapshots,"Heterogeneity by token lifecycle, social metadata, holder concentration, and source-coded risk is required."
-L6,prompts/L6_system.md,prompts/L6_user.md,960b6a3f67145275966dc83249115dbd06b8356331974e63888b191721c70349,market panel plus inference outputs,Few-cluster uncertainty/wild bootstrap instruction is mandatory.
-L7,prompts/L7_system.md,prompts/L7_user.md,59fb1c2ca6b87badfa23b803b1941123a0bfe783c8b91fa4bdfd6404e6725f8d,all computed tables plus data-availability ledger and Moralis decoded outcome sample when present,Stakeholder metric battery is mandatory; conclusion must be stakeholder-specific.

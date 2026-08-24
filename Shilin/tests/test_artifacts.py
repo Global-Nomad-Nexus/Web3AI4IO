@@ -70,6 +70,30 @@ class ArtifactIntegrityTest(unittest.TestCase):
         for rung in [f"L{i}" for i in range(8)]:
             self.assertGreaterEqual(counts.get(rung, 0), 10)
 
+    def test_agentic_ablation_cells_are_scored(self) -> None:
+        manifest = pd.read_csv(TABLES / "agentic_multimodel_ablation_manifest.csv")
+        scores = pd.read_csv(TABLES / "agentic_multimodel_ablation_scores.csv")
+        self.assertGreaterEqual(len(manifest), 40)
+        scored = scores.loc[scores["status"].astype(str).eq("scored")]
+        self.assertGreaterEqual(len(scored), 40)
+        self.assertIn("Ollama", set(scored["provider"].astype(str)))
+        self.assertGreaterEqual(len(scored[["provider", "model"]].drop_duplicates()), 2)
+        self.assertIn("omit_uncertainty_inference", set(scored["ablation_id"].astype(str)))
+        self.assertIn("omit_stakeholder_battery", set(scored["ablation_id"].astype(str)))
+
+    def test_solana_early_wallet_proxy_is_nonempty(self) -> None:
+        summary = json.loads((TABLES / "solana_early_wallet_backfill_summary.json").read_text(encoding="utf-8"))
+        early = pd.read_csv(ROOT / "artifacts" / "external_validation" / "solana_early_wallet_concentration.csv")
+        self.assertGreater(int(summary["early_wallet_rows"]), 0)
+        self.assertGreater(int(summary["parsed_early_transactions"]), 0)
+        self.assertGreater(int(summary["classified_early_transactions"]), 0)
+        self.assertGreaterEqual(int(summary["decoded_buyer_proxy_wallets"]), 0)
+        self.assertGreaterEqual(int(summary["decoded_holder_proxy_wallets"]), 0)
+        self.assertGreater(len(early), 0)
+        self.assertIn("top1_early_buyer_share", early.columns)
+        self.assertIn("decoded_buyer_proxy_wallets", early.columns)
+        self.assertIn("decoded_holder_proxy_wallets", early.columns)
+
     def test_red_cohort_overlap_audit_prevents_false_join_claims(self) -> None:
         overlap = pd.read_csv(TABLES / "red_cohort_red_pump_overlap.csv").iloc[0]
         self.assertEqual(overlap["status"], "computed_overlap_audit")

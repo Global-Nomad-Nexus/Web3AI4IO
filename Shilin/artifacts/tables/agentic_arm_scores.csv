@@ -1,9 +1,0 @@
-rung,runs,agent_mean_decision,sign_stability,calibration_gap,run_to_run_dispersion,method_omission_rate,status,notes
-L0,10,yes,1.0,-0.75,1.1702778228589004e-16,0.475,scored,Scored against deterministic rung output where compatible.
-L1,10,no_or_uncertain,1.0,-0.75,0.0,0.6,scored,Scored against deterministic rung output where compatible.
-L2,10,no_or_uncertain,1.0,-0.75,5.851389114294502e-17,0.5,scored,Scored against deterministic rung output where compatible.
-L3,10,yes,1.0,-0.5,1.1702778228589004e-16,0.5,scored,Scored against deterministic rung output where compatible.
-L4,10,no_or_uncertain,1.0,-0.75,1.684721789838181e-05,0.5,scored,Scored against deterministic rung output where compatible.
-L5,10,retail_risk_higher,1.0,-0.5,0.0,0.4,scored,Scored against deterministic rung output where compatible.
-L6,10,no_or_uncertain,1.0,-0.4,5.851389114294502e-17,0.2,scored,Scored against deterministic rung output where compatible.
-L7,10,depends_on_stakeholder,1.0,-0.25,5.851389114294502e-17,0.5,scored,Scored against deterministic rung output where compatible.

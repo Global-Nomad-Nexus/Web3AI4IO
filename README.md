@@ -24,13 +24,13 @@ This installs the locked reviewer environment, regenerates empirical tables and 
 
 ## Layout
 
-* `reproduction/` Role B control plane: shared theme, archived summaries, generated tables, manifest, tests
+* `reproduction/` Role B control plane: shared theme, archived summaries, generated tables, `generate_figures.py`, manifest, tests
 * `data_pipeline/` builders, schemas, event layer, and release manifests
-* `Claire/` identification-arm analysis and S1 through S5 source
-* `Shilin/` application-arm analysis, prompts, and tests
+* `Claire/` identification-arm analysis, S1 through S5 source, and experiment figure scripts
+* `Shilin/` application-arm analysis, `src/trustworthy_launchpads/plots.py`, prompts, and tests
 * `data/` local immutable inputs and generated canonical tables (gitignored)
 
-Paper source lives at `../paper/`.
+Paper source lives at `../paper/` and is not part of this repository.
 
 ## Data pipeline
 

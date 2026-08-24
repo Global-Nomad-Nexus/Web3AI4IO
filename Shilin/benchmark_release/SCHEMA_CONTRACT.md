@@ -79,6 +79,12 @@ may support a matched predictive/mechanism claim only when their
 Telegram treatment claim without an accepted social-attention event or stronger
 event-time exposure design.
 
+`paired_case_ladder.csv` must contain one row per shared evidence stage. It
+links Case A PumpSwap rows to Case B Telegram rows through `paired_stage`,
+`case_a_rung`, `case_b_rung`, and `paired_interpretation`. Its purpose is to
+reproduce the paired figure, not to upgrade Case B from matched support to a
+causal effect.
+
 ## Supplemental Base Full-Cohort Tables
 
 `clanker_base_full_cohort_manifest.csv` is the matched Base universe to be
@@ -106,3 +112,38 @@ the full-cohort gap.
 `clanker_base_causal_diagnostics.csv` reports matched-pair differences for the
 currently covered Base sample. Its `sample_status` and `claim_boundary` fields
 must remain bounded unless the full-cohort import coverage is complete.
+
+`full_cohort_coverage_audit.csv` reports processed shares by required coverage
+type. A platform-wide Base claim is blocked whenever any required coverage type
+has `processed_share_of_manifest < 1`.
+
+## Supplemental Solana Early-Wallet Tables
+
+`solana_early_wallet_concentration.csv` and
+`solana_parsed_transaction_proxies.csv` are decoded-proxy validation artifacts.
+Buyer/holder fields are conservative fee-payer classifications derived from
+Solana pre/post token-balance changes. Missing token balances must remain
+unclassified rather than inferred from signatures alone.
+
+`solana_early_wallet_backfill_summary.json` must record the number of tokens,
+parsed early transactions, classified early transactions, decoded buyer-proxy
+wallets, and decoded holder-proxy wallets. These rows do not close H4 until the
+same logic covers the full 1,651-token graduated universe with decoded
+buyer/holder evidence.
+
+## Supplemental Agentic Ablation Tables
+
+`agentic_multimodel_ablation_manifest.csv` registers baseline and
+leave-one-scaffold-out cells before runs are interpreted.
+`agentic_multimodel_ablation_scores.csv` records provider, model, rung,
+ablation id, successful runs, failures, and claim boundaries. Cells with model
+errors should remain in the run ledger; scored rows support benchmark
+robustness claims, not causal prompt-treatment claims.
+
+## Closure and Release Tables
+
+`requirement_closure_audit.csv` separates current release closure from
+top-conference gaps. `top_conference_gap_ledger.csv` records the credential,
+dataset, or experiment needed to close each remaining high-tier gap.
+`zenodo_metadata.json` is deposit metadata only; it is not a DOI record until a
+Zenodo deposit is actually created.

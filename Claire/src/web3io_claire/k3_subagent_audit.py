@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-API_FILE = Path("/Users/michelangelo/Works/api.txt")
+API_FILE = Path(os.environ.get("KIMI_API_FILE", ""))
 ENDPOINT = "https://api.kimi.com/coding/v1/chat/completions"
 MODEL = "k3-256k"
 
@@ -19,7 +19,7 @@ def read_key() -> str:
         return environment_value
     if not API_FILE.exists():
         raise RuntimeError(
-            "KIMI_CODING_PLAN is missing. Set the environment variable or provide the local API file."
+            "KIMI_CODING_PLAN is missing. Set KIMI_CODING_PLAN or KIMI_API_FILE."
         )
     for line in API_FILE.read_text(encoding="utf-8").splitlines():
         if line.startswith("KIMI_CODING_PLAN="):
