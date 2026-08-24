@@ -204,7 +204,7 @@ cython_debug/
 tempCodeRunnerFile.py
 
 # Immutable collaborator data bundles
-data/external/shilin/*/bundle/
+data/external/pumpswap/*/bundle/
 data/external/fourmeme/*/snapshot/
 data/external/fourmeme/*/onchain/*.jsonl
 data/external/sunpump/*/snapshot/
@@ -213,23 +213,23 @@ data/external/base/*/onchain/*.csv
 data/canonical/
 data/release/
 data/checkpoints/
-data_pipeline/.venv/
+dataset/.venv/
 *.egg-info/
 
 # Local experiment environments and generated outputs
-Claire/experiments/**/.venv/
-Claire/experiments/**/artifacts/
-Claire/experiments/s4_endogenous/R/
-Claire/experiments/s4_endogenous/NA/
-Claire/experiment_plans/
+identification/experiments/**/.venv/
+identification/experiments/**/artifacts/
+identification/experiments/s4_endogenous/R/
+identification/experiments/s4_endogenous/NA/
+identification/experiment_plans/
 
-# Shilin generated tables and figures stay local
-Shilin/artifacts/tables/
-Shilin/artifacts/figures/
-Shilin/artifacts/external_validation/
-Shilin/artifacts/agent_runs/*.csv
-Shilin/artifacts/run_manifest.json
-Shilin/benchmark_release/data/
+# Generated application tables and figures stay local
+application/artifacts/tables/
+application/artifacts/figures/
+application/artifacts/external_validation/
+application/artifacts/agent_runs/*.csv
+application/artifacts/run_manifest.json
+application/benchmark_release/data/
 
 # Ruff stuff:
 .ruff_cache/

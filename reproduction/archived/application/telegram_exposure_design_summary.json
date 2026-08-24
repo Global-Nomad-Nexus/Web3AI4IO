@@ -7,7 +7,7 @@
   "red_pump_max_created_at": "2026-06-10 17:41:33+00:00",
   "red_pump_min_created_at": "2026-05-08 17:14:38+00:00",
   "red_pump_source_artifact": "01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/data/processed/red_pump_token_outcomes.csv",
-  "shock_source_artifact": "Shilin/artifacts/external_validation/telegram_shock_candidates.csv",
+  "shock_source_artifact": "application/artifacts/external_validation/telegram_shock_candidates.csv",
   "status": "no_in_window_exogenous_shock_yet",
   "supported_shocks": 0
 }

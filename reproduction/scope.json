@@ -1,6 +1,6 @@
 {
   "release": "v1",
-  "note": "Counts and windows used by generated Table 2. Counts come from data_pipeline/releases/v1/*.json. Windows are UTC observation bounds after excluding invalid timestamps from temporal analysis.",
+  "note": "Counts and windows used by generated Table 2. Counts come from dataset/releases/v1/*.json. Windows are UTC observation bounds after excluding invalid timestamps from temporal analysis.",
   "chains": [
     {
       "chain": "Solana",
@@ -12,7 +12,7 @@
       "window_start": "2026-05-08",
       "window_end": "2026-06-10",
       "window_basis": "min/max canonical launch_at",
-      "release_file": "data_pipeline/releases/v1/solana_core.json"
+      "release_file": "dataset/releases/v1/solana_core.json"
     },
     {
       "chain": "Base",
@@ -24,7 +24,7 @@
       "window_start": "2025-08-18",
       "window_end": "2025-10-01",
       "window_basis": "declared scan window; matches min/max canonical launch_at",
-      "release_file": "data_pipeline/releases/v1/base_core.json"
+      "release_file": "dataset/releases/v1/base_core.json"
     },
     {
       "chain": "BNB",
@@ -36,7 +36,7 @@
       "window_start": "2024-07-03",
       "window_end": "2026-08-12",
       "window_basis": "manager-deployment membership through snapshot 2026-08-12. Canonical launch_at contains 79,750 epoch timestamps and is not the membership rule.",
-      "release_file": "data_pipeline/releases/v1/bnb_core.json"
+      "release_file": "dataset/releases/v1/bnb_core.json"
     },
     {
       "chain": "TRON",
@@ -48,7 +48,7 @@
       "window_start": "2024-08-09",
       "window_end": "2026-08-11",
       "window_basis": "min/max canonical launch_at; collection ended at TronGrid fingerprint exhaustion",
-      "release_file": "data_pipeline/releases/v1/tron_core.json"
+      "release_file": "dataset/releases/v1/tron_core.json"
     }
   ],
   "events": {
@@ -61,6 +61,6 @@
     "solana_registry_status": "conditional",
     "base_registry_event": "CLANKER_V41_MODULE_FIRST_OBSERVED_BASE_20250826",
     "base_registry_status": "accepted",
-    "release_file": "data_pipeline/releases/v1/events_core.json"
+    "release_file": "dataset/releases/v1/events_core.json"
   }
 }

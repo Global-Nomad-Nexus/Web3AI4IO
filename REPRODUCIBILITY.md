@@ -24,14 +24,14 @@ make reproduce
 |---|---|
 | `make archive` | Copy and redact summary artifacts into `reproduction/archived/` |
 | `make tables` | Generate `tab_data_scope.tex` and `tab_claim_evidence.tex` from archived files |
-| `make figures` | Regenerate empirical PDF/PNG figures with the shared theme |
+| `make figures` | Regenerate PDF, SVG, and PNG with Scholar Blue 1.1.0 / Arial |
 | `make verify` | Checksums, sample counts, manuscript tokens, identity scan, unit tests |
 | `make paper` | Compile `paper/neurips_2026.tex` in the mirror or the adjacent private paper tree |
 | `make all` | `reproduce` then `paper` |
 
 ## Data
 
-Canonical tables live on the withheld review dataset during anonymous submission and on Hugging Face after de-anonymization. Local processed snapshots, when present, are under `data/canonical/v1/` and are listed with SHA-256 digests in `data_pipeline/releases/v1/` and `data_pipeline/huggingface/release_manifest.json`.
+Canonical tables live on the withheld review dataset during anonymous submission and on Hugging Face after de-anonymization. Local processed snapshots, when present, are under `data/canonical/v1/` and are listed with SHA-256 digests in `dataset/releases/v1/` and `dataset/huggingface/release_manifest.json`.
 
 Acquisition of raw chain data requires RPC and API credentials and is not part of `make reproduce`. See `DATA_CARD.md`.
 
@@ -50,14 +50,14 @@ The requests used the `deepseek-chat` alias, temperature 0, and ten runs per run
 
 ## Known-truth experiments
 
-S1 through S5 source, locks, and tests remain under `Claire/experiments/`. Headline summaries used by the paper are archived under `reproduction/archived/calibration/`. Optional full reruns:
+S1 through S5 source, locks, and tests remain under `identification/experiments/`. Headline summaries used by the paper are archived under `reproduction/archived/calibration/`. Optional full reruns:
 
 ```text
-Claire/experiments/s1_staggered/run_mc.py
-Claire/experiments/s2_timing/src/s2_timing/run_mc.py
-Claire/experiments/s3_few_clusters/src/run_experiment.py
-Claire/experiments/s4_endogenous/src/s4_endogenous/run_mc.py
-Claire/experiments/s5_aggregation/src/s5agg/runner.py
+identification/experiments/s1_staggered/run_mc.py
+identification/experiments/s2_timing/src/s2_timing/run_mc.py
+identification/experiments/s3_few_clusters/src/run_experiment.py
+identification/experiments/s4_endogenous/src/s4_endogenous/run_mc.py
+identification/experiments/s5_aggregation/src/s5agg/runner.py
 ```
 
 S4 also requires the local R library, which is not part of the anonymous package.

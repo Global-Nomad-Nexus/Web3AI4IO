@@ -1,6 +1,6 @@
 {
   "active_trader_nonzero_rows": 0,
-  "audit_path": "<local-home>/Desktop/SRS/Web3AI4IO/Shilin/artifacts/tables/h1_rpc_mechanism_causal_audit.csv",
+  "audit_path": "<local-home>/Desktop/SRS/Web3AI4IO/application/artifacts/tables/h1_rpc_mechanism_causal_audit.csv",
   "claim_allowed": "PumpSwap migration is supported as an operational post-migration liquidity venue for graduated tokens: nearly all tokens have observed 30d pool activity, complete windows are universally active, and timing is after graduation.",
   "claim_not_allowed": "The RPC proxy does not prove USD-volume, welfare, price-quality, active-trader, or H4 early-allocation causal effects. When present, the Moralis decoded sample is descriptive token-level outcome measurement, not a full-cohort causal welfare estimate.",
   "complete_30d_active_ci95_high": 0.9999999999999998,
@@ -34,7 +34,7 @@
   "moralis_decoded_30d_tokens": 294,
   "moralis_decoded_outcome_rows": 882,
   "post_30d_tokens": 1651,
-  "post_path": "<local-home>/Desktop/SRS/Web3AI4IO/Shilin/artifacts/external_validation/solana_post_migration_pool_windows.csv",
+  "post_path": "<local-home>/Desktop/SRS/Web3AI4IO/application/artifacts/external_validation/solana_post_migration_pool_windows.csv",
   "temporal_order_violations_complete_30d": 0,
-  "token_outcomes_path": "<local-home>/Desktop/SRS/Web3AI4IO/Shilin/artifacts/external_validation/h1_rpc_token_level_outcomes.csv"
+  "token_outcomes_path": "<local-home>/Desktop/SRS/Web3AI4IO/application/artifacts/external_validation/h1_rpc_token_level_outcomes.csv"
 }

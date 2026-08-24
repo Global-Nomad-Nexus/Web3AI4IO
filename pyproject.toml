@@ -1,7 +1,7 @@
 [project]
-name = "web3ai4io-review-artifact"
+name = "web3ai4io"
 version = "0.1.0"
-description = "Locked runtime for the anonymous Web3AI4IO review artifact"
+description = "Locked runtime for Web3AI4IO paper reproduction"
 requires-python = ">=3.11,<3.15"
 dependencies = [
   "matplotlib>=3.8",

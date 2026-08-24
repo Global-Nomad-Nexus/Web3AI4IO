@@ -1,0 +1,96 @@
+# Design lock for experiment S3 (few platform clusters inference)
+# Spec: Web3AI4IO/identification/experiment_plans/S3_few_platform_clusters.md
+# Scale rule revised 2026-08-13 (see spec 修订记录): scale metric is s_ATT,
+# the sampling SD of the null 30-day DiD estimator, from a seeded pilot.
+# Status: RUN COMPLETE (2026-08-13). All numbers below were computed, not
+# assumed; see calibration_summary.json and artifacts/results_summary.csv.
+
+status: OK
+
+event:
+  event_id: PUMP_PUMPSWAP_MIGRATION_20250320
+  chain: Solana
+  treated_unit: pump_ecosystem
+  control_units: [raydium, orca, meteora_combined]
+  event_date_utc: "2025-03-20"
+  outcome: log_volume
+
+input_panel:
+  path: "Web3AI4IO/data/external/pumpswap/20260810/bundle/01_Pumpfun_PumpSwap_Project/pumpfun_pumpswap_did_mvp_full_local/data/processed/solana_dex_daily_did_panel.csv"
+  required_shape: "724 rows = 4 units x 181 days, rel_day -90..90"
+  validation: "PASS (see panel_validation.json, status OK)"
+
+preperiod_fit:
+  window_rel_day: [-90, -1]
+  model: "log_volume ~ unit FE (4 dummies, no intercept) + weekday dummies (6, Monday dropped), OLS, rank 10"
+  residuals: "u_it = y - unit_FE - weekday_effect (retains common day shock xi_t by construction; block-bootstrapping the 4-vectors u_t preserves contemporaneous cross-market dependence)"
+
+dgp:
+  synthetic_window_rel_day: [-60, 29]   # 90 days x 4 units = 360 obs
+  construction: "Y0_it = unitFE_i + weekday_eff[weekday(real date at rel_day t)] + u*_it; u* = 7-day moving-block bootstrap over the 90 pre-period residual day-vectors, block starts uniform on 0..83, 13 blocks truncated to 90 days"
+  assignment: "fixed by arm (trivially independent of the bootstrap RNG stream); per-rep stream = np.random.default_rng(np.random.SeedSequence([arm_seed, rep_id]))"
+  saved_per_rep: "artifacts/rep_construction.parquet records arm, rep_id, treated_unit, injected_effect, true_att (= injected constant), rng descriptor, and the 13 block-start indices (full reconstruction info)"
+
+scale_metric:
+  name: s_ATT
+  definition: "sampling SD (ddof=1) of the null 30-day DiD estimator (TWFE treated-post coefficient, unit FE + day FE, window rel_day -60..29), estimated from a seeded zero-arm pilot with the same DGP/estimator/window, assignment pump_ecosystem"
+  pilot_seed: 20260813
+  pilot_replications: 2000
+  pilot_estimate_mean: 0.004990603681651154
+  s_att: 0.7061896348083884
+
+scale_check:
+  rule: "each nonzero injected effect must lie in [0.25, 1.0] x s_ATT"
+  low_power_effect: 0.20
+  ratio: 0.2832100474743818
+  result: PASS
+  moderate_effect: 0.3530948174041942   # = 0.5 x s_ATT, fixed constant after pilot
+  note: "superseded pre-period residual SD rule (SD = 2.8784, ratio 0.0695) recorded in panel_validation.json for traceability"
+
+estimator:
+  model: "TWFE DiD: log_volume ~ unit FE + calendar-day FE + treated-post, window rel_day -60..29"
+  n_obs: 360
+  n_params_rank: 94                     # 4 unit FE + 89 day FE (day 0 dropped) + treated-post
+  variance: "CRV1 clustered by unit, G = 4, Stata small-sample factor (G/(G-1))*((N-1)/(N-K)) = (4/3)*(359/266) = 1.7994987"
+  implementation: "closed-form numpy, vectorized across reps (src/estimator.py); cross-checked against statsmodels OLS + cov_cluster in tests/test_simulation.py"
+
+inference_methods:
+  baseline_crv1_normal: "CRV1 SE, normal crit 1.9599640, CI available"
+  comparator_a_crv1_t3: "CRV1 SE, t(3) crit 3.1824463, CI available"
+  comparator_b_wild_sign_enum: "restricted wild cluster sign enumeration; sharp-null residuals; all 16 Rademacher sign vectors enumerated (no sampling); two-sided p = share of |t*| >= |t_obs|; attainable p in {2/16, 4/16, ..., 1}; CI not_available"
+  reference_randomization_inference: "zero arm only; two-sided p over the DiD point estimates under all 4 treated-identity assignments; attainable p in {0.25, 0.5, 0.75, 1.0}; CI not_available"
+
+arms:
+  zero:      {effect: 0.0,                reps: 10000, seed: 20260813001, assignments: "all 4 treated identities per rep (methods 1-3 each) + randomization reference"}
+  low_power: {effect: 0.20,               reps: 10000, seed: 20260813002, assignments: "pump_ecosystem only"}
+  moderate:  {effect: 0.3530948174041942, reps: 10000, seed: 20260813003, assignments: "pump_ecosystem only"}
+
+environment:
+  python: "3.12.13 (uv-managed CPython, .venv/)"
+  pinned_packages:
+    numpy: 2.5.2
+    pandas: 3.0.5
+    scipy: 1.18.0
+    statsmodels: 0.14.6
+    pyarrow: 25.0.1
+    pytest: 9.1.1
+    matplotlib: 3.11.1
+  full_freeze:
+    contourpy: 1.3.3
+    cycler: 0.12.1
+    fonttools: 4.63.0
+    iniconfig: 2.3.0
+    kiwisolver: 1.5.0
+    packaging: 26.3
+    patsy: 1.0.2
+    pillow: 12.3.0
+    pluggy: 1.6.0
+    pygments: 2.20.0
+    pyparsing: 3.3.2
+    python-dateutil: 2.9.0.post0
+    six: 1.17.0
+
+runtime:
+  pilot_seconds: 0.08
+  full_run_seconds: 1.53
+  hardware_note: "Apple Silicon laptop, single process; ~1.6 s total for pilot + 30,000 reps"

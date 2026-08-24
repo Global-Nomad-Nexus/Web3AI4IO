@@ -78,8 +78,6 @@ def main() -> int:
             print(f"  - {hit}")
         return 1
     print("IDENTITY AUDIT PASSED for paper/, reproduction/archived/, and generated tables.")
-    if (REPO / "Claire").exists() or (REPO / "Shilin").exists():
-        print("Working-tree contributor directory names remain private and must not enter the anonymous mirror.")
     return 0
 
 

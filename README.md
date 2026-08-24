@@ -1,46 +1,50 @@
 # Web3AI4IO
 
-Code, schemas, and the review reproducibility package for the Web3AI4IO launchpad study.
+Code and schemas for a provenance-aware launchpad study: four-chain dataset construction, identification checks, real applications, calibrated experiments, and paper-artifact reproduction.
 
-Bulk tables are not stored in this GitHub tree. During anonymous review the dataset is a withheld artifact. After de-anonymization the public copy is the Hugging Face dataset named in the camera-ready paper.
+Bulk tables are not stored in this Git tree. The public dataset is `kl41r3/web3ai4io-multichain-launchpad` on Hugging Face.
 
-## Five-minute quick start
+## Quick start
 
 ```text
 uv sync --frozen
 make reproduce
 ```
 
-This installs the locked reviewer environment, regenerates empirical tables and figures from archived summaries, writes the artifact manifest and checksums, and checks manuscript numbers and archived model outputs. It does not re-query chain data or call a model API. See `REPRODUCIBILITY.md` and `DATA_CARD.md`.
+This regenerates empirical tables and figures from archived summaries, writes the artifact manifest and checksums, and checks manuscript numbers. It does not re-query chain data or call a model API.
 
 | Command | Output |
 |---|---|
 | `make reproduce` | archived summaries, tables, figures, checksums, tests |
 | `make figures` | empirical charts in `../paper/figs` |
-| `make tables` | `paper/tabs/tab_data_scope.tex` and `tab_claim_evidence.tex` |
-| `make paper` | compile the anonymous manuscript |
+| `make tables` | `tab_data_scope.tex` and `tab_claim_evidence.tex` |
+| `make paper` | compile the adjacent manuscript |
 | `make verify` | files, checksums, sample counts, identity scan |
 | `make all` | reproduce then compile |
 
+See `REPRODUCIBILITY.md` and `DATA_CARD.md`.
+
 ## Layout
 
-* `reproduction/` Role B control plane: shared theme, archived summaries, generated tables, `generate_figures.py`, manifest, tests
-* `data_pipeline/` builders, schemas, event layer, and release manifests
-* `Claire/` identification-arm analysis, S1 through S5 source, and experiment figure scripts
-* `Shilin/` application-arm analysis, `src/trustworthy_launchpads/plots.py`, prompts, and tests
-* `data/` local immutable inputs and generated canonical tables (gitignored)
+```text
+dataset/           builders, schemas, event layer, release manifests
+identification/    event registry, design checks, S1–S5 experiments
+application/       PumpSwap applications, prompts, and plots
+reproduction/      paper tables, figures, manifest, and tests
+data/              local source pointers; generated tables are gitignored
+```
 
 Paper source lives at `../paper/` and is not part of this repository.
 
-## Data pipeline
+## Dataset build
 
-From the repository root, with local source bundles present:
+With local source bundles present:
 
 ```text
-data_pipeline/.venv/bin/python data_pipeline/scripts/build_solana_core.py
-data_pipeline/.venv/bin/python data_pipeline/scripts/build_crosschain_core.py
-data_pipeline/.venv/bin/python data_pipeline/scripts/build_events.py
-PYTHONPATH=data_pipeline/src data_pipeline/.venv/bin/python -m pytest data_pipeline/tests
+dataset/.venv/bin/python dataset/scripts/build_solana_core.py
+dataset/.venv/bin/python dataset/scripts/build_crosschain_core.py
+dataset/.venv/bin/python dataset/scripts/build_events.py
+PYTHONPATH=dataset/src dataset/.venv/bin/python -m pytest dataset/tests
 ```
 
-Canonical Parquet output is written under `data/canonical/`. See `data_pipeline/README.md` for coverage semantics.
+Canonical Parquet output is written under `data/canonical/`. See `dataset/README.md`.

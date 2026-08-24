@@ -1,4 +1,4 @@
-"""Canonical paths for the Role B reproducibility package."""
+"""Canonical paths for the paper reproduction package."""
 
 from __future__ import annotations
 

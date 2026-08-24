@@ -6,7 +6,7 @@
   "run_id": 3,
   "temperature": 0.0,
   "prompt_hash": "8c7b03cbb6f2d09deee24d3f2c161548d5479a2e03fbb18474c207d470bb2adb",
-  "content": "{\n  \"headline_estimate\": 0.836053275580796,\n  \"ci95_low\": 0.4716336440292718,\n  \"ci95_high\": 1.20047290713232,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration is associated with a 131% increase in weekly log volume post-event, but pre-trend violations (significant coefficients in weeks -8 and -3) undermine causal identification at the market level.\"\n}",
+  "content": "{\n  \"headline_estimate\": 0.836053275580796,\n  \"ci95_low\": 0.4716336440292718,\n  \"ci95_high\": 1.20047290713232,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration is associated with a 131% increase in weekly log volume post-event, but pre-trend violations (significant coefficients in weeks -8 and -3) undermine causal Web3AI4IO/Claire at the market level.\"\n}",
   "api_response": {
     "id": "b0705439-abb5-4887-b5fe-6fc46e115088",
     "object": "chat.completion",
@@ -17,7 +17,7 @@
         "index": 0,
         "message": {
           "role": "assistant",
-          "content": "{\n  \"headline_estimate\": 0.836053275580796,\n  \"ci95_low\": 0.4716336440292718,\n  \"ci95_high\": 1.20047290713232,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration is associated with a 131% increase in weekly log volume post-event, but pre-trend violations (significant coefficients in weeks -8 and -3) undermine causal identification at the market level.\"\n}"
+          "content": "{\n  \"headline_estimate\": 0.836053275580796,\n  \"ci95_low\": 0.4716336440292718,\n  \"ci95_high\": 1.20047290713232,\n  \"worked_decision\": \"no_or_uncertain\",\n  \"self_reported_confidence\": \"low\",\n  \"final_claim\": \"The PumpSwap migration is associated with a 131% increase in weekly log volume post-event, but pre-trend violations (significant coefficients in weeks -8 and -3) undermine causal Web3AI4IO/Claire at the market level.\"\n}"
         },
         "logprobs": null,
         "finish_reason": "stop"

@@ -1,0 +1,76 @@
+# S1 Base Clanker v4.1 staggered adoption - design lock
+# This file is written BEFORE any formal outputs (acceptance criterion 8.2).
+# Source of truth: Web3AI4IO/identification/experiment_plans/S1_staggered_heterogeneous_effects.md
+locked_at_utc: "2026-08-13T13:19:54Z"
+locked_by: "kimi-code subagent (identification experiment phase)"
+
+spec_path: "Web3AI4IO/identification/experiment_plans/S1_staggered_heterogeneous_effects.md"
+
+event:
+  chain: "Base (eip155:8453)"
+  platform: "Clanker"
+  anchor: "Clanker v4.1 MEV module rollout"
+  first_v41_launch_utc: "2025-08-26T20:41:57Z"
+  observed_window_utc: ["2025-08-18", "2025-10-01"]
+
+inputs:
+  - "Web3AI4IO/data/canonical/v1/base/launches/part-00000.parquet"
+  - "Web3AI4IO/data/canonical/v1/base/protocol_config/part-00000.parquet"
+  - "Web3AI4IO/data/canonical/v1/base/coverage_ledger/part-00000.parquet"
+  - "Web3AI4IO/dataset/releases/v1/base_core.json"
+join_key: "token_id"
+creator_field: "protocol_config.creator"
+launch_date_field: "launches.launch_at"
+version_field: "protocol_config.protocol_version"
+accepted_versions: ["v4.0_mev_or_hook", "v4.1_mev_or_hook"]
+
+groups:
+  treated_cohorts: "first v4.1 launch date in 2025-09-24..2025-10-01 (8 daily cohorts)"
+  excluded: "singleton cohort 2025-08-29 (1 creator)"
+  never_adopters: "creators with only v4.0 launches in the 45-day observed window"
+  pre_activity_rule: "treated and never adopters each need >= 3 launches in the pre-period (treated: before first v4.1; never: same calendar pre-period)"
+  no_cohort_merging: true
+  no_post_treatment_screening: true
+
+dgp:
+  panel: "60-day creator-day pseudo panel; relative adoption days 24..31 matching real daily spacing; cohort sizes = empirical counts [100,140,46,47,26,34,34,25]"
+  activity_model: "hurdle count model, both layers estimated from never adopters only"
+  resampling: "stratified by pre-period launch-rate quintile over never-adopter creators"
+  arms:
+    zero: "no injected effect"
+    homogeneous: "post-adoption expected launch rate multiplied by exp(0.20)"
+    heterogeneous:
+      exposure_log_effects: { "0-2": 0.10, "3-6": 0.20, "7+": 0.35 }
+      cohort_modifier_early_to_late: [0.07, 0.05, 0.03, 0.01, -0.01, -0.03, -0.05, -0.07]
+  calibration_gate: "injected log effects must lie within [0.25, 1.0] SD of untreated log1p outcome; otherwise STOP with scale blocker"
+  effect_constants_locked: true
+
+estimand:
+  scale: "log1p(daily launch count)"
+  target: "equal-weight ATT over supported treated creator-days"
+  support_rule: "cohort-time cells without never-treated support are excluded from truth AND both estimators"
+
+estimators:
+  static_twfe: "creator FE + calendar-day FE + single post indicator; SE clustered by creator"
+  group_time_att: "Callaway-Sant'Anna style unconditional group-time ATT; base period = day g-1; control = same-day never-treated only; aggregate by registered treated creator-day cell counts"
+  inference: "creator-level multiplier bootstrap, 1999 Rademacher draws"
+
+metrics: [bias, relative_bias, rmse, coverage_95, false_positive_rate, false_negative_rate, sign_correctness, claim_accuracy, mcse, unestimable_rate]
+diagnostics: "TWFE implicit weighting / Goodman-Bacon style decomposition"
+
+seeds: "three-level independent streams (scenario, arm, replication) via numpy.random.SeedSequence spawn keys"
+scenario_seed: 20250826
+
+formal_run:
+  python: "3.12"
+  locked_dependencies: [numpy, pandas, pyarrow, scipy, statsmodels]
+  replications_per_arm: 2000
+  arms: [zero, homogeneous, heterogeneous]
+
+forbidden:
+  - "interpret v4.1 first use as mandatory platform policy"
+  - "use real observed post-v4.1 launches as known untreated outcome"
+  - "use BNB/TRON/Solana controls"
+  - "modify shared data, manuscript, Wiki, root dependencies, git history"
+  - "read old joint or archive synthetic artifacts"
+  - "tune DGP or effect constants based on method performance"

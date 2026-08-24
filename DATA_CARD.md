@@ -17,7 +17,7 @@ During anonymous review the bulk dataset is a withheld review artifact, not for 
 | BNB Chain | Four.meme manager `TokenCreate` events | Verified manager-deployment and snapshot block coverage | Snapshot 2026-08-12; block 40,138,454 to 115,357,949 |
 | TRON | SunPump TronGrid contract events | Confirmed fingerprint pagination to exhaustion | 2024-08-09 to 2026-08-11 UTC |
 
-Builders, schemas, and SHA-256 digests are in `data_pipeline/`. The event layer is `data_pipeline/events/v1/` and `data_pipeline/releases/v1/events_core.json`.
+Builders, schemas, and SHA-256 digests are in `dataset/`. The event layer is `dataset/events/v1/` and `dataset/releases/v1/events_core.json`.
 
 ## Coverage states
 

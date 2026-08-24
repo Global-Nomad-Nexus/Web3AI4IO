@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import os
 import re
 import shutil
 import subprocess
@@ -130,19 +129,11 @@ def tracked_files(prefix: str) -> list[Path]:
     return [REPO / item.decode() for item in result.stdout.split(b"\0") if item]
 
 
-def neutral_relative(path: Path) -> Path:
-    rel = path.relative_to(REPO)
-    parts = list(rel.parts)
-    if parts[0] == "Claire":
-        parts[0] = "identification"
-    elif parts[0] == "Shilin":
-        parts[0] = "application"
-    parts = [part.replace("web3io_claire", "web3io_identification") for part in parts]
-    parts = [part.replace("_shilin", "_application").replace("_claire", "_identification") for part in parts]
-    return Path(*parts)
+def package_relative(path: Path) -> Path:
+    return path.relative_to(REPO)
 
 
-def neutral_name(name: str) -> str:
+def redact_name(name: str) -> str:
     return (
         name.replace("fig_shilin_application_appendix", "fig_application_appendix")
         .replace("SHILIN", "APPLICATION")
@@ -154,10 +145,10 @@ def neutral_name(name: str) -> str:
     )
 
 
-def neutralize_filenames() -> None:
+def redact_filenames() -> None:
     files = sorted((path for path in OUTPUT.rglob("*") if path.is_file()), key=lambda path: len(path.parts), reverse=True)
     for path in files:
-        new_name = neutral_name(path.name)
+        new_name = redact_name(path.name)
         if new_name != path.name:
             path.rename(path.with_name(new_name))
 
@@ -231,13 +222,13 @@ def main() -> None:
     copy_path(PRIVATE_PAPER / "figs", OUTPUT / "paper" / "figs")
     copy_path(PRIVATE_PAPER / "tabs", OUTPUT / "paper" / "tabs")
 
-    for prefix in ("Claire", "Shilin", "data_pipeline"):
+    for prefix in ("identification", "application", "dataset"):
         for src in tracked_files(prefix):
             if not should_copy_tracked(src):
                 continue
-            copy_path(src, OUTPUT / neutral_relative(src))
+            copy_path(src, OUTPUT / package_relative(src))
 
-    neutralize_filenames()
+    redact_filenames()
     for path in OUTPUT.rglob("*"):
         if path.is_file():
             transform_text(path)

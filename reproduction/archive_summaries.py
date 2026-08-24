@@ -26,7 +26,7 @@ COPIES: list[tuple[str, str]] = [
     ("application/artifacts/tables/agentic_prompt_manifest.csv", "application/agentic_prompt_manifest.csv"),
     ("application/artifacts/tables/result1_stakeholder_metric_battery.csv", "application/result1_stakeholder_metric_battery.csv"),
     ("application/artifacts/tables/result1_frequency_sensitivity.csv", "application/result1_frequency_sensitivity.csv"),
-    ("application/artifacts/tables/event_study_coefficients_shilin.csv", "application/event_study_coefficients.csv"),
+    ("application/artifacts/tables/event_study_coefficients.csv", "application/event_study_coefficients.csv"),
     ("application/artifacts/agent_runs/agent_run_schema.json", "application/agent_run_schema.json"),
     ("application/artifacts/agent_runs/agent_runs.csv", "application/agent_runs.csv"),
     ("identification/artifacts/h0_summary.json", "identification/h0_summary.json"),
@@ -39,23 +39,22 @@ COPIES: list[tuple[str, str]] = [
     ("identification/experiments/s3_few_clusters/artifacts/results_summary.csv", "calibration/s3_results_summary.csv"),
     ("identification/experiments/s4_endogenous/artifacts/results_summary.csv", "calibration/s4_results_summary.csv"),
     ("identification/experiments/s5_aggregation/artifacts/results_summary.csv", "calibration/s5_results_summary.csv"),
-    ("data_pipeline/releases/v1/solana_core.json", "release/solana_core.json"),
-    ("data_pipeline/releases/v1/base_core.json", "release/base_core.json"),
-    ("data_pipeline/releases/v1/bnb_core.json", "release/bnb_core.json"),
-    ("data_pipeline/releases/v1/tron_core.json", "release/tron_core.json"),
-    ("data_pipeline/releases/v1/events_core.json", "release/events_core.json"),
-    ("data_pipeline/events/v1/event_registry.json", "release/event_registry.json"),
-    ("data_pipeline/events/v1/event_evidence.json", "release/event_evidence.json"),
-    ("data_pipeline/source_registry.json", "release/source_registry.json"),
+    ("dataset/releases/v1/solana_core.json", "release/solana_core.json"),
+    ("dataset/releases/v1/base_core.json", "release/base_core.json"),
+    ("dataset/releases/v1/bnb_core.json", "release/bnb_core.json"),
+    ("dataset/releases/v1/tron_core.json", "release/tron_core.json"),
+    ("dataset/releases/v1/events_core.json", "release/events_core.json"),
+    ("dataset/events/v1/event_registry.json", "release/event_registry.json"),
+    ("dataset/events/v1/event_evidence.json", "release/event_evidence.json"),
+    ("dataset/source_registry.json", "release/source_registry.json"),
 ]
 
 RAW_RESPONSE_CANDIDATES = [
     REPO / "application" / "artifacts" / "agent_runs" / "raw",
-    REPO / "Shilin" / "artifacts" / "agent_runs" / "raw",
     REPO
     / "data"
     / "external"
-    / "shilin"
+    / "pumpswap"
     / "20260810"
     / "bundle"
     / "Web3AI4IO"
@@ -64,8 +63,6 @@ RAW_RESPONSE_CANDIDATES = [
     / "agent_runs"
     / "raw",
 ]
-
-SOURCE_ALIASES = {"application": "Shilin", "identification": "Claire"}
 
 
 def redact_text(text: str) -> str:
@@ -85,22 +82,11 @@ def copy_file(src: Path, dest: Path) -> None:
 
 
 def resolve_source(rel: str) -> Path:
-    direct = REPO / rel
-    if direct.exists():
-        return direct
-    head, slash, tail = rel.partition("/")
-    alias = SOURCE_ALIASES.get(head)
-    if alias and slash:
-        candidate = REPO / alias / tail
-        if candidate.exists():
-            return candidate
-    return direct
+    return REPO / rel
 
 
 def copy_prompts() -> int:
     src_dir = REPO / "application" / "prompts"
-    if not src_dir.exists():
-        src_dir = REPO / "Shilin" / "prompts"
     dest_dir = ARCHIVED / "application" / "prompts"
     n = 0
     if not src_dir.exists():

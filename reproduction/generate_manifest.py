@@ -47,9 +47,9 @@ ROWS = [
         "paper_object": "fig:evidence-contract-overview",
         "object_type": "conceptual_figure",
         "claim": "Evidence infrastructure, evaluation pillars, and bounded stakeholder interpretation",
-        "input": "reproduction/scope.json; reproduction/archived/release/*_core.json; application/deterministic_ladder.csv; h1_rpc_mechanism_summary.json; telegram_mirror_design_summary.json",
+        "input": "reproduction/figures/teaser_pipeline.yaml",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/teaser_figure.pdf; paper/figs/teaser_figure.svg",
+        "output": "paper/figs/teaser_figure.pdf; paper/figs/teaser_figure.svg; paper/figs/teaser_figure.png",
     },
     {
         "paper_object": "fig:data-layer-coverage",
@@ -57,7 +57,7 @@ ROWS = [
         "claim": "Chain-specific coverage and event-design status",
         "input": "reproduction/scope.json; reproduction/archived/release/events_core.json",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_data_layer_coverage_map.pdf",
+        "output": "paper/figs/fig_data_layer_coverage_map.pdf; paper/figs/fig_data_layer_coverage_map.svg; paper/figs/fig_data_layer_coverage_map.png",
     },
     {
         "paper_object": "fig:pumpswap-event-study",
@@ -65,7 +65,7 @@ ROWS = [
         "claim": "PumpSwap event-study coefficients and pretrend flags",
         "input": "reproduction/archived/application/event_study_coefficients.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_event_study_shilin.pdf",
+        "output": "paper/figs/fig_event_study.pdf; paper/figs/fig_event_study.svg; paper/figs/fig_event_study.png",
     },
     {
         "paper_object": "fig:pumpswap-decision-path",
@@ -73,7 +73,7 @@ ROWS = [
         "claim": "Ladder path from L0 dashboard estimate to L6 few-cluster inference",
         "input": "reproduction/archived/application/deterministic_ladder.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_ladder_decision_flip_shilin.pdf",
+        "output": "paper/figs/fig_ladder_decision_flip.pdf; paper/figs/fig_ladder_decision_flip.svg; paper/figs/fig_ladder_decision_flip.png",
     },
     {
         "paper_object": "fig:stress-test-atlas",
@@ -81,7 +81,7 @@ ROWS = [
         "claim": "S1-S5 known-truth calibration map",
         "input": "reproduction/archived/calibration/s1_results_summary.csv through s5_results_summary.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_stress_test_atlas.pdf",
+        "output": "paper/figs/fig_stress_test_atlas.pdf; paper/figs/fig_stress_test_atlas.svg; paper/figs/fig_stress_test_atlas.png",
     },
     {
         "paper_object": "fig:application-stakeholder",
@@ -89,7 +89,7 @@ ROWS = [
         "claim": "Stakeholder metric battery rates",
         "input": "reproduction/archived/application/result1_stakeholder_metric_battery.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_metric_battery_status_shilin.pdf",
+        "output": "paper/figs/fig_metric_battery_status.pdf; paper/figs/fig_metric_battery_status.svg; paper/figs/fig_metric_battery_status.png",
     },
     {
         "paper_object": "fig:application-frequency",
@@ -97,7 +97,7 @@ ROWS = [
         "claim": "Daily versus weekly TWFE aggregation shift",
         "input": "reproduction/archived/application/result1_frequency_sensitivity.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_frequency_sensitivity_shilin.pdf",
+        "output": "paper/figs/fig_frequency_sensitivity.pdf; paper/figs/fig_frequency_sensitivity.svg; paper/figs/fig_frequency_sensitivity.png",
     },
     {
         "paper_object": "fig:appendix-mechanism-coverage",
@@ -105,7 +105,7 @@ ROWS = [
         "claim": "Observed 30-day transaction-proxy activity and complete-window activity",
         "input": "reproduction/archived/application/h1_rpc_mechanism_summary.json",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_h1_mechanism_audit_shilin.pdf",
+        "output": "paper/figs/fig_h1_mechanism_audit.pdf; paper/figs/fig_h1_mechanism_audit.svg; paper/figs/fig_h1_mechanism_audit.png",
     },
     {
         "paper_object": "fig:appendix-agentic-tradeoff",
@@ -113,7 +113,7 @@ ROWS = [
         "claim": "Calibration gap and method-omission rate across L0 to L7",
         "input": "reproduction/archived/application/agentic_arm_scores.csv",
         "script": "reproduction/generate_figures.py",
-        "output": "paper/figs/fig_agentic_scaffold_tradeoff_shilin.pdf",
+        "output": "paper/figs/fig_agentic_scaffold_tradeoff.pdf; paper/figs/fig_agentic_scaffold_tradeoff.svg; paper/figs/fig_agentic_scaffold_tradeoff.png",
     },
     {
         "paper_object": "main-text:pumpswap-twfe",
@@ -152,7 +152,7 @@ ROWS = [
         "object_type": "number",
         "claim": "10,732 lamports; diagnostic -0.966 [-1.252, -0.680]; 7-day contrast 0.182 [-0.174, 0.538]",
         "input": "reproduction/archived/identification/h3_incidence.json; h0_summary.json",
-        "script": "identification/src/web3io_claire/analyze_h0.py; analyze_h3.py",
+        "script": "identification/src/web3ai4io_identification/analyze_h0.py; analyze_h3.py",
         "output": "paper/neurips_2026.tex",
     },
     {
@@ -176,7 +176,7 @@ ROWS = [
         "object_type": "number",
         "claim": "May 12 zero transfer; May 13 activation at 11:27:06 UTC; six treated and six comparison Base launches",
         "input": "reproduction/archived/identification/h3_incidence.json; application/clanker_base_event_validation_summary.json",
-        "script": "identification/src/web3io_claire/analyze_h3.py; application/scripts/run_clanker_base_validation.py",
+        "script": "identification/src/web3ai4io_identification/analyze_h3.py; application/scripts/run_clanker_base_validation.py",
         "output": "paper/neurips_2026.tex",
     },
     {
@@ -232,7 +232,7 @@ ROWS = [
         "object_type": "number",
         "claim": "All chain counts, lifecycle counts, Solana pool-window rows, decoded swaps, and Base initial-liquidity positions",
         "input": "reproduction/archived/release/solana_core.json; base_core.json; bnb_core.json; tron_core.json",
-        "script": "data_pipeline/scripts/build_solana_core.py; build_crosschain_core.py",
+        "script": "dataset/scripts/build_solana_core.py; build_crosschain_core.py",
         "output": "paper/neurips_2026.tex",
     },
     {
@@ -240,7 +240,7 @@ ROWS = [
         "object_type": "number",
         "claim": "Four event candidates and six evidence records with one accepted, one conditional, and two rejected",
         "input": "reproduction/archived/release/events_core.json; event_registry.json; event_evidence.json",
-        "script": "data_pipeline/scripts/build_events.py",
+        "script": "dataset/scripts/build_events.py",
         "output": "paper/neurips_2026.tex",
     },
     {
@@ -248,7 +248,7 @@ ROWS = [
         "object_type": "number",
         "claim": "156 platform-day rows, 21-day windows, seven Newey-West lags, and eight placebo dates",
         "input": "reproduction/archived/identification/h0_summary.json",
-        "script": "identification/src/web3io_claire/analyze_h0.py",
+        "script": "identification/src/web3ai4io_identification/analyze_h0.py",
         "output": "paper/neurips_2026.tex",
     },
     {

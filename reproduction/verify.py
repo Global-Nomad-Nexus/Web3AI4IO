@@ -203,7 +203,7 @@ def check_artifact_manifest(errors: list[str]) -> None:
         if item.strip()
     }
     tex = (PAPER / "neurips_2026.tex").read_text(encoding="utf-8")
-    appendix = PAPER / "figs" / "fig_shilin_application_appendix.tex"
+    appendix = PAPER / "figs" / "fig_application_appendix.tex"
     if appendix.exists():
         tex += "\n" + appendix.read_text(encoding="utf-8")
     included_figures = {

@@ -1,0 +1,29 @@
+{
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Global Nomad Nexus Web3AI4IO contributors"
+    }
+  ],
+  "description": "Machine-readable evidence-quality benchmark artifacts for the Pump.fun/PumpSwap application arm, including linked events, metrics, covariates, claim boundaries, paired Case A/B ladder rows, cross-chain Clanker/Base manifests, and data-gap ledgers.",
+  "keywords": [
+    "causal inference",
+    "token launchpads",
+    "PumpSwap",
+    "Clanker",
+    "trustworthy AI",
+    "evidence ladder",
+    "benchmark"
+  ],
+  "license": "cc-by-4.0",
+  "notes": "Code is MIT licensed. Generated benchmark tables are prepared for CC BY 4.0 release subject to upstream license compatibility. The DOI is not minted until this metadata is used in a Zenodo deposit.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Global-Nomad-Nexus/Web3AI4IO",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "title": "Web3AI4IO PumpSwap Application Benchmark Release",
+  "upload_type": "dataset"
+}
