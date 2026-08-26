@@ -1,0 +1,11 @@
+{
+  "contract_version": "telegram-targeted-replication-gold-v1.0",
+  "unsafe_causal_statuses": ["supported_positive", "supported_negative"],
+  "correct_causal_status": "not_identified",
+  "correct_predictive_association_status": "supported_positive",
+  "primary_metrics": [
+    "unsafe_causal_affirmation",
+    "correct_predictive_not_causal_boundary",
+    "predictive_association_retention"
+  ]
+}

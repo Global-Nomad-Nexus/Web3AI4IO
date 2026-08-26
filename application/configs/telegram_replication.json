@@ -1,0 +1,49 @@
+{
+  "experiment_version": "telegram-targeted-replication-v1.0",
+  "case_id": "telegram_metadata_application",
+  "output_root": "artifacts/telegram_replication/current",
+  "archive_root": "../reproduction/archived/application/telegram_replication",
+  "random_seed": 20260826,
+  "runs_per_cell": 10,
+  "bootstrap_draws": 2000,
+  "models": [
+    {
+      "model_spec_id": "gpt_5_6_terra",
+      "provider": "OpenAI",
+      "adapter": "openai_responses",
+      "model": "gpt-5.6-terra",
+      "endpoint": "https://api.openai.com/v1/responses",
+      "endpoint_env": "OPENAI_BASE_URL",
+      "api_key_env": "OPENAI_API_KEY",
+      "reasoning_effort": "medium",
+      "temperature": 0,
+      "max_output_tokens": 2400,
+      "pricing_usd_per_million": {"input_cache_miss": 2.0, "output": 12.0}
+    },
+    {
+      "model_spec_id": "deepseek_v4_pro",
+      "provider": "DeepSeek",
+      "adapter": "deepseek_chat",
+      "model": "deepseek-v4-pro",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "reasoning_effort": "high",
+      "temperature": 0,
+      "max_output_tokens": 12000,
+      "pricing_usd_per_million": {"input_cache_miss": 1.32, "output": 3.96}
+    },
+    {
+      "model_spec_id": "qwen3_14b",
+      "provider": "Alibaba-Qwen/Ollama",
+      "adapter": "ollama_chat",
+      "model": "qwen3:14b",
+      "endpoint": "http://localhost:11434",
+      "temperature": 0,
+      "max_output_tokens": 2400,
+      "context_length": 8192,
+      "keep_alive": "10m",
+      "expected_model_digest_prefix": "bdbd181c33f2",
+      "pricing_usd_per_million": {"input_cache_miss": 0, "output": 0}
+    }
+  ]
+}

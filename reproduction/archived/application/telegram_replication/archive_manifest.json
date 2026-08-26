@@ -1,0 +1,16 @@
+{
+  "raw_provider_json_included": false,
+  "raw_provider_note": "Raw request and provider-response JSON remains in the local execution artifact only; the release contains parsed responses and scores.",
+  "registered_calls": 60,
+  "release_files": {
+    "call_scores.csv": "b02e5c5d1c385d912d976762f3247ef774aacf5f7d25130c21b85e1736d69e07",
+    "cell_scores.csv": "e1d2361fc59452434f535c900c9bb60d9747d2a26de5bff16732c1a8fd87424e",
+    "condition_deltas.csv": "be160410bc574491a94b8c25d7d9ca01b2680d2b5cd8c8996ccd13996197c945",
+    "condition_manifest.json": "6b6c5e0c4b6b9ecc35c660c933136a43bf9477fe75667cdfa7a15f51bfc7c30e",
+    "evidence_blocks.json": "90d5728bf19b3605c2beccf8d06044afe71b58bf8a167fa48cff9dcc5f5774fc",
+    "experiment_manifest.json": "62023940a149d9c946513392893a140e4a99c89258871a660d600c5222af32f2",
+    "parsed_outputs.jsonl": "e50b45de8afede499496fcb4800a704ef2bcb390ed53a37fdbbf5603fab77e0b",
+    "run_registry.csv": "f88aee1f72d9167886360436b303b6ff0ecf7549e907b5342db6c9b23c1cc0a5",
+    "score_manifest.json": "f98cfe02899789c9de284d44f138a1e415d35dcbe7af7b2441017dd5438b87fa"
+  }
+}

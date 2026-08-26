@@ -1,13 +1,20 @@
 figure_id: fig:evidence-contract-overview
-title: Evidence infrastructure to evidence-calibrated interpretation
-theme: project status colors with Latin Modern Sans
-canonical_source: reproduction/figures/teaser_figure.tex
-generated_input: reproduction/generated/teaser_counts.tex
+title: Trustworthy causal evaluation for token launch platforms
+theme: original three-panel project design
+canonical_source: reproduction/figures/teaser_figure_original.drawio.xml
+vector_source: reproduction/figures/teaser_figure_original.svg
+render_source: reproduction/figures/teaser_figure_original.png
+vector_print_source: reproduction/figures/teaser_figure_print.html
 source_data:
   - reproduction/scope.json
   - reproduction/source_ledger.md
-generation_command: python reproduction/build_teaser.py
+  - reproduction/archived/application/agentic_v2/factorial_effects.csv
+page_format: cropped A4-width canvas (297 x 151.8 mm; original 1800:920 ratio)
+generation_command: python reproduction/build_teaser.py --paper-dir /path/to/paper
 outputs:
+  - paper/figs/teaser_figure_a4.pdf
+  - paper/figs/teaser_figure_a4.svg
+  - paper/figs/teaser_figure_a4.png
   - paper/figs/teaser_figure.pdf
   - paper/figs/teaser_figure.svg
   - paper/figs/teaser_figure.png
@@ -15,4 +22,4 @@ manuscript_locator: paper/neurips_2026.tex#fig:evidence-contract-overview
 external_assets: []
 license_dependencies:
   - TeX Live packages under their distributed licenses
-acceptance_status: visual_ready
+acceptance_status: original appearance and ratio preserved; vector text and cropped page size verified in build_teaser.py

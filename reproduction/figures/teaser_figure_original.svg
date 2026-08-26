@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="920" viewBox="0 20 1800 920" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">Trustworthy causal evaluation for token launch platforms</title>
+  <desc id="svg-desc">Multichain evidence infrastructure, a three-pillar evaluation framework, and evidence-calibrated interpretation.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, Helvetica, Arial, sans-serif; letter-spacing: 0; }
+      .panel-title { font-size: 24px; font-weight: 700; fill: #22313f; }
+      .panel-kicker { font-size: 15px; font-weight: 700; fill: #547184; }
+      .h2 { font-size: 19px; font-weight: 700; fill: #22313f; }
+      .h3 { font-size: 15px; font-weight: 700; fill: #314d5d; }
+      .body { font-size: 14px; fill: #536a7b; }
+      .small { font-size: 13px; fill: #6a7e8d; }
+      .tiny { font-size: 11.5px; fill: #6a7e8d; }
+      .num { font-size: 25px; font-weight: 700; }
+      .hairline { stroke: #d7e1e8; stroke-width: 1.25; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8da1af"/>
+    </marker>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#213845" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="960" fill="#fbfcfe"/>
+  <line x1="552" y1="35" x2="552" y2="940" stroke="#d8e2e8" stroke-width="1.5"/>
+  <line x1="1276" y1="35" x2="1276" y2="940" stroke="#d8e2e8" stroke-width="1.5"/>
+
+  <!-- A. Evidence infrastructure -->
+  <text x="50" y="68" class="panel-kicker">A</text>
+  <text x="78" y="69" class="panel-title">Evidence infrastructure</text>
+  <text x="50" y="95" class="body">Four-chain lifecycle data with explicit observation boundaries.</text>
+  <rect x="50" y="111" width="56" height="3" rx="1.5" fill="#3c8c75"/>
+
+  <!-- Chain spine -->
+  <rect x="62" y="128" width="458" height="90" rx="12" fill="#d8f3ea" opacity="0.28"/>
+  <rect x="62" y="244" width="458" height="90" rx="12" fill="#dcebfa" opacity="0.30"/>
+  <rect x="62" y="360" width="458" height="90" rx="12" fill="#fff0c7" opacity="0.34"/>
+  <rect x="62" y="476" width="458" height="90" rx="12" fill="#fadde4" opacity="0.32"/>
+  <rect x="512" y="146" width="4" height="54" rx="2" fill="#3c8c75" opacity="0.65"/>
+  <rect x="512" y="262" width="4" height="54" rx="2" fill="#5084ab" opacity="0.65"/>
+  <rect x="512" y="378" width="4" height="54" rx="2" fill="#c39325" opacity="0.65"/>
+  <rect x="512" y="494" width="4" height="54" rx="2" fill="#b46178" opacity="0.65"/>
+  <path d="M126 168 C165 220 90 286 126 346 C160 404 92 472 126 530" fill="none" stroke="#9cb0be" stroke-width="2.2" stroke-dasharray="5 6"/>
+  <g>
+    <circle cx="126" cy="174" r="26" fill="#d8f3ea" stroke="#3c8c75" stroke-width="2"/>
+    <circle cx="126" cy="290" r="26" fill="#dcebfa" stroke="#5084ab" stroke-width="2"/>
+    <circle cx="126" cy="406" r="26" fill="#fff0c7" stroke="#c39325" stroke-width="2"/>
+    <circle cx="126" cy="522" r="26" fill="#fadde4" stroke="#b46178" stroke-width="2"/>
+    <text x="126" y="180" text-anchor="middle" font-size="18" font-weight="700" fill="#3c8c75">S</text>
+    <text x="126" y="296" text-anchor="middle" font-size="18" font-weight="700" fill="#5084ab">B</text>
+    <rect x="120" y="400" width="12" height="12" transform="rotate(45 126 406)" fill="#c39325"/>
+    <text x="126" y="528" text-anchor="middle" font-size="18" font-weight="700" fill="#b46178">T</text>
+  </g>
+  <g>
+    <text x="168" y="165" class="h3">Solana · Pump.fun</text><text x="168" y="189" class="num" fill="#315f73">832,941</text><text x="280" y="189" class="small">complete terminal cohort</text>
+    <text x="168" y="281" class="h3">Base · Clanker</text><text x="168" y="305" class="num" fill="#315f73">62,618</text><text x="259" y="305" class="small">launch + pool universe</text>
+    <text x="168" y="397" class="h3">BNB Chain · Four.meme</text><text x="168" y="421" class="num" fill="#675625">1.59M</text><text x="248" y="421" class="small">bounded launch universe</text>
+    <text x="168" y="513" class="h3">TRON · SunPump</text><text x="168" y="537" class="num" fill="#7a4f5c">104,548</text><text x="280" y="537" class="small">bounded launch universe</text>
+  </g>
+
+  <!-- Coverage matrix -->
+  <text x="50" y="600" class="h2">Evidence layers</text>
+  <text x="235" y="600" class="small">observed</text><circle cx="220" cy="596" r="6" fill="#2f8f77"/>
+  <text x="335" y="600" class="small">bounded</text><circle cx="320" cy="596" r="6" fill="#e6af39"/>
+  <text x="435" y="600" class="small">not observed</text><circle cx="420" cy="596" r="6" fill="#d6dfe5" stroke="#aebdc8"/>
+
+  <g class="small" text-anchor="middle">
+    <text x="245" y="640">Launch</text><text x="326" y="640">Pool</text><text x="407" y="640">Outcome</text><text x="488" y="640">Activity</text>
+  </g>
+  <g class="h3"><text x="51" y="688">Solana</text><text x="51" y="742">Base</text><text x="51" y="796">BNB</text><text x="51" y="850">TRON</text></g>
+  <g stroke="#cdd9e1" stroke-width="1">
+    <line x1="50" y1="655" x2="520" y2="655"/><line x1="50" y1="709" x2="520" y2="709"/><line x1="50" y1="763" x2="520" y2="763"/><line x1="50" y1="817" x2="520" y2="817"/><line x1="50" y1="871" x2="520" y2="871"/>
+  </g>
+  <g>
+    <circle cx="245" cy="682" r="12" fill="#2f8f77"/><circle cx="326" cy="682" r="12" fill="#e6af39"/><circle cx="407" cy="682" r="12" fill="#2f8f77"/><circle cx="488" cy="682" r="12" fill="#e6af39"/>
+    <circle cx="245" cy="736" r="12" fill="#2f8f77"/><circle cx="326" cy="736" r="12" fill="#2f8f77"/><circle cx="407" cy="736" r="12" fill="#dfe6eb" stroke="#afbdc7"/><circle cx="488" cy="736" r="12" fill="#dfe6eb" stroke="#afbdc7"/>
+    <circle cx="245" cy="790" r="12" fill="#2f8f77"/><circle cx="326" cy="790" r="12" fill="#e6af39"/><circle cx="407" cy="790" r="12" fill="#dfe6eb" stroke="#afbdc7"/><circle cx="488" cy="790" r="12" fill="#dfe6eb" stroke="#afbdc7"/>
+    <circle cx="245" cy="844" r="12" fill="#2f8f77"/><circle cx="326" cy="844" r="12" fill="#e6af39"/><circle cx="407" cy="844" r="12" fill="#dfe6eb" stroke="#afbdc7"/><circle cx="488" cy="844" r="12" fill="#dfe6eb" stroke="#afbdc7"/>
+  </g>
+  <rect x="50" y="892" width="470" height="42" rx="6" fill="#eef5f8" stroke="#cbdce5"/>
+  <text x="285" y="918" text-anchor="middle" font-size="14" font-weight="700" fill="#38586a">Comparable representation ≠ comparable causal sample</text>
+
+  <!-- B. Three-pillar evaluation -->
+  <text x="592" y="68" class="panel-kicker">B</text>
+  <text x="620" y="69" class="panel-title">Three-pillar evaluation</text>
+  <text x="592" y="95" class="body">Stakeholders × data resolution × causal identification.</text>
+  <rect x="592" y="111" width="56" height="3" rx="1.5" fill="#6b5a9c"/>
+
+  <!-- Triangle and pillar nodes -->
+  <path d="M910 160 L690 458 L1130 458 Z" fill="#f7fafb" stroke="#d5e0e7" stroke-width="1.5"/>
+  <path d="M910 194 L738 429 L1082 429 Z" fill="none" stroke="#aabac5" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <g filter="url(#soft-shadow)">
+    <circle cx="910" cy="190" r="91" fill="#d8f3ea" stroke="#76c6ad" stroke-width="1.8"/>
+    <circle cx="706" cy="466" r="91" fill="#dcebfa" stroke="#7dafd2" stroke-width="1.8"/>
+    <circle cx="1114" cy="466" r="91" fill="#fff0c7" stroke="#dfb84f" stroke-width="1.8"/>
+    <circle cx="910" cy="388" r="89" fill="#fff" stroke="#8fa5b3" stroke-width="1.8"/>
+  </g>
+  <g text-anchor="middle">
+    <rect x="884" y="112" width="52" height="22" rx="11" fill="#fff" stroke="#8fcfbb"/><text x="910" y="127" font-size="11.5" font-weight="700" fill="#3c8c75">P1</text>
+    <rect x="680" y="388" width="52" height="22" rx="11" fill="#fff" stroke="#9abfda"/><text x="706" y="403" font-size="11.5" font-weight="700" fill="#5084ab">P2</text>
+    <rect x="1088" y="382" width="52" height="22" rx="11" fill="#fff" stroke="#dfbe62"/><text x="1114" y="397" font-size="11.5" font-weight="700" fill="#c39325">P3</text>
+  </g>
+
+  <!-- icons -->
+  <g>
+    <circle cx="884" cy="157" r="10" fill="#3c8c75"/><circle cx="910" cy="150" r="13" fill="#5084ab"/><circle cx="939" cy="157" r="10" fill="#b46178"/>
+    <rect x="866" y="173" width="36" height="18" rx="9" fill="#9ad4c2"/><rect x="892" y="169" width="38" height="22" rx="10" fill="#8cb8d6"/><rect x="924" y="173" width="31" height="18" rx="9" fill="#dfa9b8"/>
+    <text x="910" y="228" text-anchor="middle" class="h3">Stakeholder metrics</text>
+
+    <rect x="664" y="425" width="84" height="13" rx="3" fill="#fff" stroke="#5084ab"/><rect x="655" y="435" width="102" height="14" rx="3" fill="#bcd9ec" stroke="#5084ab"/><rect x="647" y="446" width="118" height="15" rx="3" fill="#7fb1d4" stroke="#5084ab"/>
+    <text x="706" y="508" text-anchor="middle" class="h3" style="font-size: 13.5px">Data richness &amp; frequency</text>
+
+    <circle cx="1114" cy="441" r="31" fill="#fff" stroke="#c39325" stroke-width="2"/><circle cx="1114" cy="441" r="18" fill="#fff0c7" stroke="#c39325"/><circle cx="1114" cy="441" r="7" fill="#c39325"/>
+    <text x="1114" y="510" text-anchor="middle" class="h3">Causal identification</text>
+  </g>
+  <g text-anchor="middle">
+    <rect x="878" y="335" width="64" height="78" rx="6" fill="#fff" stroke="#6f8796" stroke-width="1.5"/>
+    <rect x="889" y="325" width="42" height="16" rx="4" fill="#dce7ed" stroke="#6f8796"/>
+    <line x1="890" y1="355" x2="930" y2="355" stroke="#9aacb7"/><line x1="890" y1="368" x2="930" y2="368" stroke="#9aacb7"/><line x1="890" y1="381" x2="922" y2="381" stroke="#9aacb7"/>
+    <text x="910" y="446" class="h3" style="font-size: 14px">Evidence contract</text>
+  </g>
+
+  <!-- Evidence ladder -->
+  <text x="592" y="602" class="h2">Sequential evidence disclosure</text>
+  <line x1="615" y1="654" x2="1240" y2="654" stroke="#d2dde4" stroke-width="5" stroke-linecap="round"/>
+  <g text-anchor="middle">
+    <circle cx="615" cy="654" r="24" fill="#3c8c75"/><text x="615" y="650" font-size="13" font-weight="700" fill="#fff">L0</text><text x="615" y="665" font-size="10.5" fill="#fff">naive</text>
+    <circle cx="704" cy="654" r="24" fill="#cde4f4"/><text x="704" y="650" font-size="13" font-weight="700" fill="#315f73">L1</text><text x="704" y="665" font-size="10.5" fill="#315f73">control</text>
+    <circle cx="793" cy="654" r="24" fill="#cde4f4"/><text x="793" y="650" font-size="13" font-weight="700" fill="#315f73">L2</text><text x="793" y="665" font-size="10.5" fill="#315f73">FE</text>
+    <circle cx="882" cy="654" r="24" fill="#ffe4a0"/><text x="882" y="650" font-size="13" font-weight="700" fill="#6e551b">L3</text><text x="882" y="665" font-size="10.5" fill="#6e551b">dynamic</text>
+    <circle cx="971" cy="654" r="24" fill="#f5d2dc"/><text x="971" y="650" font-size="13" font-weight="700" fill="#7e5362">L4</text><text x="971" y="665" font-size="10.5" fill="#7e5362">pretrend</text>
+    <circle cx="1060" cy="654" r="24" fill="#e3daf3"/><text x="1060" y="650" font-size="13" font-weight="700" fill="#66558e">L5</text><text x="1060" y="665" font-size="10.5" fill="#66558e">hetero.</text>
+    <circle cx="1149" cy="654" r="24" fill="#cde4f4"/><text x="1149" y="650" font-size="13" font-weight="700" fill="#315f73">L6</text><text x="1149" y="665" font-size="10.5" fill="#315f73">exact</text>
+    <circle cx="1238" cy="654" r="27" fill="#6b5a9c"/><text x="1238" y="650" font-size="13" font-weight="700" fill="#fff">L7</text><text x="1238" y="665" font-size="10.5" fill="#fff">vector</text>
+  </g>
+
+  <!-- Stress tests -->
+  <text x="592" y="742" class="h2">Known-truth stress tests</text>
+  <g>
+    <line x1="614" y1="792" x2="1220" y2="792" stroke="#d7e1e8" stroke-width="1.2"/>
+    <circle cx="630" cy="792" r="18" fill="#d8f3ea" stroke="#7ec7b1"/><path d="M622 799 L622 785 L637 785" fill="none" stroke="#3c8c75" stroke-width="2"/><circle cx="622" cy="785" r="3" fill="#3c8c75"/><circle cx="637" cy="785" r="3" fill="#3c8c75"/>
+    <circle cx="760" cy="792" r="18" fill="#ffe3d8" stroke="#e0a995"/><circle cx="760" cy="792" r="9" fill="none" stroke="#b9654c" stroke-width="2"/><line x1="760" y1="792" x2="760" y2="785" stroke="#b9654c" stroke-width="2"/><line x1="760" y1="792" x2="767" y2="796" stroke="#b9654c" stroke-width="2"/>
+    <circle cx="890" cy="792" r="18" fill="#fff0c7" stroke="#dfbd5c"/><g fill="#c39325"><circle cx="883" cy="785" r="3"/><circle cx="897" cy="785" r="3"/><circle cx="883" cy="799" r="3"/><circle cx="897" cy="799" r="3"/></g>
+    <circle cx="1020" cy="792" r="18" fill="#fadde4" stroke="#d998aa"/><path d="M1011 800 C1013 785 1027 782 1029 797" fill="none" stroke="#b46178" stroke-width="2"/><circle cx="1013" cy="790" r="3" fill="#b46178"/>
+    <circle cx="1150" cy="792" r="18" fill="#e8e0f6" stroke="#bdaee0"/><path d="M1141 799 L1146 790 L1151 795 L1159 783" fill="none" stroke="#6b5a9c" stroke-width="2"/>
+  </g>
+  <g class="small" text-anchor="middle">
+    <text x="630" y="828">Staggered</text><text x="760" y="828">Timing</text><text x="890" y="828">Four clusters</text><text x="1020" y="828">Selection</text><text x="1150" y="828">Aggregation</text>
+  </g>
+  <rect x="592" y="856" width="644" height="78" rx="8" fill="#f2eef9" stroke="#cbbfe5"/>
+  <polygon points="614,873 642,873 658,895 642,917 614,917 598,895" fill="#6b5a9c"/>
+  <text x="628" y="900" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">AI</text>
+  <text x="680" y="888" font-size="16" font-weight="700" fill="#51467a">Evidence effects vary across models and evidence blocks</text>
+  <text x="680" y="913" class="small">three-model blind factorial audit</text>
+
+  <!-- C. Evidence-calibrated interpretation -->
+  <text x="1316" y="68" class="panel-kicker">C</text>
+  <text x="1344" y="69" class="panel-title">Evidence-calibrated interpretation</text>
+  <text x="1316" y="95" class="body">Inference narrows activity evidence to bounded stakeholder interpretations.</text>
+  <rect x="1316" y="111" width="56" height="3" rx="1.5" fill="#b46178"/>
+
+  <!-- mini coefficient path -->
+  <text x="1316" y="154" class="h2">Market-level estimate</text>
+  <line x1="1360" y1="330" x2="1735" y2="330" stroke="#687d8d" stroke-width="1.7"/>
+  <text x="1335" y="334" class="small">0</text>
+  <line x1="1435" y1="195" x2="1435" y2="330" stroke="#3c8c75" stroke-width="3"/>
+  <circle cx="1435" cy="225" r="12" fill="#3c8c75" stroke="#fff" stroke-width="2"/>
+  <text x="1435" y="185" text-anchor="middle" class="small">before–after</text>
+  <text x="1435" y="255" text-anchor="middle" class="num" fill="#2f7f6c">+0.669</text>
+
+  <line x1="1605" y1="270" x2="1605" y2="368" stroke="#b46178" stroke-width="3"/>
+  <line x1="1595" y1="270" x2="1615" y2="270" stroke="#b46178" stroke-width="3"/><line x1="1595" y1="368" x2="1615" y2="368" stroke="#b46178" stroke-width="3"/>
+  <circle cx="1605" cy="314" r="12" fill="#b46178" stroke="#fff" stroke-width="2"/>
+  <text x="1605" y="185" text-anchor="middle" class="small">controls + two-way FE</text>
+  <text x="1605" y="235" text-anchor="middle" class="num" fill="#864e61">+0.412</text>
+  <text x="1605" y="253" text-anchor="middle" class="tiny">95% CI [−0.128, 0.951]</text>
+
+  <path d="M1460 225 C1500 225 1530 285 1580 307" fill="none" stroke="#8da1af" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <rect x="1336" y="392" width="414" height="72" rx="8" fill="#fff5f7" stroke="#db9aae" stroke-width="1.5"/>
+  <text x="1543" y="421" text-anchor="middle" font-size="17" font-weight="700" fill="#874e61">CAUSAL EFFECT NOT IDENTIFIED</text>
+  <text x="1543" y="445" text-anchor="middle" class="small">unstable pre-period · four clusters · exact p = 0.6875</text>
+
+  <!-- retained evidence -->
+  <text x="1316" y="520" class="h2">Evidence that remains informative</text>
+  <rect x="1336" y="550" width="414" height="112" rx="8" fill="#dcebfa" stroke="#95bada" stroke-width="1.4"/>
+  <circle cx="1382" cy="606" r="25" fill="#fff" stroke="#5084ab" stroke-width="2"/><circle cx="1382" cy="606" r="15" fill="#5084ab"/><path d="M1375 606 L1380 612 L1390 599" fill="none" stroke="#fff" stroke-width="2.6"/>
+  <text x="1422" y="581" class="h3">Operational mechanism</text><text x="1422" y="617" class="num" fill="#315f73">1,636 / 1,651</text><text x="1422" y="640" class="small">observed 30-day transaction-proxy activity</text>
+
+  <rect x="1336" y="684" width="414" height="112" rx="8" fill="#fff0c7" stroke="#dfbe62" stroke-width="1.4"/>
+  <circle cx="1382" cy="740" r="24" fill="#c39325"/><path d="M1372 748 L1392 728 M1381 728 L1392 728 L1392 739" fill="none" stroke="#fff" stroke-width="2.5"/>
+  <text x="1422" y="715" class="h3">Predictive marker</text><text x="1422" y="751" class="num" fill="#675625">+0.945 pp</text><text x="1422" y="774" class="small">predictive association; causal exposure not established</text>
+
+  <!-- stakeholder vector -->
+  <text x="1316" y="846" class="h2">Stakeholder interpretation vector</text>
+  <g>
+    <rect x="1336" y="870" width="96" height="64" rx="7" fill="#d8f3ea" stroke="#8dcdb9"/><circle cx="1353" cy="890" r="5" fill="#3c8c75"/><text x="1365" y="894" class="h3">Creator</text><text x="1384" y="920" text-anchor="middle" class="tiny">mechanical</text>
+    <rect x="1442" y="870" width="96" height="64" rx="7" fill="#fadde4" stroke="#daa0b1"/><circle cx="1459" cy="890" r="5" fill="#b46178"/><text x="1471" y="894" class="h3">Trader</text><text x="1490" y="920" text-anchor="middle" class="tiny">unresolved</text>
+    <rect x="1548" y="870" width="96" height="64" rx="7" fill="#dcebfa" stroke="#9abbd7"/><circle cx="1565" cy="890" r="5" fill="#5084ab"/><text x="1577" y="894" class="h3">Platform</text><text x="1596" y="920" text-anchor="middle" class="tiny">venue active</text>
+    <rect x="1654" y="870" width="96" height="64" rx="7" fill="#e8e0f6" stroke="#bfb0df"/><circle cx="1671" cy="890" r="5" fill="#6b5a9c"/><text x="1683" y="894" font-size="13.5" font-weight="700" fill="#314d5d">Community</text><text x="1702" y="920" text-anchor="middle" class="tiny">predictive</text>
+  </g>
+</svg>

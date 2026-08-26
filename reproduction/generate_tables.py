@@ -83,7 +83,7 @@ def generate_claim_evidence() -> str:
     h1 = load_json("application/h1_rpc_mechanism_summary.json")
     h0 = load_json("identification/h0_summary.json")
     h3 = load_json("identification/h3_incidence.json")
-    agent = load_json("application/agent_provenance.json")
+    v2_registry = load_csv("application/agentic_v2/run_registry.csv")
 
     l2 = ladder["L2"]
     twfe = float(l2["estimate"])
@@ -126,12 +126,12 @@ def generate_claim_evidence() -> str:
         f"${r3(fee_est['estimate'])}$, CI $[{r3(fee_est['ci_low'])},{r3(fee_est['ci_high'])}]$; no accepted control. "
         r"\newline\textbf{\textcolor{partialamber}{Mechanical incidence supported; welfare not identified}}."
     )
-    requested_model = agent["requested_model_aliases"][0]
-    returned_model = agent["returned_models"][0]
+    ok_calls = [row for row in v2_registry if row["status"] == "ok"]
+    model_count = len({row["model_spec_id"] for row in ok_calls})
     ai = (
-        f"DeepSeek alias \\texttt{{{requested_model}}}, returned \\texttt{{{returned_model}}}; "
-        r"ten runs per rung, temperature zero, archived raw responses. Exact runtime prompt payload not archived. "
-        r"\newline\textbf{\textcolor{partialamber}{Bounded demonstration}}."
+        f"{model_count} returned models; {fmt_int(len(ok_calls))}/{fmt_int(len(v2_registry))} registered calls succeeded; "
+        r"blind cumulative and $2^4$ factorial evidence design; parsed structured outputs and per-call scores archived. "
+        r"\newline\textbf{\textcolor{partialamber}{Bounded, heterogeneous evaluation}}."
     )
 
     header = r"""\begin{table}[t]
@@ -161,7 +161,7 @@ def generate_claim_evidence() -> str:
         "    Creator-fee rule incidence & Creators; traders; operators & Activation transaction, vault transfer, admissible control, stakeholder welfare & "
         + fee
         + r" \\",
-        "    AI evidence following & Reviewers and users of AI-assisted analysis & Fixed prompts, rung disclosures, model/version, repeated runs, raw responses, prespecified scoring & "
+        "    AI evidence following & Reviewers and users of AI-assisted analysis & Blind prompts, factorized disclosures, model/version, repeated runs, controls, prespecified scoring & "
         + ai
         + r" \\",
     ]

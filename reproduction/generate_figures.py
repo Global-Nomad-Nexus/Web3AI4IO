@@ -168,8 +168,8 @@ def _matplotlib_teaser_draft() -> None:
         ax.text(x, 1.25, label, ha="center", fontsize=6.1, color=MUTED)
     ax.add_patch(FancyBboxPatch((4.55, 0.22), 4.30, 0.56, boxstyle="round,pad=0.03,rounding_size=0.06", facecolor="#F2ECFA", edgecolor="#D5C6EA", linewidth=0.8))
     ax.text(4.83, 0.50, "AI", ha="center", va="center", fontsize=7.0, color="white", fontweight="bold", bbox={"boxstyle": "round,pad=0.35", "facecolor": "#7251B5", "edgecolor": "none"})
-    ax.text(5.22, 0.56, "Structured evidence improves evidence following", fontsize=7.2, fontweight="bold", color="#57417D")
-    ax.text(5.22, 0.34, "one model evaluation; method omissions remain", fontsize=6.2, color=MUTED)
+    ax.text(5.22, 0.56, "Evidence effects vary across models and evidence blocks", fontsize=7.2, fontweight="bold", color="#57417D")
+    ax.text(5.22, 0.34, "three-model blind factorial audit", fontsize=6.2, color=MUTED)
 
     ax.text(9.55, 5.86, "Market level estimate", fontsize=9.2, fontweight="bold")
     l0 = float(ladder.loc["L0", "estimate"])
@@ -831,6 +831,49 @@ def make_agentic() -> None:
     save(fig, "fig_agentic_scaffold_tradeoff", native=True)
 
 
+def make_agentic_v2() -> None:
+    """Plot prespecified M4--M7 main effects without implying a model ranking."""
+    d = read_csv("application/agentic_v2/factorial_effects.csv")
+    models = ["gpt_5_6_terra", "deepseek_v4_pro", "qwen3_14b"]
+    model_labels = ["GPT-5.6 Terra", "DeepSeek-V4-Pro", "Qwen3-14B"]
+    factors = ["M4", "M5", "M6", "M7"]
+    metrics = [
+        ("unsafe_causal_affirmation", r"Unsafe affirmation: $\Delta$ pp"),
+        ("correct_boundary", r"Correct boundary: $\Delta$ pp"),
+    ]
+
+    fig, axes = plt.subplots(2, 1, figsize=(APP_WIDTH_IN, 2.05), sharex=True)
+    fig.subplots_adjust(left=0.34, right=0.99, top=0.91, bottom=0.16, hspace=0.34)
+    norm = TwoSlopeNorm(vmin=-75, vcenter=0, vmax=75)
+    for ax, (metric, title) in zip(axes, metrics):
+        matrix = np.full((len(models), len(factors)), np.nan)
+        for row_idx, model in enumerate(models):
+            for col_idx, factor in enumerate(factors):
+                row = d[
+                    (d["model_spec_id"] == model)
+                    & (d["effect_type"] == "main_effect")
+                    & (d["factor"] == factor)
+                    & (d["metric"] == metric)
+                ]
+                if len(row) != 1:
+                    raise ValueError(f"missing V2 main effect: {model} {factor} {metric}")
+                matrix[row_idx, col_idx] = 100 * float(row.iloc[0]["mean_difference_bit1_minus_bit0"])
+        ax.imshow(matrix, cmap="coolwarm", norm=norm, aspect="auto", interpolation="nearest")
+        ax.set_title(title, fontsize=6.4, loc="left", pad=2.5)
+        ax.set_yticks(np.arange(len(models)), model_labels)
+        ax.tick_params(axis="both", length=0, labelsize=5.7, pad=1.5)
+        for row_idx in range(len(models)):
+            for col_idx in range(len(factors)):
+                value = matrix[row_idx, col_idx]
+                ink = "white" if abs(value) >= 40 else INK
+                label = f"{value:+.1f}".replace("-", "−")
+                ax.text(col_idx, row_idx, label, ha="center", va="center", fontsize=5.8, color=ink, fontweight="bold")
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+    axes[-1].set_xticks(np.arange(len(factors)), factors)
+    save(fig, "fig_agentic_v2_factor_effects", native=True)
+
+
 def main() -> None:
     apply_style()
     build_teaser()
@@ -842,6 +885,7 @@ def main() -> None:
     make_frequency()
     make_mechanism()
     make_agentic()
+    make_agentic_v2()
 
 
 if __name__ == "__main__":

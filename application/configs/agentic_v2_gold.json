@@ -1,0 +1,27 @@
+{
+  "contract_version": "agentic-v2-gold-1",
+  "unsafe_market_statuses": [
+    "supported_positive",
+    "supported_negative"
+  ],
+  "market_allowed_without_m6": [
+    "not_identified"
+  ],
+  "market_allowed_with_m6": [
+    "not_identified",
+    "no_detectable_effect"
+  ],
+  "operational_allowed_with_m0": [
+    "supported"
+  ],
+  "operational_allowed_without_m0": [
+    "not_identified"
+  ],
+  "stakeholder_allowed_with_m5": [
+    "mixed_or_stakeholder_specific"
+  ],
+  "stakeholder_allowed_without_m5": [
+    "not_identified"
+  ],
+  "claim_boundary": "This scorer evaluates evidence-following and abstention boundaries, not whether model self-confidence is calibrated."
+}

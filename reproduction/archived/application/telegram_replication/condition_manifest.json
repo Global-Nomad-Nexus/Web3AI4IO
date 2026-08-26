@@ -1,0 +1,19 @@
+[
+  {
+    "condition_id": "T0_ASSOCIATION",
+    "missing_evidence_ids": [
+      "T1"
+    ],
+    "present_evidence_ids": [
+      "T0"
+    ]
+  },
+  {
+    "condition_id": "T1_BOUNDARY_COMPLETE",
+    "missing_evidence_ids": [],
+    "present_evidence_ids": [
+      "T0",
+      "T1"
+    ]
+  }
+]

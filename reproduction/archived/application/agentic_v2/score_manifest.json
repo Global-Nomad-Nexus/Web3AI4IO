@@ -1,0 +1,20 @@
+{
+  "bootstrap_draws": 2000,
+  "claim_boundary": "This scorer evaluates evidence-following and abstention boundaries, not whether model self-confidence is calibrated.",
+  "confidence_policy": "exploratory_only_not_calibration",
+  "gold_contract": "agentic-v2-gold-1",
+  "outputs": [
+    "call_scores.csv",
+    "canonical_deltas.csv",
+    "cell_scores.csv",
+    "control_comparisons.csv",
+    "cost_estimate.csv",
+    "factorial_effects.csv",
+    "model_block_heterogeneity.csv",
+    "model_factor_interactions.csv"
+  ],
+  "registered_calls": 714,
+  "status_counts": {
+    "ok": 714
+  }
+}

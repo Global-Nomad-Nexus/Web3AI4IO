@@ -1,0 +1,16 @@
+{
+  "analysis": "hierarchical_matched_cell_fixed_model_panel",
+  "bootstrap_draws": 2000,
+  "calls_per_cell": 10,
+  "interpretation": "descriptive interval for this fixed model panel and factorial grid; not population-model inference",
+  "matched_backgrounds_per_model_factor": 8,
+  "models_fixed_equal_weight": 3,
+  "models_resampled": false,
+  "outputs": {
+    "matched_factorial_effects.csv": "6569a0babbdb2d64cd49cdfa823b1d05ca72f69485981884c9254527a14cbb5a",
+    "matched_factorial_pairs.csv": "f106e73a58454b45300e97ce7e46ff5bf47731d50220e6d69c82f1fccf6976c7"
+  },
+  "seed": 20260729,
+  "source": "call_scores.csv",
+  "source_sha256": "8de28ee480ea00b52b60738665bad8e05b6e9c253662646ff5ab147069f55c0d"
+}

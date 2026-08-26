@@ -1,0 +1,27 @@
+{
+  "archive_scope": "PumpSwap V2 runner, provider, scorer, configuration, tests, and invocation targets as found before the 2026-08-26 dual-case revision",
+  "created_at_utc": "2026-08-26T07:24:00Z",
+  "historical_runtime_git_commit": "7563b43",
+  "historical_runtime_note": "The historical experiment manifest recorded commit 7563b43. The V2 files listed here were untracked at that commit, so this release snapshot must not be interpreted as proof that commit 7563b43 contained them.",
+  "raw_provider_archive_note": "The released 714-call archive contains parsed outputs, scores, manifests, and the run registry, but intentionally omits raw provider response JSON and request-by-call directories.",
+  "runtime_answers_policy": "No historical PumpSwap answer was regenerated or modified when this snapshot was created.",
+  "snapshot_archive": {
+    "path": "reproduction/archived/application/agentic_v2/runtime_code_snapshot_20260826.tar.gz",
+    "sha256": "bd0da66cb104567ce14af22948b3cc8767bce85b7a5f7c44b7a649d8ff780634"
+  },
+  "files": {
+    "Makefile": "97f1ee10a5cb16152dc05ee784e8e26b835b4a7bbdc38a1ef16fcb908d050a1a",
+    "application/README.md": "8ca12a73443f4e11c69229945d5d352a309485b94a8105b5f4f40d28e3661fde",
+    "application/configs/agentic_v2.json": "4c76fb4f6f0d4ee16790cc819d315f947267285f8aca31d39aafd05f3a002d1b",
+    "application/configs/agentic_v2_gold.json": "be8e961d4e9075623a5280ec3a56e1674e7f3917552fd3ea0ca541efc3ae17f2",
+    "application/scripts/configure_agentic_v2_keychain.py": "a9ff67a297734189ac7222102efd889945be1352d29ec334fa50ef4a34de5e1c",
+    "application/scripts/run_agentic_v2.py": "5acbbcf6b4622255bf80546354a122c358d55c735bc0080a0b6f07dd2b06b391",
+    "application/scripts/run_agentic_v2_all.py": "c6fa34e5144428013f52549793a838dd71e9746cc8f19064383d1c47e47002ed",
+    "application/scripts/score_agentic_v2.py": "e92c64fa0d3a21234afea3e8d231877cae7101560c1409882fe2c86327013c83",
+    "application/scripts/verify_agentic_v2.py": "ad37061840572954e7d595408a2bf36c0ebd728aace8ac0efc28cd39e4509694",
+    "application/src/trustworthy_launchpads/agentic_v2.py": "093cc232aac9eccb06f6ef1490933fe75887cc9321fbd3501be41cf56adc2739",
+    "application/src/trustworthy_launchpads/agentic_v2_providers.py": "56e47b9e41321d0c835bb80c6867d759eaabab06ff91c3a74b154f0da47669db",
+    "application/src/trustworthy_launchpads/agentic_v2_scoring.py": "eda1115ac713791eeaa9b940368e9ff78cd6712c3d75f1def1baf3f86369869b",
+    "application/tests/test_agentic_v2.py": "99f6c2618067c9f95331fcfa4c8c4e626013f4304d31caadf7677bce7379c277"
+  }
+}

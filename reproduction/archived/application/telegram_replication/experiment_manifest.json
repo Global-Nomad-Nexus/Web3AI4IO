@@ -1,0 +1,63 @@
+{
+  "analysis_scope": "targeted two-condition case replication; not population-level generalization or model ranking",
+  "case_id": "telegram_metadata_application",
+  "conditions": 2,
+  "created_at_utc": "2026-08-26T10:39:04.929207+00:00",
+  "experiment_version": "telegram-targeted-replication-v1.0",
+  "external_upload_boundary": "only the two aggregate Telegram evidence blocks; no manuscript, token rows, transactions, wallets, or claim-boundary text",
+  "git_commit": "7563b43cb2513c31fb59422087c619f710b6fb59",
+  "models": [
+    {
+      "adapter": "openai_responses",
+      "api_key_env": "OPENAI_API_KEY",
+      "endpoint": "https://api.openai.com/v1/responses",
+      "endpoint_env": "OPENAI_BASE_URL",
+      "max_output_tokens": 2400,
+      "model": "gpt-5.6-terra",
+      "model_spec_id": "gpt_5_6_terra",
+      "pricing_usd_per_million": {
+        "input_cache_miss": 2.0,
+        "output": 12.0
+      },
+      "provider": "OpenAI",
+      "reasoning_effort": "medium",
+      "temperature": 0
+    },
+    {
+      "adapter": "deepseek_chat",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "max_output_tokens": 12000,
+      "model": "deepseek-v4-pro",
+      "model_spec_id": "deepseek_v4_pro",
+      "pricing_usd_per_million": {
+        "input_cache_miss": 1.32,
+        "output": 3.96
+      },
+      "provider": "DeepSeek",
+      "reasoning_effort": "high",
+      "temperature": 0
+    },
+    {
+      "adapter": "ollama_chat",
+      "context_length": 8192,
+      "endpoint": "http://localhost:11434",
+      "expected_model_digest_prefix": "bdbd181c33f2",
+      "keep_alive": "10m",
+      "max_output_tokens": 2400,
+      "model": "qwen3:14b",
+      "model_spec_id": "qwen3_14b",
+      "pricing_usd_per_million": {
+        "input_cache_miss": 0,
+        "output": 0
+      },
+      "provider": "Alibaba-Qwen/Ollama",
+      "temperature": 0
+    }
+  ],
+  "python": "3.11.4",
+  "random_seed": 20260826,
+  "registered_calls": 60,
+  "runs_per_cell": 10,
+  "temperature": 0
+}

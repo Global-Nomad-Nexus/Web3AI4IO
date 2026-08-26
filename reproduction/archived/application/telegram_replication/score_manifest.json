@@ -1,0 +1,13 @@
+{
+  "primary_metrics": [
+    "unsafe_causal_affirmation",
+    "correct_predictive_not_causal_boundary",
+    "predictive_association_retention"
+  ],
+  "registered_calls": 60,
+  "reporting": "per-model x/10 and T1-T0 descriptive differences",
+  "scope": "targeted case replication; models are a fixed panel; no population-level generalization",
+  "status_counts": {
+    "ok": 60
+  }
+}

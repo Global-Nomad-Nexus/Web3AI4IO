@@ -1,0 +1,442 @@
+{
+  "M0": {
+    "content": {
+      "aggregate_observation": {
+        "ci95_high": 0.7915974761265958,
+        "ci95_low": 0.5458447590488631,
+        "estimate": 0.6687211175877295,
+        "outcome": "log(1 + Pump ecosystem daily volume USD)",
+        "p_value": null,
+        "std_error": 0.0626920196626869
+      },
+      "case": {
+        "case_id": "pumpswap_application",
+        "event_date_utc": "2025-03-20"
+      }
+    },
+    "evidence_id": "M0",
+    "introduced_at_rung": "L0",
+    "source_artifact": "reproduction/archived/application/deterministic_ladder.csv",
+    "source_sha256": "83e948ea5a80609afa91dc27af367c46996e7dda0eeb8329c6ec65dea47d959d"
+  },
+  "M1": {
+    "content": {
+      "aggregate_observation": {
+        "ci95_high": 0.8522068598390515,
+        "ci95_low": -0.0288085913765485,
+        "estimate": 0.4116991342312515,
+        "outcome": "log(1 + daily volume USD)",
+        "p_value": 0.066978431567946,
+        "std_error": 0.2247488395958163
+      }
+    },
+    "evidence_id": "M1",
+    "introduced_at_rung": "L1",
+    "source_artifact": "reproduction/archived/application/deterministic_ladder.csv",
+    "source_sha256": "83e948ea5a80609afa91dc27af367c46996e7dda0eeb8329c6ec65dea47d959d"
+  },
+  "M2": {
+    "content": {
+      "aggregate_observation": {
+        "ci95_high": 0.951416744328656,
+        "ci95_low": -0.1280184758660943,
+        "estimate": 0.4116991342312808,
+        "outcome": "log(1 + daily volume USD)",
+        "p_value": 0.1348890690674124,
+        "std_error": 0.2753661276007016
+      }
+    },
+    "evidence_id": "M2",
+    "introduced_at_rung": "L2",
+    "source_artifact": "reproduction/archived/application/deterministic_ladder.csv",
+    "source_sha256": "83e948ea5a80609afa91dc27af367c46996e7dda0eeb8329c6ec65dea47d959d"
+  },
+  "M3": {
+    "content": {
+      "aggregate_observation": {
+        "ci95_high": 1.2004729071324387,
+        "ci95_low": 0.4716336440294297,
+        "estimate": 0.8360532755809342,
+        "outcome": "average post-event dynamic effect on log volume",
+        "p_value": null,
+        "std_error": 0.1859283834446451
+      }
+    },
+    "evidence_id": "M3",
+    "introduced_at_rung": "L3",
+    "source_artifact": "reproduction/archived/application/deterministic_ladder.csv",
+    "source_sha256": "83e948ea5a80609afa91dc27af367c46996e7dda0eeb8329c6ec65dea47d959d"
+  },
+  "M4": {
+    "content": {
+      "event_study_coefficients": [
+        {
+          "ci95_high": 2.567083629658385,
+          "ci95_low": 0.2654934500581429,
+          "coef": 1.416288539858264,
+          "reference_week": -1,
+          "rel_week": -8,
+          "std_error": 0.5871403519388373
+        },
+        {
+          "ci95_high": 0.0383123984062842,
+          "ci95_low": -1.0011010029622582,
+          "coef": -0.4813943022779869,
+          "reference_week": -1,
+          "rel_week": -7,
+          "std_error": 0.2651564799409547
+        },
+        {
+          "ci95_high": 0.1991427035670252,
+          "ci95_low": -0.7482588111056101,
+          "coef": -0.2745580537692924,
+          "reference_week": -1,
+          "rel_week": -6,
+          "std_error": 0.2416840598654682
+        },
+        {
+          "ci95_high": 0.3043182501904327,
+          "ci95_low": -0.7259573500943453,
+          "coef": -0.2108195499519563,
+          "reference_week": -1,
+          "rel_week": -5,
+          "std_error": 0.2628254082359127
+        },
+        {
+          "ci95_high": 0.0955297685668513,
+          "ci95_low": -0.9486078847095726,
+          "coef": -0.4265390580713606,
+          "reference_week": -1,
+          "rel_week": -4,
+          "std_error": 0.2663616462439857
+        },
+        {
+          "ci95_high": -0.0923452485988566,
+          "ci95_low": -1.222989315844386,
+          "coef": -0.6576672822216212,
+          "reference_week": -1,
+          "rel_week": -3,
+          "std_error": 0.2884296089912064
+        },
+        {
+          "ci95_high": 0.0938286450286058,
+          "ci95_low": -0.8990924095257937,
+          "coef": -0.4026318822485939,
+          "reference_week": -1,
+          "rel_week": -2,
+          "std_error": 0.2532961873863264
+        },
+        {
+          "ci95_high": 0.0,
+          "ci95_low": 0.0,
+          "coef": 0.0,
+          "reference_week": -1,
+          "rel_week": -1,
+          "std_error": 0.0
+        },
+        {
+          "ci95_high": 1.1313490764752243,
+          "ci95_low": 0.0360948135729211,
+          "coef": 0.5837219450240727,
+          "reference_week": -1,
+          "rel_week": 0,
+          "std_error": 0.279401597679159
+        },
+        {
+          "ci95_high": 1.5384587303127897,
+          "ci95_low": 0.4769012969842764,
+          "coef": 1.007680013648533,
+          "reference_week": -1,
+          "rel_week": 1,
+          "std_error": 0.2708054676858452
+        },
+        {
+          "ci95_high": 1.2173088429503207,
+          "ci95_low": 0.0809973569518843,
+          "coef": 0.6491530999511026,
+          "reference_week": -1,
+          "rel_week": 2,
+          "std_error": 0.2898753790812338
+        },
+        {
+          "ci95_high": 1.4331517031680354,
+          "ci95_low": 0.4607145478749636,
+          "coef": 0.9469331255214994,
+          "reference_week": -1,
+          "rel_week": 3,
+          "std_error": 0.2480707028808856
+        },
+        {
+          "ci95_high": 1.483176387604721,
+          "ci95_low": 0.5120484482789172,
+          "coef": 0.9976124179418192,
+          "reference_week": -1,
+          "rel_week": 4,
+          "std_error": 0.2477367192157663
+        },
+        {
+          "ci95_high": 1.1484176545753888,
+          "ci95_low": 0.2396204031219282,
+          "coef": 0.6940190288486585,
+          "reference_week": -1,
+          "rel_week": 5,
+          "std_error": 0.231836033534046
+        },
+        {
+          "ci95_high": 2.1265439656945904,
+          "ci95_low": 0.5992882945399446,
+          "coef": 1.3629161301172674,
+          "reference_week": -1,
+          "rel_week": 6,
+          "std_error": 0.3896060385598586
+        },
+        {
+          "ci95_high": 0.8461442667194926,
+          "ci95_low": -0.1484129610209003,
+          "coef": 0.3488656528492961,
+          "reference_week": -1,
+          "rel_week": 7,
+          "std_error": 0.2537135785052022
+        },
+        {
+          "ci95_high": 1.3093894800437087,
+          "ci95_low": 0.5577666526086115,
+          "coef": 0.93357806632616,
+          "reference_week": -1,
+          "rel_week": 8,
+          "std_error": 0.1917405172028309
+        }
+      ],
+      "neutral_preperiod_summary": {
+        "preperiod_coefficients": 7,
+        "preperiod_intervals_excluding_zero": 2
+      }
+    },
+    "evidence_id": "M4",
+    "introduced_at_rung": "L4",
+    "source_artifact": "reproduction/archived/application/event_study_coefficients.csv",
+    "source_sha256": "27763becca53a0ac3901c7d57ed5cdf6c1659fe1f96279ddc8cb5372982e066a"
+  },
+  "M5": {
+    "content": {
+      "stakeholder_metrics": [
+        {
+          "dimension": "Inclusion",
+          "metric": "Graduation rate",
+          "stakeholder": "Token creators",
+          "unit": "token",
+          "value": 0.001982133188305,
+          "value_label": "0.198%"
+        },
+        {
+          "dimension": "Efficiency",
+          "metric": "Median time-to-graduation",
+          "stakeholder": "Token creators",
+          "unit": "minutes",
+          "value": 1.0,
+          "value_label": "1.0 minutes"
+        },
+        {
+          "dimension": "Security",
+          "metric": "Timeout incidence",
+          "stakeholder": "Retail traders",
+          "unit": "timeouts per 1000 launches",
+          "value": 998.017866811695,
+          "value_label": "998.0 per 1000"
+        },
+        {
+          "dimension": "Inclusion / attention",
+          "metric": "Telegram metadata effect on graduation",
+          "stakeholder": "Community and creators",
+          "unit": "probability points",
+          "value": 0.0122683178415698,
+          "value_label": "1.227 pp; CI [0.010642, 0.013895]"
+        },
+        {
+          "dimension": "UX / behavioral",
+          "metric": "Token market-activity persistence proxy",
+          "stakeholder": "Retail traders",
+          "unit": "token latest snapshot",
+          "value": 0.057193396226415,
+          "value_label": "5.7% active; median 24h volume $388"
+        },
+        {
+          "dimension": "Fairness",
+          "metric": "Holder concentration snapshot",
+          "stakeholder": "Retail traders",
+          "unit": "token latest snapshot",
+          "value": 100.0,
+          "value_label": "p90 top-10 holder share 100.0%; high-conc rate 60.1%"
+        },
+        {
+          "dimension": "Security / fairness",
+          "metric": "Risk premium of high-concentration tokens",
+          "stakeholder": "Retail traders",
+          "unit": "probability points",
+          "value": 0.5237034458753915,
+          "value_label": "52.4 pp higher high/critical risk"
+        },
+        {
+          "dimension": "Mechanism validation",
+          "metric": "Solana RPC external-validation sample",
+          "stakeholder": "Researchers and reviewers",
+          "unit": "token sample",
+          "value": 1651.0,
+          "value_label": "1651 tokens; complete 30d 46%; complete-active 100%; median complete 30d pool-tx 826.0; truncated 54%; truncated-zero observed 15"
+        },
+        {
+          "dimension": "Mechanism validation",
+          "metric": "Moralis decoded token outcomes",
+          "stakeholder": "Researchers and reviewers",
+          "unit": "decoded swap sample",
+          "value": 57743.0,
+          "value_label": "294 tokens with 30d decoded swaps; 57,743 unique swaps; median 30d volume $15,967; median 30d trades 198"
+        },
+        {
+          "dimension": "Mechanism validation",
+          "metric": "Dune full-indexer export path",
+          "stakeholder": "Researchers and reviewers",
+          "unit": "graduated token",
+          "value": 1651.0,
+          "value_label": "Dune attempted; stopped by account datapoint limit"
+        },
+        {
+          "dimension": "Fairness / early access",
+          "metric": "RED-COHORT persistent sniper cohorts",
+          "stakeholder": "Retail traders",
+          "unit": "cohort catalogue",
+          "value": 1012.0,
+          "value_label": "1012 cohorts; 5411 strict touched mints; median first rank 3.55"
+        },
+        {
+          "dimension": "Community",
+          "metric": "Discord volume coefficient in TVL extension",
+          "stakeholder": "Discord communities",
+          "unit": "log points",
+          "value": 0.0386248843244166,
+          "value_label": "0.039"
+        },
+        {
+          "dimension": "Trust / RWA",
+          "metric": "RWA category coefficient in TVL snapshot",
+          "stakeholder": "Asset-backed token communities",
+          "unit": "log points",
+          "value": 3.7760199483602057,
+          "value_label": "3.776"
+        }
+      ]
+    },
+    "evidence_id": "M5",
+    "introduced_at_rung": "L5",
+    "source_artifact": "reproduction/archived/application/result1_stakeholder_metric_battery.csv",
+    "source_sha256": "d70ce99277cb3a2b6a02a84019f4415dc600645f40c5df0bec23bdfcfa89bb89"
+  },
+  "M6": {
+    "content": {
+      "few_cluster_inference": {
+        "cluster_count": 4,
+        "estimate": 0.4116991342312808,
+        "method": "Exact Rademacher wild-cluster bootstrap over protocol units",
+        "sign_assignments": 16,
+        "std_error_hc1": 0.2753661276007016,
+        "wild_bootstrap_ci95_high": 1.342315753937705,
+        "wild_bootstrap_ci95_low": -1.3423157539376223,
+        "wild_bootstrap_p_value": 0.6875
+      }
+    },
+    "evidence_id": "M6",
+    "introduced_at_rung": "L6",
+    "source_artifact": "reproduction/archived/application/wild_cluster_bootstrap.json",
+    "source_sha256": "ea31140f787f5425b80f716f155ce0c8db98480e38b6bbd1b8e136e13864c40f"
+  },
+  "M7": {
+    "content": {
+      "aggregate_artifact_availability": [
+        {
+          "aggregate_artifact": "deterministic_ladder.csv",
+          "availability": "available",
+          "sha256": "83e948ea5a80609afa91dc27af367c46996e7dda0eeb8329c6ec65dea47d959d"
+        },
+        {
+          "aggregate_artifact": "event_study_coefficients.csv",
+          "availability": "available",
+          "sha256": "27763becca53a0ac3901c7d57ed5cdf6c1659fe1f96279ddc8cb5372982e066a"
+        },
+        {
+          "aggregate_artifact": "result1_stakeholder_metric_battery.csv",
+          "availability": "available",
+          "sha256": "d70ce99277cb3a2b6a02a84019f4415dc600645f40c5df0bec23bdfcfa89bb89"
+        },
+        {
+          "aggregate_artifact": "wild_cluster_bootstrap.json",
+          "availability": "available",
+          "sha256": "ea31140f787f5425b80f716f155ce0c8db98480e38b6bbd1b8e136e13864c40f"
+        },
+        {
+          "aggregate_artifact": "result1_frequency_sensitivity.csv",
+          "availability": "available",
+          "sha256": "494e1652946168b13d382cbb32c4cc432f9584c4bb62adfed12f4303118fbca1"
+        },
+        {
+          "aggregate_artifact": "data_availability_ledger.csv",
+          "availability": "not_available",
+          "sha256": ""
+        }
+      ],
+      "frequency_and_data_richness": [
+        {
+          "ci95_high": 0.951416744328656,
+          "ci95_low": -0.1280184758660943,
+          "estimate": 0.4116991342312808,
+          "layer": "market_daily_twfe",
+          "outcome": "log(1 + daily volume USD)",
+          "unit": "protocol-day"
+        },
+        {
+          "ci95_high": 1.4423642699829324,
+          "ci95_low": 0.3181078887417748,
+          "estimate": 0.8802360793623536,
+          "layer": "market_weekly_twfe",
+          "outcome": "log(1 + daily volume USD)",
+          "unit": "protocol-week"
+        },
+        {
+          "ci95_high": 0.5616491833600306,
+          "ci95_low": 0.4857577083907525,
+          "estimate": 0.5237034458753915,
+          "layer": "token_risk_snapshot_heterogeneity",
+          "outcome": "source-coded high/critical risk probability: high concentration minus others",
+          "unit": "token"
+        },
+        {
+          "ci95_high": NaN,
+          "ci95_low": NaN,
+          "estimate": 826.0,
+          "layer": "token_post_migration_windows",
+          "outcome": "30d successful PumpSwap-pool transaction count proxy, complete windows",
+          "unit": "token x horizon"
+        },
+        {
+          "ci95_high": NaN,
+          "ci95_low": NaN,
+          "estimate": 15967.274221544722,
+          "layer": "token_decoded_usd_outcomes",
+          "outcome": "30d decoded Moralis USD swap volume, covered tokens",
+          "unit": "token x horizon"
+        },
+        {
+          "ci95_high": NaN,
+          "ci95_low": NaN,
+          "estimate": NaN,
+          "layer": "early_allocation_fairness",
+          "outcome": "top holder share, Gini, sniper share",
+          "unit": "token x early-wallet cohort"
+        }
+      ]
+    },
+    "evidence_id": "M7",
+    "introduced_at_rung": "L7",
+    "source_artifact": "reproduction/archived/application/result1_frequency_sensitivity.csv",
+    "source_sha256": "85f92c0b177a73e35a49621a26e00883f7ca3a319c4dd9dd5486a9e096ef7f7a"
+  }
+}

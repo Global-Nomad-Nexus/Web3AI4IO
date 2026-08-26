@@ -23,9 +23,9 @@ MemeTrans is included despite preprint status because it is the closest launchpa
 
 The L0 to L7 contract is definitional. It is not estimated from a factorial experiment. The application-arm estimates that travel this ladder are in `reproduction/archived/application/deterministic_ladder.csv`.
 
-## Teaser figure (`paper/figs/teaser_figure.pdf`)
+## Teaser figures (`paper/figs/teaser_figure_a4.pdf` and `paper/figs/teaser_figure.pdf`)
 
-The conceptual overview is a three-panel LaTeX/TikZ diagram whose canonical editable source is `reproduction/figures/teaser_figure.tex`. The left-panel counts are generated from `reproduction/scope.json` into `reproduction/generated/teaser_counts.tex`; all other labels are traced in `reproduction/figures/teaser_evidence_ledger.md`. `python reproduction/build_teaser.py` exports vector PDF, SVG, and a 300 dpi PNG preview. The figure uses no external icons or raster assets.
+The editable original is `reproduction/figures/teaser_figure_original.drawio.xml`, with the corresponding preserved SVG and PNG exports beside it. The vector print source in `reproduction/figures/teaser_figure_print.html` retains the original 1800:920 composition, scales it to the 297 mm width of an A4 design canvas, and crops the page height to 151.8 mm rather than retaining blank A4-paper margins. `python reproduction/build_teaser.py --paper-dir /path/to/paper` prints the SVG directly to PDF, verifies the cropped dimensions and vector content, and generates 300 dpi previews. Figure labels are traced in `reproduction/figures/teaser_evidence_ledger.md`; no external visual assets are used.
 
 ## Event-design labels in Figure 2
 

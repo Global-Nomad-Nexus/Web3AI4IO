@@ -12,6 +12,8 @@ artifacts/run_manifest.json
 benchmark_release/data/
 artifacts/agent_runs/raw_responses/
 artifacts/agent_runs/raw/
+artifacts/agentic_v2/
+artifacts/telegram_replication/
 artifacts/download_failures/
 artifacts/external_validation/raw_coin_metadata/
 artifacts/external_validation/moralis_token_swaps.csv

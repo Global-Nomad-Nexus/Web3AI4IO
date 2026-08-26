@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import re
 import shutil
 import subprocess
@@ -12,7 +13,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 WORKSPACE = REPO.parent
-PRIVATE_PAPER = WORKSPACE / "paper"
+PRIVATE_PAPER = Path(os.environ.get("WEB3AI4IO_PAPER_DIR", WORKSPACE / "paper")).expanduser().resolve()
 DIST = REPO / "dist"
 OUTPUT = DIST / "anonymous-review"
 ZIP_PATH = DIST / "web3ai4io-anonymous-review.zip"
@@ -52,6 +53,7 @@ TEXT_SUFFIXES = {
 }
 
 REPLACEMENTS = [
+    ("https://github.com/Global-Nomad-Nexus/Web3AI4IO", "https://anonymous.invalid/Web3AI4IO"),
     ("fig_shilin_application_appendix", "fig_application_appendix"),
     ("web3io_claire", "web3io_identification"),
     ("Web3ioClaire", "Web3ioIdentification"),
@@ -87,6 +89,28 @@ SKIP_TRACKED_PARTS = {
     "huggingface",
     "node_modules",
 }
+
+AGENTIC_V2_SOURCE_FILES = [
+    "application/configs/agentic_v2.json",
+    "application/configs/agentic_v2_gold.json",
+    "application/scripts/configure_agentic_v2_keychain.py",
+    "application/scripts/run_agentic_v2.py",
+    "application/scripts/run_agentic_v2_all.py",
+    "application/scripts/score_agentic_v2.py",
+    "application/scripts/verify_agentic_v2.py",
+    "application/scripts/reanalyze_agentic_v2_matched.py",
+    "application/configs/telegram_replication.json",
+    "application/configs/telegram_replication_gold.json",
+    "application/scripts/run_telegram_replication.py",
+    "application/scripts/score_telegram_replication.py",
+    "application/scripts/verify_telegram_replication.py",
+    "application/src/trustworthy_launchpads/agentic_v2.py",
+    "application/src/trustworthy_launchpads/agentic_v2_providers.py",
+    "application/src/trustworthy_launchpads/agentic_v2_scoring.py",
+    "application/src/trustworthy_launchpads/telegram_replication.py",
+    "application/tests/test_agentic_v2.py",
+    "application/tests/test_telegram_replication.py",
+]
 
 
 def safe_reset_output() -> None:
@@ -205,6 +229,23 @@ def write_package_manifest() -> None:
     (OUTPUT / "PACKAGE_MANIFEST.sha256").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def refresh_reproduction_checksums() -> None:
+    """Re-hash review files after identity-only text substitutions."""
+    checksum_path = OUTPUT / "reproduction" / "checksums.sha256"
+    if not checksum_path.exists():
+        return
+    lines: list[str] = []
+    for line in checksum_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        _, rel = line.split("  ", 1)
+        target = checksum_path.parent / rel
+        if not target.exists():
+            raise RuntimeError(f"anonymous checksum target missing: {rel}")
+        lines.append(f"{hashlib.sha256(target.read_bytes()).hexdigest()}  {rel}")
+    checksum_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def write_zip() -> None:
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in sorted(OUTPUT.rglob("*")):
@@ -228,10 +269,18 @@ def main() -> None:
                 continue
             copy_path(src, OUTPUT / package_relative(src))
 
+    # The frozen V2 audit was added after the last repository commit. Include its
+    # source explicitly so the anonymous mirror remains complete before staging.
+    for rel in AGENTIC_V2_SOURCE_FILES:
+        src = REPO / rel
+        if src.exists():
+            copy_path(src, OUTPUT / rel)
+
     redact_filenames()
     for path in OUTPUT.rglob("*"):
         if path.is_file():
             transform_text(path)
+    refresh_reproduction_checksums()
     audit_tree()
     write_package_manifest()
     write_zip()

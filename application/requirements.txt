@@ -5,3 +5,4 @@ statsmodels>=0.14
 pyfixest>=0.30
 scipy>=1.12
 requests>=2.32
+certifi>=2024.8.30

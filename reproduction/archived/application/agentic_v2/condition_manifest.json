@@ -1,0 +1,657 @@
+[
+  {
+    "canonical_rung": "L0",
+    "condition_id": "P_L0",
+    "factorial_bits": "",
+    "family": "canonical",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0"
+    ]
+  },
+  {
+    "canonical_rung": "L1",
+    "condition_id": "P_L1",
+    "factorial_bits": "",
+    "family": "canonical",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1"
+    ]
+  },
+  {
+    "canonical_rung": "L2",
+    "condition_id": "P_L2",
+    "factorial_bits": "",
+    "family": "canonical",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2"
+    ]
+  },
+  {
+    "canonical_rung": "L3",
+    "condition_id": "F_0000",
+    "factorial_bits": "0000",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0001",
+    "factorial_bits": "0001",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0010",
+    "factorial_bits": "0010",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M5",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M6"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0011",
+    "factorial_bits": "0011",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M5"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0100",
+    "factorial_bits": "0100",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M5"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0101",
+    "factorial_bits": "0101",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M6"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M5",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0110",
+    "factorial_bits": "0110",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M5",
+      "M6"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_0111",
+    "factorial_bits": "0111",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M4"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M5",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "L4",
+    "condition_id": "F_1000",
+    "factorial_bits": "1000",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_1001",
+    "factorial_bits": "1001",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M5",
+      "M6"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_1010",
+    "factorial_bits": "1010",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M5",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M6"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_1011",
+    "factorial_bits": "1011",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M5"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "L5",
+    "condition_id": "F_1100",
+    "factorial_bits": "1100",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5"
+    ]
+  },
+  {
+    "canonical_rung": "",
+    "condition_id": "F_1101",
+    "factorial_bits": "1101",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M6"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "L6",
+    "condition_id": "F_1110",
+    "factorial_bits": "1110",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6"
+    ]
+  },
+  {
+    "canonical_rung": "L7",
+    "condition_id": "F_1111",
+    "factorial_bits": "1111",
+    "family": "factorial",
+    "leakage_expected": false,
+    "missing_evidence_ids": [],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "L0",
+    "condition_id": "CTRL_LEAKY_L0",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0"
+    ]
+  },
+  {
+    "canonical_rung": "L1",
+    "condition_id": "CTRL_LEAKY_L1",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1"
+    ]
+  },
+  {
+    "canonical_rung": "L2",
+    "condition_id": "CTRL_LEAKY_L2",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2"
+    ]
+  },
+  {
+    "canonical_rung": "L3",
+    "condition_id": "CTRL_LEAKY_L3",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "canonical_rung": "L4",
+    "condition_id": "CTRL_LEAKY_L4",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ]
+  },
+  {
+    "canonical_rung": "L5",
+    "condition_id": "CTRL_LEAKY_L5",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5"
+    ]
+  },
+  {
+    "canonical_rung": "L6",
+    "condition_id": "CTRL_LEAKY_L6",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [
+      "M7"
+    ],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6"
+    ]
+  },
+  {
+    "canonical_rung": "L7",
+    "condition_id": "CTRL_LEAKY_L7",
+    "factorial_bits": "",
+    "family": "legacy_leaky_positive_control",
+    "leakage_expected": true,
+    "missing_evidence_ids": [],
+    "present_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "canonical_rung": "L0",
+    "condition_id": "CTRL_EMPTY_L0",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L1",
+    "condition_id": "CTRL_EMPTY_L1",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L2",
+    "condition_id": "CTRL_EMPTY_L2",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L3",
+    "condition_id": "CTRL_EMPTY_L3",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L4",
+    "condition_id": "CTRL_EMPTY_L4",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L5",
+    "condition_id": "CTRL_EMPTY_L5",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L6",
+    "condition_id": "CTRL_EMPTY_L6",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  },
+  {
+    "canonical_rung": "L7",
+    "condition_id": "CTRL_EMPTY_L7",
+    "factorial_bits": "",
+    "family": "evidence_free_negative_control",
+    "leakage_expected": false,
+    "missing_evidence_ids": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7"
+    ],
+    "present_evidence_ids": []
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "T0": {
+    "content": {
+      "e_value": 5.02,
+      "launch_day_clustered_ci95_percentage_points": [
+        0.732,
+        1.163
+      ],
+      "matched_difference_percentage_points": 0.945,
+      "matched_support": {
+        "supported_controls": 586581,
+        "telegram_present": 20227
+      },
+      "matching_variables": [
+        "launch day",
+        "Twitter presence",
+        "website presence",
+        "initial market-capitalization decile",
+        "description length"
+      ],
+      "sample_size": 832941,
+      "telegram_absent_graduation_percent": 0.166,
+      "telegram_present_graduation_percent": 1.485
+    },
+    "evidence_id": "T0",
+    "source_artifacts": [
+      "reproduction/archived/application/telegram_mirror_design_summary.json"
+    ],
+    "source_sha256": [
+      "7f81af535a607fb2a2013ee685ba27232bf2458d224beb24c942af7435c98b23"
+    ]
+  },
+  "T1": {
+    "content": {
+      "after_60_minutes_ci95_percentage_points": [
+        0.0,
+        0.0
+      ],
+      "after_60_minutes_difference_percentage_points": 0.0,
+      "five_minute_clustered_ci95_percentage_points": [
+        0.732,
+        1.163
+      ],
+      "five_minute_matched_difference_percentage_points": 0.945,
+      "qualifying_exogenous_shocks": {
+        "screened": 6,
+        "supported": 0
+      },
+      "unavailable_or_proxied_controls": [
+        "full-cohort creator history unavailable",
+        "initial liquidity proxied by initial market capitalization",
+        "full-cohort risk labels unavailable"
+      ]
+    },
+    "evidence_id": "T1",
+    "source_artifacts": [
+      "reproduction/archived/application/telegram_mirror_design_summary.json",
+      "reproduction/archived/application/telegram_exposure_design_summary.json"
+    ],
+    "source_sha256": [
+      "7f81af535a607fb2a2013ee685ba27232bf2458d224beb24c942af7435c98b23",
+      "bdc83d747247dd62f3c83b6ef7ba386a30a810eba30ac33ee66ec9d4e201f22f"
+    ]
+  }
+}
