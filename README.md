@@ -5,7 +5,7 @@
 ### Trustworthy AI and Causal Inference for Token Launch Platforms
 
 <p>
-  <a href="docs/publications/web3ai4io-paper-neurips2026.pdf"><img alt="Read the paper" src="https://img.shields.io/badge/Paper-PDF-8B1E3F?style=for-the-badge"></a>
+  <a href="docs/publications/README.md"><img alt="Publication status and official conference information" src="https://img.shields.io/badge/Paper-Publication_Status-8B1E3F?style=for-the-badge"></a>
   <a href="docs/publications/README.md"><img alt="Publication archive" src="https://img.shields.io/badge/Publication_Archive-Details-4B5563?style=for-the-badge"></a>
   <a href="https://huggingface.co/datasets/kl41r3/web3ai4io-multichain-launchpad"><img alt="Hugging Face dataset" src="https://img.shields.io/badge/Dataset-Hugging_Face-FFD21E?style=for-the-badge"></a>
 </p>
@@ -21,6 +21,13 @@
 
 ---
 
+## Official publication links
+
+- [NeurIPS 2026 venue information](https://neurips.cc/Conferences/2026/CallForPapers)
+
+A public paper record has not yet been verified. The conference page provides venue information only.
+- [Citation and publication details](docs/publications/README.md) · [BibTeX](CITATION.bib)
+
 ## Research overview
 
 Web3AI4IO is a provenance-aware research artifact for studying token launch platforms across heterogeneous blockchain ecosystems. It combines four-chain dataset construction, entity and event identification checks, empirical applications, calibrated experiments, and manuscript-artifact verification under a shared evidence contract.
@@ -31,8 +38,8 @@ The repository preserves chain-specific evidence boundaries instead of treating 
 
 | Output | Description | Access |
 |---|---|:---:|
-| Manuscript | *Trustworthy AI and Causal Inference for Token Launch Platforms: Evidence, Stakeholders, and Market Design* | [PDF](docs/publications/web3ai4io-paper-neurips2026.pdf) |
-| Publication archive | Compilation notes and manuscript provenance | [Open](docs/publications/README.md) |
+| Manuscript | *Trustworthy AI and Causal Inference for Token Launch Platforms: Evidence, Stakeholders, and Market Design* | [Publication status](docs/publications/README.md) |
+| Publication archive | Official paper links and citation | [Open](docs/publications/README.md) |
 | Public dataset | `kl41r3/web3ai4io-multichain-launchpad` | [Hugging Face](https://huggingface.co/datasets/kl41r3/web3ai4io-multichain-launchpad) |
 
 ## Reproducibility
@@ -63,7 +70,7 @@ identification/    event registry, design checks, S1–S5 experiments
 application/       PumpSwap applications, prompts, and plots
 reproduction/      paper tables, figures, manifest, and tests
 data/              local source pointers; generated tables are gitignored
-docs/publications/ compiled manuscript and publication notes
+docs/publications/ official links, citation, and publication status
 ```
 
 With local source bundles present, rebuild the canonical dataset with:
